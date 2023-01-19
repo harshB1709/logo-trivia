@@ -1,0 +1,12 @@
+[
+    {"name": "Vue", "points": 1},
+    {"name": "MongoDB", "points": 1},
+    {"name": "Git", "points": 2},
+    {"name": "Redis", "points": 2},
+    {"name": "Laravel", "points": 1},
+    {"name": "Tailwind", "points": 1},
+    {"name": "Azure", "points": 2},
+    {"name": "Docker", "points": 1},
+    {"name": "Dusk", "points": 3},
+    {"name": "Webpack", "points": 3}
+]
