@@ -19,10 +19,12 @@ class Word extends Model
         'is_active'
     ];
 
-    protected function url(): Attribute
+    protected $appends = ['svg'];
+
+    protected function svg(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Storage::url($value),
+            get: fn ($value, $attributes) => ($attributes['url'] ?? null) ? Storage::disk('public')->get($attributes['url']) : null,
         );
     }
 }

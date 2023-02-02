@@ -27,7 +27,6 @@ class WordsController extends Controller
                     ->paginate()
                     ->withQueryString();
 
-        // dd($words[0]->url);
         return Inertia::render('Dashboard', [
             'words' => $words
         ])->table(function (InertiaTable $table) {

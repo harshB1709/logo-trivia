@@ -22,6 +22,8 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
-        "@protonemedia/inertiajs-tables-laravel-query-builder": "^2.1.0"
+        "@protonemedia/inertiajs-tables-laravel-query-builder": "^2.1.0",
+        "animejs": "^3.2.1",
+        "vivus": "^0.4.6"
     }
 }

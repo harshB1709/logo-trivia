@@ -11,9 +11,9 @@
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-2">
                     <Table :resource="words" :striped="true">
                         <template #cell(url)="{ item: word }">
-                            <div class="h-100 block">
-                                <!-- <svg v-html="word.url"></svg> -->
-                                <img :src="word.url" height="100" width="100">
+                            <div>
+                                <svg v-html="word.svg"></svg>
+                                <!-- <img :src="word.url" height="100" width="100"> -->
                             </div>
                         </template>
 

@@ -16,6 +16,13 @@ module.exports = {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'ranium-blue': '#006Df5'
+            },
+            aspectRatio: {
+                '4/3': '4/3',
+                '5/4': '5/4'
+            }
         },
     },
 
