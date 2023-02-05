@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('words', function (Blueprint $table) {
+        Schema::create('app_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 60);
-            $table->string('url');
-            $table->unsignedInteger('points');
-            $table->string('hint')->nullable();
-            $table->boolean('is_active')->default(true);
-            $table->timestamps();
+            $table->string('key', 40)->unique();
+            $table->boolean('value');
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('words');
+        Schema::dropIfExists('app_settings');
     }
 };

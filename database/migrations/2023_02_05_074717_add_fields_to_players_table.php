@@ -13,14 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('words', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 60);
-            $table->string('url');
-            $table->unsignedInteger('points');
-            $table->string('hint')->nullable();
-            $table->boolean('is_active')->default(true);
-            $table->timestamps();
+        Schema::table('players', function (Blueprint $table) {
+            $table->string('display_name')->nullable()->after('name');
         });
     }
 
@@ -31,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('words');
+        Schema::table('players', function (Blueprint $table) {
+            $table->dropColumn('display_name');
+        });
     }
 };

@@ -26,7 +26,7 @@ class WordSeeder extends Seeder
             Word::create([
                 "name" => $value->name,
                 "points" => $value->points,
-                "url" => Storage::disk('public')->putFileAs('logos', new HttpFile("database/data/logos/{$name}.svg"), uniqid().".svg")
+                "url" => Storage::putFileAs('logos', new HttpFile("database/data/logos/{$name}.svg"), uniqid().".svg")
             ]);
         }
     }

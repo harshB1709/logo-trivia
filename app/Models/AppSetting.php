@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Game extends Model
+class AppSetting extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'player_id',
-        'score',
+        'key',
+        'value'
     ];
 
-    public function words() {
-        return $this->belongsToMany(Word::class, 'game_words')->withPivot('score');
-    }
+    public $timestamps = false;
 }

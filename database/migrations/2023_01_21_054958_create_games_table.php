@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('player_id')->constrained();
             $table->unsignedInteger('score')->default(0);
-            $table->string('word_ids', 50);
             $table->timestamps();
         });
     }

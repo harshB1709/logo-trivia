@@ -17,13 +17,15 @@ use App\Http\Controllers\PlayerController;
 |
  */
 
-Route::get('/', [PlayerController::class, 'home'])->name('home');
-Route::post('/identify-player', [PlayerController::class, 'identifyPlayer']);
+Route::middleware(['app.setting:app_status'])->group(function() {
+    Route::get('/', [PlayerController::class, 'home'])->middleware(['app.setting:player_registration'])->name('home');
+    Route::post('/register', [PlayerController::class, 'register'])->middleware(['app.setting:player_registration']);
+    Route::get('/{player}/game', [PlayerController::class, 'gamePage'])->name('game');
 
-Route::middleware(['player.identified'])->group(function() {
-    Route::get('/game', [PlayerController::class, 'gamePage'])->name('game');
-    Route::post('/start-game', [PlayerController::class, 'startGame'])->name('startGame');
-    Route::post('/game-action', [PlayerController::class, 'gameAction']);
+    Route::middleware(['player.identified'])->group(function() {
+        Route::post('/start-game', [PlayerController::class, 'startGame'])->name('startGame');
+        Route::post('/game-action', [PlayerController::class, 'gameAction']);
+    });
 });
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {

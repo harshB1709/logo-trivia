@@ -24,7 +24,7 @@ class Word extends Model
     protected function svg(): Attribute
     {
         return Attribute::make(
-            get: fn ($value, $attributes) => ($attributes['url'] ?? null) ? Storage::disk('public')->get($attributes['url']) : null,
+            get: fn ($value, $attributes) => ($attributes['url'] ?? null) ? Storage::get($attributes['url']) : null,
         );
     }
 }

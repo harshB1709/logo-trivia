@@ -4,15 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use App\Models\AppSetting;
 use App\Models\Word;
+use App\Http\Requests\StoreOrUpdateWordRequest;
 use Inertia\Inertia;
 use ProtoneMedia\LaravelQueryBuilderInertiaJs\InertiaTable;
+use Illuminate\Support\Facades\Storage;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class WordsController extends Controller
 {
     public function index(Request $request) {
+        $app_settings = AppSetting::pluck('value', 'key');
+
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
                     $query->where(function ($query) use ($value) {
                         Collection::wrap($value)->each(function ($value) use ($query) {
@@ -28,7 +33,8 @@ class WordsController extends Controller
                     ->withQueryString();
 
         return Inertia::render('Dashboard', [
-            'words' => $words
+            'words' => $words,
+            'appSettings' => $app_settings,
         ])->table(function (InertiaTable $table) {
             $table
                 ->withGlobalSearch('Search words..')
@@ -42,5 +48,56 @@ class WordsController extends Controller
                     1 => "Enabled",
                 ]);
         });
+    }
+
+    public function store(StoreOrUpdateWordRequest $request) {
+        $word = new Word();
+        $word->name = $request->get('name');
+        $word->points = $request->get('points');
+        $word->is_active = $request->has('is_active') ? true : false;
+
+        if($request->hasFile('svg-file')) {
+            $word->url = Storage::putFileAs('logos', $request->file('svg-file'), uniqid().".svg");
+        }
+
+        $word->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Word Created Successfully'
+        ]);
+    }
+
+    public function update(StoreOrUpdateWordRequest $request, Word $word) {
+        $word->name = $request->get('name');
+        $word->points = $request->get('points');
+        $word->is_active = $request->has('is_active') ? true : false;
+
+        if($request->hasFile('svg-file')) {
+            $word->url = Storage::putFileAs('logos', $request->file('svg-file'), uniqid().".svg");
+        }
+
+        $word->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Word Updated Successfully'
+        ]);
+    }
+
+    public function toggleSetting(Request $request) {
+        $setting_key = $request->get('setting', null);
+        if($setting_key) {
+            $setting = AppSetting::where('key', $setting_key)->firstOrFail();
+            $setting->value = !$setting->value;
+            $setting->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Setting toggled Successfully',
+                'value' => (int) $setting->value
+            ]);
+        }
+        abort(400);
     }
 }

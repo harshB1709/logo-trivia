@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('words', function (Blueprint $table) {
+        Schema::create('game_words', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 60);
-            $table->string('url');
-            $table->unsignedInteger('points');
-            $table->string('hint')->nullable();
-            $table->boolean('is_active')->default(true);
-            $table->timestamps();
+            $table->foreignId('game_id')->constrained();
+            $table->foreignId('word_id')->constrained();
+            $table->unsignedInteger('score')->default(0);
         });
     }
 
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('words');
+        Schema::dropIfExists('game_words');
     }
 };

@@ -19,6 +19,16 @@
                         <InputError class="mt-2" :message="form.errors.name" />
                     </div>
                     <div>
+                        <InputLabel for="displayName" value="Display Name(Optional)" />
+                        <TextInput
+                            id="displayName"
+                            v-model="form.display_name"
+                            type="text"
+                            class="mt-1 block w-full"
+                        />
+                        <InputError class="mt-2" :message="form.errors.display_name" />
+                    </div>
+                    <div>
                         <InputLabel for="email" value="Email" />
                         <TextInput
                             id="email"
@@ -42,13 +52,17 @@
                         />
                         <InputError class="mt-2" :message="form.errors.phone" />
                     </div>
+                    <div class="bg-teal-100 border-l-4 border-teal-500 text-teal-700 p-4" v-if="registered" role="alert">
+                        <p class="font-bold">Registered Successfully.</p>
+                        <p>You have successfully registered for the game. You will shortly receive an email with a game link.</p>
+                    </div>
                     <button
                         type="submit"
                         class="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block !mt-8"
                         @click="submit"
                         :disabled="form.processing"
                     >
-                        Start Game
+                        Register
                     </button>
                 </div>
             </div>
@@ -75,16 +89,27 @@ export default {
         return {
             form: useForm({
                 name: "",
+                display_name: "",
                 email: "",
                 phone: ""
             })
         }
     },
 
+    props: {
+        registered: {
+            type: Boolean,
+            default: false
+        }
+    },
+
     methods: {
         submit() {
-            this.form.post('/identify-player', {
-
+            this.form.post('/register', {
+                preserveScroll: true,
+                onSuccess: () => {
+                    this.form.reset();
+                },
             })
         }
     }

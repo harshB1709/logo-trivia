@@ -7,34 +7,45 @@ use Inertia\Inertia;
 use App\Models\Player;
 use App\Models\Word;
 use App\Models\Game;
+use App\Notifications\GameInvite;
 use Illuminate\Support\Facades\Storage;
 
 class PlayerController extends Controller
 {
     public function home(Request $request) {
-        return Inertia::render('Welcome');
+        $registered = session('registered', false);
+        return Inertia::render('Welcome', [
+            'registered' => $registered
+        ]);
     }
 
-    public function identifyPlayer(Request $request) {
+    public function register(Request $request) {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|string|email:rfc,dns|max:255',
+            'name' => 'required|string|max:100',
+            'display_name' => 'string|max:60|nullable',
+            'email' => 'required|string|email:rfc,dns|unique:players,email,max:255',
             'phone' => 'required|numeric|digits:10'
         ]);
 
-        $player = Player::updateOrCreate([
-            'email' => $request->get('email')
-        ], [
+        $player = Player::create([
+            'email' => $request->get('email'),
             'name' => $request->get('name'),
+            'display_name' => $request->get('display_name', null),
             'phone' => $request->get('phone')
         ]);
 
-        session(['player_id' => $player->id ]);
+        $player->notify(new GameInvite());
 
-        return redirect()->route('game');
+        return redirect()->route('home')
+                    ->with('registered', true);
     }
 
-    public function gamePage(Request $request) {
+    public function gamePage(Request $request, Player $player) {
+        if ((! $request->hasValidSignature()) || $player->game) {
+            abort(401);
+        }
+
+        session(['player_id' => $player->id ]);
         return Inertia::render('Game');
     }
 
@@ -60,7 +71,7 @@ class PlayerController extends Controller
                 'name' => $word->name,
                 'url' => $word->url,
                 'characters' => strlen($word->name),
-                'guesses_remaining' => 5,
+                'guesses_remaining' => 3,
                 'points' => $word->points,
                 'hints' => null,
                 'is_completed' => false
@@ -74,7 +85,7 @@ class PlayerController extends Controller
         ]);
 
         return response()->json([
-            'logo' => Storage::disk('public')->get($words[0]['url']),
+            'logo' => Storage::get($words[0]['url']),
             'charLength' => $words[0]['characters']
         ]);
     }
@@ -132,9 +143,6 @@ class PlayerController extends Controller
                 $game = Game::create([
                     'player_id' => session('player_id'),
                     'score' => $points_scored,
-                    'word_ids' => implode(', ', array_map(function($word) {
-                        return $word['id'];
-                    }, $words))
                 ]);
             }
 
@@ -143,7 +151,7 @@ class PlayerController extends Controller
                 'guessesRemaining' => !$game_over ? $curr_word['guesses_remaining'] : 0,
                 'gameOver' => $game_over,
                 'wordChange' => $word_change,
-                'logo' => $word_change ? Storage::disk('public')->get($curr_word['url']) : null,
+                'logo' => $word_change ? Storage::get($curr_word['url']) : null,
                 'charLength' => $word_change ? $curr_word['characters'] : null
             ]);
         }
