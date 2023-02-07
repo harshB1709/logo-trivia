@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('game_words', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('game_id')->constrained();
-            $table->foreignId('word_id')->constrained();
+            $table->foreignId('game_id')->constrained()->onDelete('cascade');
+            $table->foreignId('word_id')->constrained()->onDelete('cascade');
             $table->unsignedInteger('score')->default(0);
         });
     }

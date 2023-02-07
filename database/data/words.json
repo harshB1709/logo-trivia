@@ -1,12 +1,824 @@
 [
-    {"name": "Vue", "points": 1},
-    {"name": "MongoDB", "points": 1},
-    {"name": "Git", "points": 2},
-    {"name": "Redis", "points": 2},
-    {"name": "Laravel", "points": 1},
-    {"name": "Tailwind", "points": 1},
-    {"name": "Azure", "points": 2},
-    {"name": "Docker", "points": 1},
-    {"name": "Dusk", "points": 3},
-    {"name": "Webpack", "points": 3}
+    {
+        "name": "HTML5",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Python",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Java",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Ruby",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Rust",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Swift",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Wasm",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Kotlin",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Angular",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "React",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Vue",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Bootstrap",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "MaterialUI",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Foundation",
+        "points": 3,
+        "hint": "A responsive front-end framework for building user-friendly, accessible websites and apps.",
+        "is_active": true
+    },
+    {
+        "name": "Bulma",
+        "points": 2,
+        "hint": "A popular character in the 'Dragon Ball' anime series.",
+        "is_active": true
+    },
+    {
+        "name": "npm",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "PyPI",
+        "points": 3,
+        "hint": "A popular repository for distributing and managing Python packages",
+        "is_active": true
+    },
+    {
+        "name": "NuGet",
+        "points": 3,
+        "hint": "A package manager for .NET applications, used for managing software dependencies.",
+        "is_active": true
+    },
+    {
+        "name": "Composer",
+        "points": 2,
+        "hint": "A person who writes music as a professional occupation is called a ..?",
+        "is_active": true
+    },
+    {
+        "name": "MySQL",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "PostgreSQL",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "SQLite",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "MongoDB",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Redis",
+        "points": 2,
+        "hint": "An in-memory data structure store, used as a database, cache and message broker",
+        "is_active": true
+    },
+    {
+        "name": "Firebase",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "AWS",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Azure",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "GCP",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "DigitalOcean",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Docker",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Kubernetes",
+        "points": 2,
+        "hint": "A platform for automating deployment, scaling, and management of applications.",
+        "is_active": true
+    },
+    {
+        "name": "Ansible",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Terraform",
+        "points": 3,
+        "hint": "A tool for defining, managing, and provisioning infrastructure as code.",
+        "is_active": true
+    },
+    {
+        "name": "Puppet",
+        "points": 3,
+        "hint": "A handheld figure controlled by strings or rods.",
+        "is_active": true
+    },
+    {
+        "name": "Chef",
+        "points": 3,
+        "hint": "A person who cooks professionally.",
+        "is_active": true
+    },
+    {
+        "name": "Elasticsearch",
+        "points": 3,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Logstash",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Xdebug",
+        "points": 3,
+        "hint": "A PHP debugger and profiler.",
+        "is_active": true
+    },
+    {
+        "name": "Kibana",
+        "points": 3,
+        "hint": "An open-source data visualization and exploration tool.",
+        "is_active": true
+    },
+    {
+        "name": "Grafana",
+        "points": 3,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Prometheus",
+        "points": 2,
+        "hint": "An open-source monitoring system and time series database.",
+        "is_active": true
+    },
+    {
+        "name": "PHPUnit",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Tinker",
+        "points": 3,
+        "hint": "A REPL tool for Laravel used for testing.",
+        "is_active": true
+    },
+    {
+        "name": "Dusk",
+        "points": 3,
+        "hint": "It's a tool for performing browser automation and testing with Laravel.",
+        "is_active": true
+    },
+    {
+        "name": "Laravel",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Forge",
+        "points": 2,
+        "hint": "It is synonymous to making an illegal copy of something.",
+        "is_active": true
+    },
+    {
+        "name": "Vapor",
+        "points": 2,
+        "hint": "A serverless deployment platform for a famous web framework.",
+        "is_active": true
+    },
+    {
+        "name": "Cashier",
+        "points": 3,
+        "hint": "A person who works at a cash register, handling financial transactions.",
+        "is_active": true
+    },
+    {
+        "name": "Echo",
+        "points": 3,
+        "hint": "A JavaScript library for real-time updates.",
+        "is_active": true
+    },
+    {
+        "name": "Scout",
+        "points": 3,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Passport",
+        "points": 3,
+        "hint": "You cannot travel internationally without this document.",
+        "is_active": true
+    },
+    {
+        "name": "Nova",
+        "points": 3,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Mix",
+        "points": 3,
+        "hint": "A word synonymous with blending things together.",
+        "is_active": true
+    },
+    {
+        "name": "Homestead",
+        "points": 3,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Sanctum",
+        "points": 3,
+        "hint": "A tool for authentication in single-page applications",
+        "is_active": true
+    },
+    {
+        "name": "Socialite",
+        "points": 3,
+        "hint": "A library used for logging in with popular social networks.",
+        "is_active": true
+    },
+    {
+        "name": "Octane",
+        "points": 3,
+        "hint": "CH₃-CH₂-CH₂-CH₂-CH₂-CH₂-CH₂-CH₃",
+        "is_active": true
+    },
+    {
+        "name": "Breeze",
+        "points": 3,
+        "hint": "A starter kit for Laravel, used for quickly setting up a new project.",
+        "is_active": true
+    },
+    {
+        "name": "Pint",
+        "points": 3,
+        "hint": "A tool for handling HTTP responses in Laravel",
+        "is_active": true
+    },
+    {
+        "name": "Sail",
+        "points": 3,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Valet",
+        "points": 3,
+        "hint": "A laravel package synonymous to a person who is employed to park cars.",
+        "is_active": true
+    },
+    {
+        "name": "Horizon",
+        "points": 3,
+        "hint": "The line at which the earth's surface and the sky appear to meet",
+        "is_active": true
+    },
+    {
+        "name": "Spark",
+        "points": 3,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Telescope",
+        "points": 3,
+        "hint": "A device that allows us to see far into space, revealing distant stars and galaxies.",
+        "is_active": true
+    },
+    {
+        "name": "Jetstream",
+        "points": 3,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Git",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Webpack",
+        "points": 3,
+        "hint": "It helps bundle and optimize assets for efficient loading in a web application.",
+        "is_active": true
+    },
+    {
+        "name": "Vite",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Babel",
+        "points": 2,
+        "hint": "A compiler that makes modern javascript backwards compatible",
+        "is_active": true
+    },
+    {
+        "name": "NodeJS",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "SocketIO",
+        "points": 3,
+        "hint": "A JavaScript library used for creating real-time applications",
+        "is_active": true
+    },
+    {
+        "name": "Electron",
+        "points": 2,
+        "hint": "Negatively charged particle in atoms.",
+        "is_active": true
+    },
+    {
+        "name": "GitHub",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "GitLab",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Bitbucket",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Svelte",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "InertiaJS",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Tailwind",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "VSCode",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "PhpStorm",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "C++",
+        "points": 1,
+        "hint": "",
+        "is_active": false
+    },
+    {
+        "name": "C#",
+        "points": 1,
+        "hint": "",
+        "is_active": false
+    },
+    {
+        "name": "Sublime",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "XAMPP",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Vim",
+        "points": 3,
+        "hint": "A text editor for experienced travelers.",
+        "is_active": true
+    },
+    {
+        "name": "Solidity",
+        "points": 3,
+        "hint": "A strong, unyielding material for building on the blockchain.",
+        "is_active": true
+    },
+    {
+        "name": "TypeScript",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "jQuery",
+        "points": 2,
+        "hint": "This JavaScript library is used in about 90% of all the web applications.",
+        "is_active": true
+    },
+    {
+        "name": "Jira",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Livewire",
+        "points": 2,
+        "hint": "A full-stack framework used for making dynamic interfaces simple and fast.",
+        "is_active": true
+    },
+    {
+        "name": "Envoyer",
+        "points": 3,
+        "hint": "A messenger for your applications, delivering updates without downtime.",
+        "is_active": true
+    },
+    {
+        "name": "Bash",
+        "points": 2,
+        "hint": "A standard CLI for most Linux distros.",
+        "is_active": true
+    },
+    {
+        "name": "WordPress",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "DynamoDB",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "WebRTC",
+        "points": 2,
+        "hint": "An open-source project that provides browsers and mobile apps with Real-Time Communications capabilities.",
+        "is_active": true
+    },
+    {
+        "name": "Ethereum",
+        "points": 3,
+        "hint": "A decentralized platform for building decentralized applications.",
+        "is_active": true
+    },
+    {
+        "name": "Flutter",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "GraphQL",
+        "points": 2,
+        "hint": "A query language for APIs and a runtime for executing those queries.",
+        "is_active": true
+    },
+    {
+        "name": "Symfony",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Kafka",
+        "points": 3,
+        "hint": "A fast-paced messaging system for streaming data.",
+        "is_active": true
+    },
+    {
+        "name": "GoLang",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "PowerBI",
+        "points": 3,
+        "hint": "A tool for transforming data into knowledge and insights.",
+        "is_active": true
+    },
+    {
+        "name": "Yii",
+        "points": 3,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Drupal",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "CodeIgniter",
+        "points": 2,
+        "hint": "A loosely based MVC web framework.",
+        "is_active": true
+    },
+    {
+        "name": "CakePHP",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Lumen",
+        "points": 3,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Algolia",
+        "points": 3,
+        "hint": "A search engine for lightning-fast search results.",
+        "is_active": true
+    },
+    {
+        "name": "Lodash",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "JavaScript",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "CSS3",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Axios",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "NuxtJS",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "ThreeJS",
+        "points": 3,
+        "hint": "A JavaScript library for creating 3D graphics in the browser.",
+        "is_active": true
+    },
+    {
+        "name": "AlpineJS",
+        "points": 3,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "PostCSS",
+        "points": 2,
+        "hint": "A tool for transforming CSS with JavaScript.",
+        "is_active": true
+    },
+    {
+        "name": "Unity",
+        "points": 2,
+        "hint": "A popular game engine for creating 2D and 3D games.",
+        "is_active": true
+    },
+    {
+        "name": "Unreal",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Ubuntu",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Deno",
+        "points": 2,
+        "hint": "A secure javascript runtime with the ability to run on the server as well as the browser.",
+        "is_active": true
+    },
+    {
+        "name": "FFmpeg",
+        "points": 3,
+        "hint": "A powerful multimedia framework for handling audio and video.",
+        "is_active": true
+    },
+    {
+        "name": "NGINX",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "FontAwesome",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "cURL",
+        "points": 3,
+        "hint": "A tool for making transfers of data using various protocols",
+        "is_active": true
+    },
+    {
+        "name": "Linux",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "macOS",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Redux",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Sass",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "MariaDB",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Apache",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Windows",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Postman",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "TensorFlow",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Rails",
+        "points": 2,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Android",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "Soketi",
+        "points": 3,
+        "hint": "",
+        "is_active": true
+    },
+    {
+        "name": "php",
+        "points": 1,
+        "hint": "",
+        "is_active": true
+    }
 ]

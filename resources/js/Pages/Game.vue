@@ -3,11 +3,11 @@
         <div class="sm:max-h-[26rem] max-w-full sm:max-w-4xl sm:h-screen w-full">
             <div class="flex flex-col-reverse sm:flex-row sm:justify-center h-full gap-10 sm:gap-16">
                 <div class="aspect-5/4 w-full sm:w-auto h-auto sm:h-full p-6 sm:p-12 border-2 border-black">
-                    <svg id="logo-svg" v-if="logoSvg" v-html="logoSvg" class="h-full w-full" ref="logoSvg"></svg>
+                    <svg id="logo-svg" v-if="logoSvg" v-html="logoSvg" class="h-full w-full stroked" ref="logoSvg"></svg>
                 </div>
                 <div class="grid grid-cols-3 gap-3 sm:grid-cols-none sm:grid-rows-3 sm:h-full sm:w-36">
                     <div class="flex flex-col gap-1 justify-center items-center border-2 border-black p-1">
-                        <span class="text-5xl sm:text-7xl font-bold">{{ timer }}</span>
+                        <span class="text-5xl sm:text-7xl font-bold">{{ timer || 0 }}</span>
                         <span class="text-sm sm:text-lg">TIMER</span>
                     </div>
                     <div class="flex flex-col gap-1 justify-center items-center border-2 border-black p-1">
@@ -21,6 +21,20 @@
                 </div>
             </div>
         </div>
+        <div class="w-full max-w-2xl px-2 flex justify-center" v-if="hasHint || hint">
+            <button
+                class="bg-gray-300 hover:bg-gray-400 text-gray-800 border-2 border-gray-800 font-bold py-2 px-3 rounded flex"
+                v-if="hasHint"
+                @click="getHint"
+                :disabled="actionsDisabled"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="1.5em" height="1.5em">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                    </path>
+                </svg>&nbsp;<span class="mt-0.5">Hint</span>
+            </button>
+            <p v-if="hint" class="w-full text-center text-lg"><span class="font-semibold">Hint:</span> {{ hint }}</p>
+        </div>
         <div class="flex flex-col items-center w-full border-2 border-black max-w-3xl p-2">
             <div
                 v-if="charLength"
@@ -29,7 +43,11 @@
             >
                 <input
                     v-for="index in charLength" :key="index"
-                    class="text-center uppercase text-xl font-bold p-0 h-10 max-w-[32px] form-control border-2 border-black rounded  focus:shadow-outline"
+                    class="text-center uppercase text-xl font-bold p-0 max-w-[32px] form-control border-2 border-black rounded focus:shadow-outline"
+                    :class="{
+                        'h-10': charLength < 12,
+                        'h-7 md:h-10': charLength > 11
+                    }"
                     type="text"
                     maxlength="1"
                     ref="guess"
@@ -104,8 +122,22 @@ export default {
             timer: null,
             timerSetInterval: null,
             guesses: null,
-            actionsDisabled: false
+            actionsDisabled: false,
+            hint: null,
+            hasHint: null,
+            drawing: false,
+            refreshRate: null
         }
+    },
+
+    mounted() {
+        this.getFPS()
+            .then((fps) => {
+                this.refreshRate = fps ?? 60;
+            })
+            .catch((err) => {
+                this.refreshRate = 60;
+            });
     },
 
     methods: {
@@ -114,7 +146,7 @@ export default {
                 .post('/start-game')
                 .then((res) => {
                     this.hideInstructionsModal();
-                    this.setNewWord(res.data.logo, res.data.charLength);
+                    this.setNewWord(res.data);
                 })
                 .catch((err) => {
 
@@ -125,12 +157,13 @@ export default {
             this.showInstructionsModal = false;
         },
 
-        setNewWord(logoSvg, charLength) {
+        setNewWord(data) {
             this.$refs?.logoSvg?.classList?.remove('finished');
-            this.logoSvg = logoSvg;
-            this.charLength = charLength;
+            this.logoSvg = data.logo;
+            this.charLength = data.charLength;
             this.timer = 30;
-            this.guesses = 5;
+            this.guesses = data.guessesRemaining;
+            this.hasHint = data.hasHint;
             this.$nextTick(function() {
                 this.$refs.guess[0].focus();
                 this.animateLogo();
@@ -138,12 +171,14 @@ export default {
         },
 
         animateLogo() {
+            this.drawing = true;
             const vivus = new Vivus('logo-svg', {
-                duration: 165,
+                duration: this.refreshRate * 2,
                 type: 'oneByOne'
             }, (obj) => {
                 obj.el.classList.add('finished');
                 setTimeout(function() {
+                    this.drawing = false;
                     this.startTimerInterval();
                 }.bind(this), 500)
             });
@@ -199,43 +234,71 @@ export default {
                 })
         },
 
+        getHint() {
+            this.clearTimerInterval();
+            this.actionsDisabled = true;
+            axios
+                .post('/game-action', {
+                    action: 'getHint'
+                })
+                .then((res) => {
+                    this.handleGameActionResponse(res.data)
+                })
+                .finally(()=> {
+                    this.actionsDisabled = false;
+                })
+        },
+
         startTimerInterval() {
-            this.timerSetInterval = setInterval(function() {
-                if(this.timer > 0) {
-                    this.timer--;
-                }
-                if(this.timer === 0) {
-                    this.clearTimerInterval();
-                    this.skipWord();
-                }
-            }.bind(this), 1000)
+            if(!this.timerSetInterval && !this.drawing) {
+                this.timerSetInterval = setInterval(function() {
+                    if(this.timer > 0) {
+                        this.timer--;
+                    }
+                    if(this.timer === 0) {
+                        this.clearTimerInterval();
+                        this.skipWord();
+                    }
+                }.bind(this), 1000)
+            }
         },
 
         clearTimerInterval() {
             if(this.timerSetInterval) {
-                clearInterval(this.timerSetInterval)
+                clearInterval(this.timerSetInterval);
+                this.timerSetInterval = null;
             }
         },
 
         handleGameActionResponse(data) {
             this.points = data.points;
             this.guesses = data.guessesRemaining || 0;
+            this.hint = data.hint;
+            this.hasHint = data.hasHint;
             this.$refs?.guess?.map((i) => {i.value = ''});
             if(data.gameOver) {
                 window.alert(`Game Over. Points: ${data.points}`);
                 this.clearTimerInterval();
                 this.logoSvg = null;
                 this.charLength = null;
-                this.timer = 0;
+                this.timer = null;
                 this.guesses = 0;
             }
             else if(data.wordChange) {
-                this.setNewWord(data.logo, data.charLength);
+                this.setNewWord(data);
             }
             else {
                 this.startTimerInterval();
             }
             this.$refs?.guess?.[0]?.focus();
+        },
+
+        getFPS() {
+            return new Promise(resolve =>
+              requestAnimationFrame(t1 =>
+                requestAnimationFrame(t2 => resolve(1000 / (t2 - t1)))
+              )
+            )
         }
     }
 }
@@ -244,6 +307,11 @@ export default {
     #logo-svg * {
         fill-opacity: 0;
         transition: fill-opacity 0.5s;
+    }
+
+    #logo-svg.stroked, #logo-svg.stroked *{
+        stroke: black;
+        stroke-width: 0.4%;
     }
 
     #logo-svg.finished * {

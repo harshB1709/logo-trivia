@@ -1,0 +1,14 @@
+<svg viewBox="-1 -1 86 88" xmlns="http://www.w3.org/2000/svg" fill="rgb(0, 0, 0)">
+  <linearGradient id="3CriL45dmQ" gradientUnits="userSpaceOnUse" x1="-134.495" y1="459.963" x2="-134.495" y2="458.963" gradientTransform="matrix(80 0 0 -80 10801.861 36800.844)" fill="rgb(0, 0, 0)">
+    <stop offset="0" stop-color="#f1cf88" fill="rgb(0, 0, 0)"></stop>
+    <stop offset="1" stop-color="#f65a5a" fill="rgb(0, 0, 0)"></stop>
+  </linearGradient>
+  <linearGradient id="1TSgrFUqcA" gradientUnits="userSpaceOnUse" x1="-134.495" y1="459.963" x2="-134.495" y2="458.963" gradientTransform="matrix(80 0 0 -80 10801.861 36800.844)" fill="rgb(0, 0, 0)">
+    <stop offset="0" stop-color="#f1cf88" fill="rgb(0, 0, 0)"></stop>
+    <stop offset="1" stop-color="#f65a5a" fill="rgb(0, 0, 0)"></stop>
+  </linearGradient>
+  <path d="M0,48 V63.200 L42.300,86.400 L84.500,63.200 V48 L42.300,71.200 Z" fill="#fff"></path>
+  <path d="M42.300,23.200 L0,0 V43.200 L42.300,66.400 L84.500,43.200 V0 Z" fill="#fff"></path>
+  <path d="M2.300,51.800 L42.300,73.800 L82.300,51.800 L82.300,61.800 L42.300,83.800 L2.300,61.800 L2.300,51.800 L2.300,51.800 Z" fill="url(#3CriL45dmQ)"></path>
+  <path d="M2.300,3.800 L42.300,25.800 L82.300,3.800 L82.300,41.800 L42.300,63.800 L2.300,41.800 L2.300,3.800 L2.300,3.800 Z" fill="url(#3CriL45dmQ)"></path>
+</svg>

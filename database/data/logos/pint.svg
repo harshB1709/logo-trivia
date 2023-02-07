@@ -1,0 +1,12 @@
+<svg viewBox="-1 -1 70 70" xmlns="http://www.w3.org/2000/svg" fill="rgb(0, 0, 0)">
+  <path d="M 34 0 C 15.3 0 0 15.3 0 34 C 0 52.7 15.3 68 34 68 C 52.7 68 68 52.7 68 34 C 68 15.3 52.7 0 34 0 Z" fill="rgb(255, 255, 255)"></path>
+  <g fill="rgb(0, 0, 0)">
+    <path d="M 66 34 A 32 32 0 0 1 34 66 A 32 32 0 0 1 2 34 A 32 32 0 0 1 34 2 A 32 32 0 0 1 66 34 Z" id="b" fill="rgb(255, 163, 0)"></path>
+    <path d="M 47 66 L 21 66 L 18 24 L 50 24 Z" opacity=".9" clip-path="url(#a)" fill="#fed100"></path>
+    <path d="M 30 66 L 21 66 L 18 24 L 29 24 Z" opacity=".5" clip-path="url(#a)" fill="#ffffff"></path>
+    <path d="M 18 16 H 50 V 24 H 18 V 16 Z" clip-path="url(#a)" fill="#ffffff"></path>
+    <clipPath id="a" fill="rgb(0, 0, 0)">
+      <path transform="matrix(1, 0, 0, 1, 0, 0)" fill="rgb(0, 0, 0)" d="M2,34A32,32 0,1,1 66,34A32,32 0,1,1 2,34"></path>
+    </clipPath>
+  </g>
+</svg>

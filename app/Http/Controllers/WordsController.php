@@ -54,6 +54,7 @@ class WordsController extends Controller
         $word = new Word();
         $word->name = $request->get('name');
         $word->points = $request->get('points');
+        $word->hint = $request->get('hint', null);
         $word->is_active = $request->has('is_active') ? true : false;
 
         if($request->hasFile('svg-file')) {
@@ -71,6 +72,7 @@ class WordsController extends Controller
     public function update(StoreOrUpdateWordRequest $request, Word $word) {
         $word->name = $request->get('name');
         $word->points = $request->get('points');
+        $word->hint = $request->get('hint', null);
         $word->is_active = $request->has('is_active') ? true : false;
 
         if($request->hasFile('svg-file')) {

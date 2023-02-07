@@ -28,7 +28,9 @@ class StoreOrUpdateWordRequest extends FormRequest
             'name' => 'required|string|max:15',
             'points' => 'required|integer|between:1,3',
             'svg-file' => [
-                'file|mimetypes:image/svg+xml|max:200',
+                'file',
+                'mimetypes:image/svg+xml',
+                'max:200',
                 Rule::requiredIf(fn () => !$this->route('word'))
             ],
             'hint' => 'string|nullable'

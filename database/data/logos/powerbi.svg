@@ -1,0 +1,19 @@
+<svg viewBox="75 -2 479 634" xmlns="http://www.w3.org/2000/svg" fill="rgb(0, 0, 0)">
+  <defs fill="rgb(0, 0, 0)">
+    <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="7oN6EKtnBr" fill="rgb(0, 0, 0)">
+      <stop stop-color="#EBBB14" offset="0" fill="rgb(0, 0, 0)"></stop>
+      <stop stop-color="#B25400" offset="1" fill="rgb(0, 0, 0)"></stop>
+    </linearGradient>
+    <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="3ar476aIwe" fill="rgb(0, 0, 0)">
+      <stop stop-color="#F9E583" offset="0" fill="rgb(0, 0, 0)"></stop>
+      <stop stop-color="#DE9800" offset="1" fill="rgb(0, 0, 0)"></stop>
+    </linearGradient>
+    <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="OvBujM37oT" fill="rgb(0, 0, 0)">
+      <stop stop-color="#F9E68B" offset="0" fill="rgb(0, 0, 0)"></stop>
+      <stop stop-color="#F3CD32" offset="1" fill="rgb(0, 0, 0)"></stop>
+    </linearGradient>
+  </defs>
+  <path d="M359.500,0 L526.500,0 C540.859,0,552.500,11.641,552.500,26 L552.500,604 C552.500,618.359,540.859,630,526.500,630 L359.500,630 C345.141,630,333.500,618.359,333.500,604 L333.500,26 C333.500,11.641,345.141,0,359.500,0 Z" id="Rectangle" fill="url(#7oN6EKtnBr)"></path>
+  <path d="M423.500,604 L423.500,630 L397.500,630 L230.500,630 C216.141,630,204.500,618.359,204.500,604 L204.500,183 C204.500,168.641,216.141,157,230.500,157 L397.500,157 C411.859,157,423.500,168.641,423.500,183 L423.500,604 Z" fill="url(#3ar476aIwe)" fill-rule="evenodd"></path>
+  <path d="M296.500,604 L296.500,630 L270.500,630 L103.500,630 C89.141,630,77.500,618.359,77.500,604 L77.500,341 C77.500,326.641,89.141,315,103.500,315 L270.500,315 C284.859,315,296.500,326.641,296.500,341 L296.500,604 Z" id="Combined-Shape" fill="url(#OvBujM37oT)"></path>
+</svg>

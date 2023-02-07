@@ -1,0 +1,75 @@
+<svg viewBox="-1 -1 26 26" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="rgb(0, 0, 0)">
+    <linearGradient gradientTransform="rotate(-45 32051.159 -83912.245) scale(31.584)" gradientUnits="userSpaceOnUse" id="bTaMOTdHue" x1="-1582" x2="-1581" y1="-1495.328" y2="-1495.328" fill="rgb(0, 0, 0)">
+        <stop offset="0" stop-color="#c757bc" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset=".108" stop-color="#c757bc" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset=".173" stop-color="#cd5ca9" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset=".492" stop-color="#e8744f" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset=".716" stop-color="#f88316" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset=".823" stop-color="#ff8900" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset="1" stop-color="#ff8900" fill="rgb(0, 0, 0)">
+        </stop>
+    </linearGradient>
+    <linearGradient id="u6COIgAPeC" fill="rgb(0, 0, 0)">
+        <stop offset="0" stop-color="#00afff" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset=".296" stop-color="#00afff" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset=".694" stop-color="#5282ff" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset="1" stop-color="#945dff" fill="rgb(0, 0, 0)">
+        </stop>
+    </linearGradient>
+    <linearGradient gradientTransform="rotate(-45 15635.387 -40897.94) scale(15.3946)" gradientUnits="userSpaceOnUse" id="S95kvXyfEf" x1="-1582" x2="-1581" xlink:href="#u6COIgAPeC" y1="-1494.622" y2="-1494.622" fill="rgb(0, 0, 0)">
+    </linearGradient>
+    <linearGradient gradientTransform="matrix(7.6364 -7.6366 7.6366 7.6364 23489.887 -665.412)" gradientUnits="userSpaceOnUse" id="RuzJlRcmgY" x1="-1582" x2="-1581" xlink:href="#u6COIgAPeC" y1="-1494.036" y2="-1494.036" fill="rgb(0, 0, 0)">
+    </linearGradient>
+    <linearGradient gradientTransform="rotate(-45 32051.159 -83912.245) scale(31.584)" gradientUnits="userSpaceOnUse" id="ZN09g6r6tJ" x1="-1582" x2="-1581" y1="-1495.322" y2="-1495.322" fill="rgb(0, 0, 0)">
+        <stop offset="0" stop-color="#ad4ca4" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset=".108" stop-color="#ad4ca4" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset=".173" stop-color="#b25093" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset=".492" stop-color="#ca6545" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset=".716" stop-color="#d87213" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset=".823" stop-color="#de7700" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset="1" stop-color="#de7700" fill="rgb(0, 0, 0)">
+        </stop>
+    </linearGradient>
+    <linearGradient id="992x1aiRx6" fill="rgb(0, 0, 0)">
+        <stop offset="0" stop-color="#0098de" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset=".296" stop-color="#0098de" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset=".694" stop-color="#4771de" fill="rgb(0, 0, 0)">
+        </stop>
+        <stop offset="1" stop-color="#8151de" fill="rgb(0, 0, 0)">
+        </stop>
+    </linearGradient>
+    <linearGradient gradientTransform="rotate(-45 15635.387 -40897.94) scale(15.3946)" gradientUnits="userSpaceOnUse" id="EZ3sv0o4zd" x1="-1582" x2="-1581" xlink:href="#992x1aiRx6" y1="-1494.622" y2="-1494.622" fill="rgb(0, 0, 0)">
+    </linearGradient>
+    <linearGradient gradientTransform="matrix(7.6364 -7.6366 7.6366 7.6364 23489.887 -665.412)" gradientUnits="userSpaceOnUse" id="6fyVURLElm" x1="-1582" x2="-1581" xlink:href="#992x1aiRx6" y1="-1493.643" y2="-1493.643" fill="rgb(0, 0, 0)">
+    </linearGradient>
+    <path d="M24,0 H12.050 L0.639,12 H11.979 L12.032,11.946 Z" fill="url(#bTaMOTdHue)">
+    </path>
+    
+    <path d="M12.050,0 H0 V12.672 V12 H0.639 Z" fill="url(#RuzJlRcmgY)">
+    </path>
+    <path d="M11.979,12 H0.639 L0,12.672 V24 Z" fill="url(#ZN09g6r6tJ)">
+    </path>
+    <path d="M12.086,12 H11.979 L0,24 H24 Z" fill="url(#EZ3sv0o4zd)">
+    </path>
+    <path d="M0.639,12 H0 V12.672 Z" fill="url(#6fyVURLElm)">
+    </path>
+<path d="M24,24 H0 Z" fill="url(#S95kvXyfEf)">
+    </path><path d="M12.032,11.946 L11.979,12 H12.086 Z" fill="url(#S95kvXyfEf)">
+    </path></svg>

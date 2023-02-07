@@ -23,11 +23,15 @@ class WordSeeder extends Seeder
 
         foreach ($words as $key => $value) {
             $name = strtolower($value->name);
-            Word::create([
-                "name" => $value->name,
-                "points" => $value->points,
-                "url" => Storage::putFileAs('logos', new HttpFile("database/data/logos/{$name}.svg"), uniqid().".svg")
-            ]);
+            $filename = sha1($value->name);
+            Word::updateOrCreate([
+                    "name" => $value->name,
+                ], [
+                    "points" => $value->points,
+                    "hint" => !empty($value?->hint) ? $value->hint : null,
+                    "url" => Storage::putFileAs('logos', new HttpFile("database/data/logos/{$name}.svg"), "{$filename}.svg"),
+                    "is_active" => !empty($value?->is_active) ? $value->is_active : false
+                ]);
         }
     }
 }

@@ -1,0 +1,10 @@
+<svg viewBox="-1 -1 70 72" xmlns="http://www.w3.org/2000/svg" fill="rgb(0, 0, 0)">
+  <linearGradient id="YUBFdQ6wR2" gradientUnits="userSpaceOnUse" x1="29.047" y1="312.303" x2="29.047" y2="311.303" gradientTransform="matrix(64 0 0 -66 -1825 20614)" fill="rgb(0, 0, 0)">
+    <stop offset="0" stop-color="#e99cb7" fill="rgb(0, 0, 0)"></stop>
+    <stop offset="1" stop-color="#bc62ce" fill="rgb(0, 0, 0)"></stop>
+  </linearGradient>
+  <path d="M12,70 L12,62.400 L28,59.200 L28,34.800 L0,6.800 L0,0 L68,0 L68,6.800 L40,34.800 L40,59.100 L56,62.300 L56,70 L12,70 Z" fill="rgb(255, 255, 255)"></path>
+  <path d="M30,60.800 L30,34 L2,6 L2,2 L66,2 L66,6 L38,34 L38,60.800 L54,64 L54,68 L14,68 L14,64 L30,60.800 Z" fill-rule="evenodd" clip-rule="evenodd" fill="url(#YUBFdQ6wR2)"></path>
+  <path d="M44,18.300 C47.300,18.300,50,15.600,50,12.300 C50,9,47.300,6.300,44,6.300 C40.700,6.300,38,9,38,12.300 C38,15.600,40.700,18.300,44,18.300 Z" fill-rule="evenodd" clip-rule="evenodd" fill="rgb(255, 255, 255)"></path>
+  <path d="M44,8.300 C41.800,8.300,40,10.100,40,12.300 C40,14.500,41.800,16.300,44,16.300 C46.200,16.300,48,14.500,48,12.300 C48,10.100,46.200,8.300,44,8.300 Z" fill="rgb(255, 255, 255)"></path>
+</svg>

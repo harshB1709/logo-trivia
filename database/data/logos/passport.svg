@@ -1,0 +1,13 @@
+<svg viewBox="1 2 82 60" xmlns="http://www.w3.org/2000/svg" fill="rgb(0, 0, 0)">
+  <defs fill="rgb(0, 0, 0)">
+    <style fill="rgb(0, 0, 0)">.st0,.st2{fill-rule:evenodd;clip-rule:evenodd;fill:#fff}.st2{fill:#2e2e2e}</style>
+  </defs>
+  <linearGradient id="E0TfD2XVuw" gradientUnits="userSpaceOnUse" x1="47.925" y1="308.883" x2="47.925" y2="307.883" gradientTransform="matrix(80 0 0 -60 -3792 18535)" fill="rgb(0, 0, 0)">
+    <stop offset="0" stop-color="#80ddf3" fill="rgb(0, 0, 0)"></stop>
+    <stop offset="1" stop-color="#4990e2" fill="rgb(0, 0, 0)"></stop>
+  </linearGradient>
+  <path d="M8,2 H76 C79.300,2,82,4.700,82,8 V56 C82,59.300,79.300,62,76,62 H8 C4.700,62,2,59.300,2,56 V8 C2,4.700,4.700,2,8,2 Z" fill-rule="evenodd" clip-rule="evenodd" fill="url(#E0TfD2XVuw)"></path>
+  <path d="M24.200,62 L39.200,32 L24.200,2 L19.700,2 L34.700,32 L19.700,62 L24.200,62 L24.200,62 Z" fill="rgb(255, 255, 255)"></path>
+  <path d="M36.200,62 L51.200,32 L36.200,2 L31.700,2 L46.700,32 L31.700,62 L36.200,62 Z" fill="rgb(255, 255, 255)"></path>
+  <path d="M48.200,62 L63.200,32 L48.200,2 L43.700,2 L58.700,32 L43.700,62 L48.200,62 Z" fill="rgb(255, 255, 255)"></path>
+</svg>
