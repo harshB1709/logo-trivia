@@ -1,17 +1,17 @@
 <template>
     <dialog-modal :show="show">
         <template #title>
-            <div class="flex justify-between">
+            <div class="flex justify-between text-black">
                 <span>Word CRUD</span>
                 <button @click="$emit('close')" class="hover:bg-gray-100 p-2 aspect-square">&times;</button>
             </div>
         </template>
         <template #content>
-            <div class="flex flex-col md:flex-row w-full gap-3">
+            <div class="flex flex-col md:flex-row w-full gap-3 text-black">
                 <form id="svg-crud" ref="svgCrudForm"></form>
                 <div class="space-y-2 md:space-y-4 md:w-1/2 h-full px-2">
-                    <div class="flex justify-center h-44 md:h-56 md:pt-4" v-if="svgContent || word.svg">
-                        <svg v-html="svgContent || word.svg" class="w-full finished" id="word-logo" ref="wordLogo"></svg>
+                    <div class="h-44 md:h-56 md:pt-4" v-if="svgContent || word.svg">
+                        <div v-html="svgContent || word.svg" class="w-full h-full finished flex justify-center" id="word-logo" ref="wordLogo"></div>
                     </div>
                     <input
                         id="word-svg"
@@ -78,7 +78,7 @@
             </div>
         </template>
         <template #footer>
-            <div class="flex justify-end gap-2">
+            <div class="flex justify-end gap-2 text-black">
                 <primary-button v-if="svgContent || word.svg" @click="animateLogo">Animate</primary-button>
                 <primary-button v-if="editable" @click="submit">Submit</primary-button>
             </div>
@@ -141,11 +141,11 @@ export default {
     methods: {
         animateLogo() {
             this.$refs?.wordLogo?.classList?.remove('finished');
-            const vivus = new Vivus('word-logo', {
+            const vivus = new Vivus(this.$refs?.wordLogo?.querySelector('svg'), {
                 duration: 165,
                 type: 'oneByOne'
             }, (obj) => {
-                obj.el.classList.add('finished');
+                obj.el.parentNode.classList.add('finished');
             });
         },
 
@@ -178,14 +178,14 @@ export default {
 }
 </script>
 <style>
-    #word-logo {
+    #word-logo > svg {
         fill-opacity: 0;
         transition: fill-opacity 0.5s;
         stroke: #000;
         stroke-width: 0.4%;
     }
 
-    #word-logo.finished {
+    #word-logo.finished > svg {
         fill-opacity: 1;
     }
 </style>

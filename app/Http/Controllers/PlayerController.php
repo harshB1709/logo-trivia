@@ -14,6 +14,7 @@ class PlayerController extends Controller
 {
     const TOTAL_WORDS = 15;
     const GUESSES_PER_WORD = 3;
+    const DELAY_SECONDS = 3;
 
     public function home(Request $request) {
         $registered = session('registered', false);
@@ -95,7 +96,7 @@ class PlayerController extends Controller
             'words' => $words,
             'points_scored' => 0,
             'current_index' => 0,
-            'started_at' => now()->addSeconds(3)->timestamp
+            'started_at' => now()->addSeconds(self::DELAY_SECONDS + 3)->timestamp
         ]);
 
         return response()->json([
@@ -111,7 +112,7 @@ class PlayerController extends Controller
             $current_index++;
             $word_change = $current_index <= (PlayerController::TOTAL_WORDS - 1);
             $game_over = $current_index > (PlayerController::TOTAL_WORDS - 1);
-            $started_at = now()->addSeconds(3)->timestamp;
+            $started_at = now()->addSeconds(PlayerController::DELAY_SECONDS)->timestamp;
         }
 
         $action = $request->get('action', 'skipWord');

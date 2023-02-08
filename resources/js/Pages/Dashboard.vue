@@ -5,7 +5,7 @@
                 Words
             </h2>
         </template>
-        <div class="w-full flex flex-col md:flex-row justify-center gap-3 md:gap-20 mt-4 px-6 lg:px-8">
+        <div class="w-full flex flex-col md:flex-row justify-center gap-3 md:gap-20 mt-4 px-6 lg:px-8 text-black">
             <div class="border border-gray-700 ring-offset-2 ring-gray-900 ring-2 w-full md:w-1/3 rounded-lg px-3 py-4 flex flex-col lg:flex-row gap-3 justify-between items-center">
                 <p class="text-lg">
                     App Status:&nbsp;
