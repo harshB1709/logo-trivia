@@ -57,6 +57,11 @@ class PlayerController extends Controller
     }
 
     public function startGame(Request $request) {
+        $player = Player::findOrFail(session('player_id'));
+
+        if($player->game && !$request->user())
+            abort(403);
+
         $words = collect();
 
         for($i = 1; $i < 4; $i++) {
@@ -182,7 +187,7 @@ class PlayerController extends Controller
                 $curr_word = $words[$current_index];
             }
             else {
-                $request->session()->forget(['words', 'points_scored', 'current_index']);
+                $request->session()->forget(['words', 'points_scored', 'current_index', 'started_at']);
             }
 
             return response()->json([
@@ -197,5 +202,18 @@ class PlayerController extends Controller
             ]);
         }
         abort(404);
+    }
+
+    public function leaderboard(Request $request) {
+        $games = Game::with('player:id,name,display_name')
+                    ->select('id', 'player_id', 'score')
+                    ->orderByDesc('score')
+                    ->paginate(25);
+
+        $games->onEachSide(0)->links();
+
+        return Inertia::render('Leaderboard', [
+            'games' => $games,
+        ]);
     }
 }

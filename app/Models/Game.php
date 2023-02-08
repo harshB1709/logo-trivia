@@ -14,6 +14,10 @@ class Game extends Model
         'score',
     ];
 
+    public function player() {
+        return $this->belongsTo(Player::class);
+    }
+
     public function words() {
         return $this->belongsToMany(Word::class, 'game_words')->withPivot('score');
     }
