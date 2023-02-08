@@ -45,6 +45,7 @@ class PlayerController extends Controller
     }
 
     public function gamePage(Request $request, Player $player) {
+        $request->session()->forget(['words', 'points_scored', 'current_index', 'started_at']);
         if($request->user())
             $player->game()?->delete();
 
@@ -130,15 +131,25 @@ class PlayerController extends Controller
             $points_scored = session('points_scored', 0);
             $hint = null;
             $started_at = session('started_at');
+            $time_elapsed = now()->timestamp - $started_at;
+            if($time_elapsed > 40) {
+                $request->session()->forget(['words', 'points_scored', 'current_index', 'started_at']);
+                return response()->json([
+                    'status' => 'redirect',
+                    'redirect' => route('home')
+                ]);
+            }
+
 
             switch ($action) {
                 case 'guessWord':
                     $guess = $request->get('guess', '');
                     $word = &$words[$current_index];
-                    logger(now()->timestamp . ' ' . $started_at . ' ' . 31 - now()->timestamp + $started_at);
+                    logger(now()->timestamp . ' ' . $started_at . ' ' . 31 - $time_elapsed);
                     if(strtolower($guess) === strtolower($word['name'])) {
-                        $time_remaining = 31 - now()->timestamp + $started_at;
+                        $time_remaining = 31 - $time_elapsed;
                         $time_remaining = min($time_remaining, 30);
+                        $time_remaining = max(1, $time_remaining);
                         $word_points = $word['guesses_remaining'] * ($word['points'] + $time_remaining);
                         $points_scored += $word_points;
                         $game = Game::where('player_id', session('player_id'))->first();

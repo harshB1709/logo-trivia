@@ -1,7 +1,7 @@
 <template>
     <div class="container min-h-screen flex flex-col justify-center items-center mx-auto px-4">
         <div class="sm:max-w-md w-full rounded-xl flex flex-col items-center">
-            <h1 class="font-bold text-center text-3xl mb-5">Tech Pictionary</h1>
+            <h1 class="font-bold text-center text-3xl mb-5 text-primary">Tech Pictionary</h1>
             <div class="w-full flex flex-col bg-base-200 rounded-lg p-4 items-center gap-4">
                 <div class="form-control w-full max-w-sm">
                   <label class="label" for="name">
@@ -31,11 +31,21 @@
                   <input type="text" placeholder="Phone No." v-model="form.phone" id="phone" class="input input-bordered border-base-content w-full" />
                   <InputError class="mt-1 text-error" :message="form.errors.phone" />
                 </div>
+                <div class="alert alert-success shadow-lg" v-if="registered">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>
+                            You have successfully registered for the game. You will shortly receive an email with your game link.
+                        </span>
+                    </div>
+                </div>
                 <button
                     type="submit"
                     @click="submit"
                     :disabled="form.processing"
-                    class="btn btn-base-content mt-4 mb-2"
+                    class="btn btn-outline btn-primary mt-4 mb-2"
                     :class="{
                         'loading': form.processing
                     }"

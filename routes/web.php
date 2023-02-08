@@ -17,21 +17,23 @@ use App\Http\Controllers\PlayerController;
 |
  */
 
-Route::redirect('/', '/register');
+Route::middleware(['throttle:api'])->group(function() {
+    Route::redirect('/', '/register');
 
-Route::middleware(['app.setting:app_status'])->group(function() {
-    Route::get('/register', [PlayerController::class, 'home'])->middleware(['app.setting:player_registration'])->name('home');
-    Route::post('/register', [PlayerController::class, 'register'])->middleware(['app.setting:player_registration']);
-    Route::get('/{player}/game', [PlayerController::class, 'gamePage'])->name('game');
+    Route::middleware(['app.setting:app_status'])->group(function() {
+        Route::get('/register', [PlayerController::class, 'home'])->middleware(['app.setting:player_registration'])->name('home');
+        Route::post('/register', [PlayerController::class, 'register'])->middleware(['app.setting:player_registration']);
+        Route::get('/{player}/game', [PlayerController::class, 'gamePage'])->name('game');
 
-    Route::middleware(['player.identified'])->group(function() {
-        Route::post('/start-game', [PlayerController::class, 'startGame'])->name('startGame');
-        Route::post('/game-action', [PlayerController::class, 'gameAction'])->middleware(['game.ongoing']);
+        Route::middleware(['player.identified'])->group(function() {
+            Route::post('/start-game', [PlayerController::class, 'startGame'])->name('startGame');
+            Route::post('/game-action', [PlayerController::class, 'gameAction'])->middleware(['game.ongoing']);
+        });
     });
-});
 
-Route::get('/leaderboard', [PlayerController::class, 'leaderboard']);
+    Route::get('/leaderboard', [PlayerController::class, 'leaderboard']);
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
-    Route::get('/words', [WordsController::class, 'index'])->name('words');
+    Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+        Route::get('/words', [WordsController::class, 'index'])->name('words');
+    });
 });

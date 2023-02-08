@@ -32,17 +32,38 @@
                 </div>
 
             </div>
+            <div class="form-control w-40 mx-auto">
+                    <label class="label cursor-pointer">
+                        <span class="label-text text-lg">Show Outlines</span>
+                        <input
+                            type="checkbox"
+                            v-model="showStroke"
+                            :disabled="actionsDisabled"
+                            class="checkbox checkbox-primary"
+                        />
+                </label>
+            </div>
             <div class="sm:max-h-[23rem] max-w-full sm:max-w-3xl sm:h-screen w-full">
                 <div class="flex justify-center h-full gap-10 sm:gap-16">
-                    <div class="aspect-5/4 w-full sm:w-auto h-auto sm:h-full p-6 sm:p-12 border-2 border-black bg-white rounded-xl">
-                        <div id="logo-svg" v-if="logoSvg" v-html="logoSvg" class="flex h-full w-full stroked" ref="logoSvg"></div>
+                    <div class="aspect-5/4 w-full sm:w-auto h-auto sm:h-full p-6 sm:p-7 border-2 border-black bg-white rounded-xl">
+                        <div
+                            id="logo-svg"
+                            v-if="logoSvg"
+                            v-html="logoSvg"
+                            class="flex h-full w-full"
+                            :class="{
+                                'stroked': showStroke || showStrokeInternal,
+                                'finished': showColour
+                            }"
+                            ref="logoSvg"
+                        />
                     </div>
                 </div>
             </div>
 
             <div class="w-full max-w-md flex justify-end" v-if="hasHint || hint">
                 <button
-                    class="btn gap-1 btn-outline btn-sm md:btn-md"
+                    class="btn gap-1 btn-outline btn-primary btn-sm md:btn-md"
                     v-if="hasHint"
                     @click="getHint"
                     :disabled="actionsDisabled"
@@ -79,7 +100,7 @@
                 </div>
                 <div class="mt-3 btn-group" v-if="charLength">
                     <button
-                        class="btn btn-md btn-outline w-28 md:btn-wide"
+                        class="btn btn-md btn-outline btn-primary w-28 md:btn-wide"
                         type="button"
                         :disabled="actionsDisabled"
                         @click="guessWord"
@@ -88,7 +109,7 @@
                         Guess
                     </button>
                     <button
-                        class="btn btn-md btn-outline w-28 md:btn-wide"
+                        class="btn btn-md btn-outline btn-primary w-28 md:btn-wide"
                         type="button"
                         :disabled="actionsDisabled"
                         @click="skipWord"
@@ -101,10 +122,10 @@
         </div>
 
         <input type="checkbox" :checked="showInstructionsModal" id="start-game-modal" class="modal-toggle" />
-        <label for="start-game-modal" class="modal cursor-pointer">
+        <div class="modal">
             <label class="modal-box w-11/12 max-w-4xl relative" for="">
-                <h3 class="text-lg font-bold" v-if="gameStartedTimer === null">Instructions:</h3>
-                <div class="py-4 pl-3">
+                <h3 class="text-2xl underline text-primary font-bold md:pl-4" v-if="gameStartedTimer === null">Instructions:</h3>
+                <div class="py-4 pl-3 md:pl-7">
                     <template v-if="gameStartedTimer === null">
                         <p class="list-item">In this game, you will be presented with 15 logos of various software development technologies.</p>
                         <p class="list-item">Each logo has a point value, with the first 5 logos being worth 1 point, the next 5 being worth 2 points, and the last 5 being worth 3 points.</p>
@@ -112,7 +133,8 @@
                         <p class="list-item">The points you score for each technology will be calculated as follows: (logo_points + remaining_seconds_on_the_timer) x remaining_number_of_guesses.</p>
                         <p class="list-item">This means that your score will be directly influenced by the points associated with the logo, how quickly you answer, and the number of guesses you have left.</p>
                         <p class="list-item">Hints are available for some logos at the cost of one guess.</p>
-                        <p class="list-item">When the game ends, your final score will be calculated and displayed. Good luck!</p>
+                        <p class="list-item">When the game ends, your final score will be calculated and displayed.</p>
+                        <p class="list-item"><span class="font-bold text-lg underline">Important</span>: All word scoring and timing calculations are performed on the server. Ensure a stable internet connection before playing. Good luck!</p>
                     </template>
                     <template v-else>
                         <div class="w-full flex flex-col items-center gap-6">
@@ -126,13 +148,13 @@
                     </template>
                 </div>
                 <div class="modal-action justify-center" v-if="gameStartedTimer === null">
-                    <button class="btn btn-outline btn-lg" @click="startGame" ref="startGame">Start Game</button>
+                    <button class="btn btn-outline btn-primary btn-lg" @click="startGame" ref="startGame">Start Game</button>
                 </div>
             </label>
-        </label>
+        </div>
 
         <input type="checkbox" :checked="showGameOverModal" id="start-game-modal" class="modal-toggle" />
-        <label for="start-game-modal" class="modal cursor-pointer">
+        <div class="modal">
             <label class="modal-box relative" for="">
                 <h3 class="text-lg font-bold text-center">Game Over!</h3>
                 <div class="py-4 w-full flex flex-col justify-center text-center">
@@ -141,10 +163,10 @@
                     <p class="mt-6">Check the leaderboard to check where you stand!</p>
                 </div>
                 <div class="modal-action justify-center mt-2">
-                    <button class="btn btn-outline btn-lg">Leaderboard</button>
+                    <button class="btn btn-outline btn-outline btn-lg" @click="$inertia.visit('/leaderboard')">Leaderboard</button>
                 </div>
             </label>
-        </label>
+        </div>
     </div>
 </template>
 
@@ -176,7 +198,10 @@ export default {
             refreshRate: null,
             wordNo: 0,
             gameStartedTimer: null,
-            gameStartedTimerSetInterval: null
+            gameStartedTimerSetInterval: null,
+            showStroke: true,
+            showStrokeInternal: false,
+            showColour: false,
         }
     },
 
@@ -226,7 +251,7 @@ export default {
         },
 
         setNewWord(data) {
-            this.$refs?.logoSvg?.classList?.remove('finished');
+            this.showColour = false;
             this.logoSvg = data.logo;
             this.charLength = data.charLength;
             this.timer = 30;
@@ -242,14 +267,16 @@ export default {
         animateLogo() {
             this.drawing = true;
             this.actionsDisabled = true;
+            this.showStrokeInternal = true;
             const vivus = new Vivus(this.$refs?.logoSvg?.querySelector('svg'), {
                 duration: 165,
                 type: 'oneByOne'
             }, (obj) => {
-                obj.el?.parentNode?.classList?.add('finished');
+                this.showColour = true;
                 setTimeout(function() {
                     this.drawing = false;
                     this.actionsDisabled = false;
+                    this.showStrokeInternal = false;
                     this.startTimerInterval();
                 }.bind(this), 500)
             });
@@ -354,6 +381,9 @@ export default {
         },
 
         handleGameActionResponse(data) {
+            if(data?.status === 'redirect') {
+                window.location.href = data?.redirect || '';
+            }
             this.points = data.points;
             this.guesses = data.guessesRemaining || 0;
             this.hint = data.hint;
