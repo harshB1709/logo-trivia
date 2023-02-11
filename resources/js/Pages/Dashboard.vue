@@ -23,7 +23,7 @@
             </div>
             <div class="border border-gray-700 ring-offset-2 ring-gray-900 ring-2 w-full md:w-1/3 rounded-lg px-3 py-4 flex flex-col lg:flex-row gap-3 justify-between items-center">
                 <p class="text-lg">
-                    Player Registration:&nbsp;
+                    Self Registration:&nbsp;
                     <span
                         class="font-semibold text-xl px-1.5 py-0.5 rounded border-2"
                         :class="{
@@ -39,7 +39,8 @@
         </div>
         <div class="pt-8 pb-10">
             <div class="max-w-7xl mx-auto px-2 px-6 lg:px-8">
-                <div class="w-full flex justify-end mb-2">
+                <div class="w-full flex justify-end gap-2 mb-2">
+                    <a href="/register" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">Register User</a>
                     <primary-button @click="createWord">Create Word</primary-button>
                 </div>
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-2">

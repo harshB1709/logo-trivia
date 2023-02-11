@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class PlayerController extends Controller
 {
-    const TOTAL_WORDS = 15;
+    const TOTAL_WORDS = 21;
     const GUESSES_PER_WORD = 3;
     const DELAY_SECONDS = 3;
 

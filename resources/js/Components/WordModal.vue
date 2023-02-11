@@ -182,7 +182,7 @@ export default {
         fill-opacity: 0;
         transition: fill-opacity 0.5s;
         stroke: #000;
-        stroke-width: 0.4%;
+        stroke-width: 0.5%;
     }
 
     #word-logo.finished > svg {

@@ -24,7 +24,17 @@
                 </div>
                 <div class="stat bg-base-100 place-items-center px-3 py-2 sm:px-6 sm:py-4 font-mono">
                     <div class="stat-title text-xs sm:text-base">Points</div>
-                    <div class="stat-value text-2xl sm:text-4xl">{{ points }}</div>
+                    <div class="stat-value relative text-2xl sm:text-4xl w-full">
+                        <div class="w-full text-center">{{ points }}</div>
+                        <div
+                            class="absolute left-0 top-0 w-full text-center"
+                            :class="{
+                                'animate__animated animate__fadeOutUp': pointsAdded
+                            }"
+                        >
+                            {{ pointsAdded ? `+${pointsAdded}` : '' }}
+                        </div>
+                    </div>
                 </div>
                 <div class="stat bg-base-100 place-items-center px-3 py-2 sm:px-6 sm:py-4 font-mono">
                     <div class="stat-title text-xs sm:text-base">Guesses</div>
@@ -127,8 +137,9 @@
                 <h3 class="text-2xl underline text-primary font-bold md:pl-4" v-if="gameStartedTimer === null">Instructions:</h3>
                 <div class="py-4 pl-3 md:pl-7">
                     <template v-if="gameStartedTimer === null">
-                        <p class="list-item">In this game, you will be presented with 15 logos of various software development technologies.</p>
-                        <p class="list-item">Each logo has a point value, with the first 5 logos being worth 1 point, the next 5 being worth 2 points, and the last 5 being worth 3 points.</p>
+                        <p class="w-full text-center text-2xl font-bold mb-4 underline underline-offset-2">PLEASE READ THESE INSTRUCTIONS VERY CAREFULLY!!</p>
+                        <p class="list-item">In this game, you will be presented with 21 logos of various software development technologies.</p>
+                        <p class="list-item">Each logo has a point value, with the first 7 logos being worth 1 point, the next 7 being worth 2 points, and the last 7 being worth 3 points.</p>
                         <p class="list-item">Once a logo is displayed, a 30-second timer will start. You have three attempts to guess the name of the technology and enter it into the input box before the timer runs out.</p>
                         <p class="list-item">The points you score for each technology will be calculated as follows: (logo_points + remaining_seconds_on_the_timer) x remaining_number_of_guesses.</p>
                         <p class="list-item">This means that your score will be directly influenced by the points associated with the logo, how quickly you answer, and the number of guesses you have left.</p>
@@ -156,14 +167,14 @@
         <input type="checkbox" :checked="showGameOverModal" id="start-game-modal" class="modal-toggle" />
         <div class="modal">
             <label class="modal-box relative" for="">
-                <h3 class="text-lg font-bold text-center">Game Over!</h3>
+                <h3 class="text-2xl font-bold text-center text-primary">Game Over!</h3>
                 <div class="py-4 w-full flex flex-col justify-center text-center">
-                    <p class="text-lg">Final Score</p>
-                    <h3 class="font-bold text-6xl mt-4">{{ points }}</h3>
+                    <p class="text-2xl">Final Score</p>
+                    <h3 class="font-bold text-primary text-6xl mt-4">{{ points }}</h3>
                     <p class="mt-6">Check the leaderboard to check where you stand!</p>
                 </div>
                 <div class="modal-action justify-center mt-2">
-                    <button class="btn btn-outline btn-outline btn-lg" @click="$inertia.visit('/leaderboard')">Leaderboard</button>
+                    <button class="btn btn-outline btn-primary" @click="$inertia.visit('/leaderboard')">Leaderboard</button>
                 </div>
             </label>
         </div>
@@ -174,6 +185,7 @@
 import DialogModal from "@/Components/DialogModal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import * as Vivus from "vivus";
+import 'animate.css';
 
 export default {
     components: {
@@ -188,6 +200,7 @@ export default {
             logoSvg: null,
             charLength: null,
             points: 0,
+            pointsAdded: null,
             timer: null,
             timerSetInterval: null,
             guesses: null,
@@ -384,6 +397,10 @@ export default {
             if(data?.status === 'redirect') {
                 window.location.href = data?.redirect || '';
             }
+            this.pointsAdded = data.points - this.points;
+            setTimeout(function() {
+                this.pointsAdded = null;
+            }.bind(this), 600);
             this.points = data.points;
             this.guesses = data.guessesRemaining || 0;
             this.hint = data.hint;
@@ -429,7 +446,7 @@ export default {
 
     #logo-svg.stroked *{
         stroke: black;
-        stroke-width: 0.4%;
+        stroke-width: 0.5%;
     }
 
     #logo-svg.finished * {
