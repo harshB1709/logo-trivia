@@ -17,7 +17,7 @@ use App\Http\Controllers\PlayerController;
 |
  */
 
-Route::middleware(['throttle:api'])->group(function() {
+Route::middleware([])->group(function() {
     Route::redirect('/', '/register');
 
     Route::middleware(['app.setting:app_status'])->group(function() {
