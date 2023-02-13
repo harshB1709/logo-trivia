@@ -130,7 +130,7 @@
                         @click="guessWord"
                         ref="guessButton"
                     >
-                        Guess
+                        Submit
                     </button>
                 </div>
             </div>
