@@ -7,7 +7,7 @@
                     <div class="stat-title text-xs sm:text-base">Word</div>
                     <div class="stat-value text-2xl sm:text-4xl">
                         <span class="countdown font-mono">
-                          <span :style="`--value:${wordNo};`"></span>/15
+                          <span :style="`--value:${wordNo};`"></span>/21
                         </span>
                     </div>
                 </div>
@@ -184,7 +184,7 @@
 <script>
 import DialogModal from "@/Components/DialogModal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import * as Vivus from "vivus";
+import Vivus from "vivus";
 import 'animate.css';
 
 export default {
