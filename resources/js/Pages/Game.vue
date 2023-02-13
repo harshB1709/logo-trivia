@@ -105,10 +105,24 @@
                         type="text"
                         maxlength="1"
                         ref="guess"
-                        @keydown.prevent="handleKeydown($event, index)"
+                        @keyup.prevent="handleKeydown($event, index)"
                     />
                 </div>
-                <div class="mt-3 btn-group" v-if="charLength">
+                <div class="text-primary text-lg my-3">Time Remaining:
+                    <span class="countdown font-mono">
+                        <span :style="`--value:${timer || 0};`"></span>
+                    </span>
+                </div>
+                <div class="btn-group" v-if="charLength">
+                    <button
+                        class="btn btn-md btn-outline w-28 md:btn-wide"
+                        type="button"
+                        :disabled="actionsDisabled"
+                        @click="skipWord"
+                        ref="skipButton"
+                    >
+                        Skip
+                    </button>
                     <button
                         class="btn btn-md btn-outline btn-primary w-28 md:btn-wide"
                         type="button"
@@ -117,15 +131,6 @@
                         ref="guessButton"
                     >
                         Guess
-                    </button>
-                    <button
-                        class="btn btn-md btn-outline btn-primary w-28 md:btn-wide"
-                        type="button"
-                        :disabled="actionsDisabled"
-                        @click="skipWord"
-                        ref="skipButton"
-                    >
-                        Skip
                     </button>
                 </div>
             </div>
@@ -271,10 +276,20 @@ export default {
             this.guesses = data.guessesRemaining;
             this.hasHint = data.hasHint;
             this.$nextTick(function() {
-                this.$refs.guess[0].focus();
+                this.focusOnInput();
                 this.animateLogo();
             });
             this.wordNo++;
+        },
+
+        focusOnInput() {
+            if(this.$refs?.guess?.[0])
+                this.$refs.guess[0].readOnly = true;
+            this.$nextTick(function() {
+                this.$refs.guess[0].focus();
+                if(this.$refs?.guess?.[0])
+                    this.$refs.guess[0].readOnly = false;
+            });
         },
 
         animateLogo() {
@@ -297,7 +312,18 @@ export default {
 
         handleKeydown(event, index) {
             const keyCode = event.keyCode
-            if(keyCode == 8) {
+            if(keyCode == 229) {
+                const val = event.target.value;
+                const found = val.match(/[A-Za-z0-9]/g);
+                if(found?.length) {
+                    event.target.value = found[found.length - 1];
+                    this.$refs.guess[Math.min(index, this.charLength - 1)].focus();
+                }
+                else {
+                    this.$refs.guess[Math.max(index - 2, 0)].focus();
+                }
+            }
+            else if(keyCode == 8) {
                 this.$refs.guess[index - 1].value = "";
                 this.$nextTick(function() {
                     this.$refs.guess[Math.max(index - 2, 0)].focus();
@@ -420,7 +446,7 @@ export default {
             else {
                 this.startTimerInterval();
             }
-            this.$refs?.guess?.[0]?.focus();
+            this.focusOnInput();
         },
 
         getFPS() {

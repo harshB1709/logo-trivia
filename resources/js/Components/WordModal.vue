@@ -93,7 +93,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
-import * as Vivus from "vivus";
+import Vivus from "vivus";
 
 export default {
     components: {

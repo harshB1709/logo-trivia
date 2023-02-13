@@ -49,7 +49,7 @@ class PlayerController extends Controller
         if($request->user())
             $player->game()?->delete();
 
-        if ((! $request->hasValidSignature()) || $player->game) {
+        if ((!$request->hasValidSignature() && !$request->user()) || $player->game) {
             abort(401);
         }
 
