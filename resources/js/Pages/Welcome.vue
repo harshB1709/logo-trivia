@@ -1,7 +1,7 @@
 <template>
     <div class="container min-h-screen flex flex-col justify-center items-center mx-auto px-4">
         <div class="sm:max-w-md w-full rounded-xl flex flex-col items-center">
-            <h1 class="font-bold text-center text-3xl mb-5 text-primary">Tech Pictionary</h1>
+            <h1 class="font-bold text-center text-3xl mb-5 text-primary">Ranium's Tech Pictionary</h1>
             <div class="w-full flex flex-col bg-base-200 rounded-lg p-4 items-center gap-4">
                 <div class="form-control w-full max-w-sm">
                   <label class="label" for="name">

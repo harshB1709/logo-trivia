@@ -2,7 +2,7 @@
     <div class="min-h-screen">
         <div class="navbar bg-base-200 justify-between">
             <div class="navbar-start">
-                <a class="btn btn-ghost normal-case text-xl text-primary" href="/">Tech Pictionary</a>
+                <a class="btn btn-ghost normal-case text-xl text-primary" href="/">Ranium's Tech Pictionary</a>
             </div>
             <div class="dropdown dropdown-end lg:hidden">
                 <label tabindex="0" class="btn btn-ghost">

@@ -27,7 +27,7 @@
                     <div class="stat-value relative text-2xl sm:text-4xl w-full">
                         <div class="w-full text-center">{{ points }}</div>
                         <div
-                            class="absolute left-0 top-0 w-full text-center"
+                            class="absolute left-0 top-0 w-full text-center text-success"
                             :class="{
                                 'animate__animated animate__fadeOutUp': pointsAdded
                             }"
@@ -38,7 +38,17 @@
                 </div>
                 <div class="stat bg-base-100 place-items-center px-3 py-2 sm:px-6 sm:py-4 font-mono">
                     <div class="stat-title text-xs sm:text-base">Guesses</div>
-                    <div class="stat-value text-2xl sm:text-4xl">{{ guesses || '-' }}</div>
+                    <div class="stat-value relative text-2xl sm:text-4xl w-full">
+                        <div class="w-full text-center">{{ guesses || '-' }}</div>
+                        <div
+                            class="absolute left-0 top-0 w-full text-center text-error"
+                            :class="{
+                                'animate__animated animate__fadeOutDown': guessesDecreased
+                            }"
+                        >
+                            {{ guessesDecreased ? `-${guessesDecreased}` : '' }}
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -63,7 +73,8 @@
                             class="flex h-full w-full"
                             :class="{
                                 'stroked': showStroke || showStrokeInternal,
-                                'finished': showColour
+                                'finished': showColour,
+                                'animate__animated animate__lightSpeedOutLeft': showingNext
                             }"
                             ref="logoSvg"
                         />
@@ -85,7 +96,15 @@
                     </svg>
                     <span class="mt-0.5">Hint</span>
                 </button>
-                <p class="w-full text-center text-lg" v-if="hint"><span class="font-semibold">Hint:</span> {{ hint }}</p>
+                <p
+                    class="w-full text-center text-lg"
+                    :class="{
+                        'animate__animated animate__bounceIn': hint
+                    }"
+                    v-if="hint"
+                >
+                    <span class="font-semibold">Hint:</span> {{ hint }}
+                </p>
             </div>
 
             <div class="flex flex-col items-center w-full mt-4 border-base-content rounded-xl max-w-3xl p-2">
@@ -96,16 +115,20 @@
                 >
                     <input
                         v-for="index in charLength" :key="index"
-                        class="input input-bordered border-base-content border-2 text-center uppercase font-bold p-0 max-w-[32px] rounded"
+                        class="input input-bordered border-2 text-center uppercase font-bold p-0 max-w-[32px] rounded"
                         :class="{
                             'h-10 text-xl': charLength < 10,
                             'h-8 sm:h-10 text-lg sm:text-xl': charLength > 9 && charLength < 12,
-                            'h-7 sm:h-10 text-base sm:text-xl': charLength > 11
+                            'h-7 sm:h-10 text-base sm:text-xl': charLength > 11,
+                            'border-success text-success': pointsAdded,
+                            'border-error text-error animate__animated animate__shakeX': guessesDecreased,
+                            'border-base-content': !pointsAdded && !guessesDecreased
                         }"
                         type="text"
                         maxlength="1"
                         ref="guess"
                         @keyup.prevent="handleKeydown($event, index)"
+                        @keydown.prevent=""
                     />
                 </div>
                 <div class="text-primary text-lg my-3">Time Remaining:
@@ -209,6 +232,7 @@ export default {
             timer: null,
             timerSetInterval: null,
             guesses: null,
+            guessesDecreased: null,
             actionsDisabled: false,
             hint: null,
             hasHint: false,
@@ -220,6 +244,8 @@ export default {
             showStroke: true,
             showStrokeInternal: false,
             showColour: false,
+            showingNext: false,
+            lastAction: null
         }
     },
 
@@ -351,6 +377,7 @@ export default {
                         guess: this.$refs.guess.map(i => i.value).join('')
                     })
                     .then((res) => {
+                        this.lastAction = 'guessWord';
                         this.handleGameActionResponse(res.data)
                     })
                     .finally(()=> {
@@ -370,6 +397,7 @@ export default {
                         action: 'skipWord'
                     })
                     .then((res) => {
+                        this.lastAction = 'skipWord';
                         this.handleGameActionResponse(res.data)
                     })
                     .finally(()=> {
@@ -389,6 +417,7 @@ export default {
                         action: 'getHint'
                     })
                     .then((res) => {
+                        this.lastAction = 'getHint';
                         this.handleGameActionResponse(res.data)
                     })
                     .finally(()=> {
@@ -426,12 +455,20 @@ export default {
             this.pointsAdded = data.points - this.points;
             setTimeout(function() {
                 this.pointsAdded = null;
-            }.bind(this), 600);
+            }.bind(this), 1000);
             this.points = data.points;
+            if(this.lastAction === 'guessWord' && (this.guesses > (data.guessesRemaining || 0) || this.guesses === 1 && data.guessesRemaining === 3 && data.wordChange)) {
+                this.guessesDecreased = 1;
+                setTimeout(function() {
+                    this.guessesDecreased = null;
+                }.bind(this), 1000);
+            }
             this.guesses = data.guessesRemaining || 0;
             this.hint = data.hint;
             this.hasHint = data.hasHint;
-            this.$refs?.guess?.map((i) => {i.value = ''});
+            setTimeout(function() {
+                this.$refs?.guess?.map((i) => {i.value = ''});
+            }.bind(this), 1000);
             if(data.gameOver) {
                 this.showGameOverModal = true;
                 this.clearTimerInterval();
@@ -441,7 +478,12 @@ export default {
                 this.guesses = 0;
             }
             else if(data.wordChange) {
-                this.setNewWord(data);
+                this.showingNext = true;
+                setTimeout(function() {
+                    this.showingNext = false;
+                    this.setNewWord(data);
+                    this.$refs?.guess?.map((i) => {i.value = ''});
+                }.bind(this), 1000);
             }
             else {
                 this.startTimerInterval();
