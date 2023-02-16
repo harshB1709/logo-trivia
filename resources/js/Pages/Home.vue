@@ -22,7 +22,7 @@
                         <span class="h-100 inline-block">Ranium's Tech Pictionary</span>
                     </h1>
                     <div class="flex flex-col sm:flex-row items-center gap-3">
-                        <img src="/images/iphone-14.png" class="max-w-xs rounded-lg shadow-2xl">
+                        <img src="/images/iphone-14.png" class="max-w-100 sm:max-w-xs rounded-lg shadow-2xl">
                         <div>
                             <p class="py-3 text-xl">Play the game and get a change to win an Iphone 14.</p>
                             <button class="btn btn-primary" @click="$inertia.visit('/register')">Register</button>
