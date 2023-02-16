@@ -17,7 +17,7 @@ module.exports = {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                'ranium-blue': '#3167E5'
+                'ranium-blue': '#006DF5'
             },
             aspectRatio: {
                 '4/3': '4/3',
@@ -31,7 +31,7 @@ module.exports = {
             {
                 ranium: {
                     ...require("daisyui/src/colors/themes")["[data-theme=halloween]"],
-                    primary: "#3167E5"
+                    primary: "#006DF5"
                 },
             },
         ],

@@ -18,7 +18,9 @@ use App\Http\Controllers\PlayerController;
  */
 
 Route::middleware([])->group(function() {
-    Route::redirect('/', '/register');
+    Route::get('/', function() {
+        return Inertia::render('Home');
+    });
 
     Route::middleware(['app.setting:app_status'])->group(function() {
         Route::get('/register', [PlayerController::class, 'home'])->middleware(['app.setting:player_registration'])->name('home');
