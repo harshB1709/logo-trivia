@@ -17,13 +17,24 @@ module.exports = {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                'ranium-blue': '#006Df5'
+                'ranium-blue': '#3167E5'
             },
             aspectRatio: {
                 '4/3': '4/3',
                 '5/4': '5/4'
             }
         },
+    },
+
+    daisyui: {
+        themes: [
+            {
+                ranium: {
+                    ...require("daisyui/src/colors/themes")["[data-theme=halloween]"],
+                    primary: "#3167E5"
+                },
+            },
+        ],
     },
 
     plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography'), require("daisyui")],
