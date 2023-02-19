@@ -54,6 +54,7 @@ class PlayerController extends Controller
         ])->table(function (InertiaTable $table) {
             $table
                 ->withGlobalSearch('Search players..')
+                ->defaultSort('-score')
                 ->column(key: 'name', sortable: true, canBeHidden: false)
                 ->column(key: 'email', sortable: true)
                 ->column(key: 'display_name', sortable: true)
