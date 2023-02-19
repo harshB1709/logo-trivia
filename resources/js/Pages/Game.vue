@@ -204,30 +204,37 @@
                     <h3 class="font-bold text-primary text-6xl mt-4">{{ points }}</h3>
                     <p class="mt-6">Check the leaderboard to check where you stand!</p>
                 </div>
-                <div class="modal-action justify-center mt-2">
+                <div class="modal-action justify-center mt-2 gap-2">
                     <button class="btn btn-outline btn-primary" @click="$inertia.visit('/leaderboard')">Leaderboard</button>
+                    <button class="btn btn-outline btn-primary" @click="openAboutModal">About</button>
                 </div>
             </label>
         </div>
+
+        <about-modal
+            :modelValue="showAboutModal"
+            @update:modelValue="handleAboutModalShow"
+        />
     </div>
 </template>
 
 <script>
 import DialogModal from "@/Components/DialogModal.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
+import AboutModal from "@/Components/AboutModal.vue"
 import Vivus from "vivus";
 import 'animate.css';
 
 export default {
     components: {
         DialogModal,
-        PrimaryButton
+        AboutModal
     },
 
     data() {
         return {
             showInstructionsModal: false,
             showGameOverModal: false,
+            showAboutModal: false,
             logoSvg: null,
             charLength: null,
             points: 0,
@@ -248,7 +255,7 @@ export default {
             showStrokeInternal: false,
             showColour: false,
             showingNext: false,
-            lastAction: null
+            lastAction: null,
         }
     },
 
@@ -500,6 +507,18 @@ export default {
                 requestAnimationFrame(t2 => resolve(1000 / (t2 - t1)))
               )
             )
+        },
+
+        openAboutModal() {
+            this.showAboutModal = true;
+            this.showGameOverModal = false;
+        },
+
+        handleAboutModalShow(val) {
+            this.showAboutModal = false;
+            if(val === false) {
+                this.showGameOverModal = true;
+            }
         }
     }
 }
