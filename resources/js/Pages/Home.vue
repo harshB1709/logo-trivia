@@ -27,13 +27,13 @@
                             <h1 class="text-3xl font-bold mb-4 underline">Play the Game to Win an iPhone 14*</h1>
                             <div class="text-left text-lg">
                                 <p class="mb-2">
-                                    <span class="font-bold text-primary">Step 1:</span> Test your knowledge of the technologies you use regularly by recognizing as many logos as possible to earn points.
+                                    <span class="font-bold text-primary">Step 1:</span> Register for the game.
                                 </p>
                                 <p class="mb-2">
-                                    <span class="font-bold text-primary">Step 2:</span> Check the leaderboard to see where you stand against other players.
+                                    <span class="font-bold text-primary">Step 2:</span> Play the game and test your knowledge of the technologies you use regularly by recognizing as many logos as possible to earn points which will increase your chances of winning the latest iPhone 14!
                                 </p>
                                 <p class="mb-4">
-                                    <span class="font-bold text-primary">Step 3:</span> Make sure to earn as many points as possible to increase your chances of winning the latest iPhone 14!
+                                    <span class="font-bold text-primary">Step 3:</span> Check the leaderboard to see where you stand against other players.
                                 </p>
                             </div>
                             <p class="mb-4 text-primary text-lg">Register now and don't miss this opportunity to win big!</p>
