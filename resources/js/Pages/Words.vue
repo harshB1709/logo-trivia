@@ -5,42 +5,10 @@
                 Words
             </h2>
         </template>
-        <div class="w-full flex flex-col md:flex-row justify-center gap-3 md:gap-20 mt-4 px-6 lg:px-8 text-black">
-            <div class="border border-gray-700 ring-offset-2 ring-gray-900 ring-2 w-full md:w-1/3 rounded-lg px-3 py-4 flex flex-col lg:flex-row gap-3 justify-between items-center">
-                <p class="text-lg">
-                    App Status:&nbsp;
-                    <span
-                        class="font-semibold text-xl px-1.5 py-0.5 rounded border-2"
-                        :class="{
-                            'bg-green-100 border-green-500 text-green-500': appStatus === 1,
-                            'bg-red-100 border-red-500 text-red-500': appStatus === 0
-                        }"
-                    >
-                        {{ (appStatus === 1) ? `ON` : `OFF` }}
-                    </span>
-                </p>
-                <primary-button @click="toggleSetting('app_status')" type="button">Toggle</primary-button>
-            </div>
-            <div class="border border-gray-700 ring-offset-2 ring-gray-900 ring-2 w-full md:w-1/3 rounded-lg px-3 py-4 flex flex-col lg:flex-row gap-3 justify-between items-center">
-                <p class="text-lg">
-                    Self Registration:&nbsp;
-                    <span
-                        class="font-semibold text-xl px-1.5 py-0.5 rounded border-2"
-                        :class="{
-                            'bg-green-100 border-green-500 text-green-500': playerRegistration === 1,
-                            'bg-red-100 border-red-500 text-red-500': playerRegistration === 0
-                        }"
-                    >
-                        {{ (playerRegistration === 1) ? `ON` : `OFF` }}
-                    </span>
-                </p>
-                <primary-button @click="toggleSetting('player_registration')" type="button">Toggle</primary-button>
-            </div>
-        </div>
+
         <div class="pt-8 pb-10">
             <div class="max-w-7xl mx-auto px-2 px-6 lg:px-8">
                 <div class="w-full flex justify-end gap-2 mb-2">
-                    <a href="/register" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">Register User</a>
                     <primary-button @click="createWord">Create Word</primary-button>
                 </div>
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-2">
@@ -96,15 +64,6 @@ import WordModal from '@/Components/WordModal.vue';
             WordModal
         },
 
-        computed: {
-            appStatus() {
-                return this.appSettings['app_status'];
-            },
-            playerRegistration() {
-                return this.appSettings['player_registration']
-            }
-        },
-
         data() {
             return {
                 showWordModal: false,
@@ -115,10 +74,6 @@ import WordModal from '@/Components/WordModal.vue';
 
         props: {
             words: {
-                type: Object,
-                default: {}
-            },
-            appSettings: {
                 type: Object,
                 default: {}
             }
@@ -144,17 +99,6 @@ import WordModal from '@/Components/WordModal.vue';
             },
             updateWord(word) {
                 this.$inertia.reload({only: ['words']});
-            },
-            toggleSetting(setting) {
-                if(confirm(`Are you sure about toggling the ${setting.replace('_', ' ')}`)) {
-                    axios
-                        .post(`/api/toggle-setting`, {
-                            setting: setting
-                        })
-                        .then((res) => {
-                            this.appSettings[setting] = res.data.value;
-                        });
-                }
             }
         }
     }

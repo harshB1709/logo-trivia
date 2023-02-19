@@ -21,13 +21,15 @@ class AppSetting
             'key' => $setting_key
         ])->first();
 
-        $app_setting = $app_setting?->value ?? true;
+        $app_setting_val = $app_setting?->value ?? true;
 
         $user = $request->user();
 
-        if($app_setting || $user)
+        if($app_setting_val || $user)
             return $next($request);
 
-        return abort(503);
+        $message = $app_setting?->message ?? 'The game is not available as of now. Please try again later';
+
+        return abort(503, $message);
     }
 }

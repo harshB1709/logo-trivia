@@ -43,12 +43,13 @@ class GameInvite extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject(config('app.name') . ' - Access to Your Game')
+                    ->subject("Tech Pictionary @ LaraconIN 2023 | Access your game")
                     ->greeting("Hello {$notifiable->display_name},")
                     ->line('Your game is now ready for you to play. To start playing, simply click on the link below.')
                     ->action('Game Link', URL::signedRoute('game', ['player' => $notifiable->id]))
-                    ->line('We hope you enjoy the game and have a great time playing it! If you have any questions or concerns, please feel free to reach out to us.')
-                    ->line(new HtmlString('<strong>Note: </strong>This link can be used only once. After you start the game, you can\'t reload or reuse the link.'));
+                    ->line('We hope you enjoy the game and have a great time playing it! If you have any questions or concerns, please feel free to reach out to us at our stall B6.')
+                    ->line(new HtmlString('<strong>Note: </strong>This link can be used only once. After you start the game, you can\'t reload or reuse the link.'))
+                    ->line("Best of luck! And we hope you win the iPhone 14 @ LaraconIN 2023");
     }
 
     /**

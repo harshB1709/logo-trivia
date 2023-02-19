@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen">
+    <div class="min-h-screen ubuntu-mono">
         <div class="navbar bg-base-200 justify-between">
             <div class="navbar-start">
                 <a class="btn btn-ghost normal-case text-xl text-primary" href="/">Ranium's Tech Pictionary</a>

@@ -16,7 +16,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 class WordsController extends Controller
 {
     public function index(Request $request) {
-        $app_settings = AppSetting::pluck('value', 'key');
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
                     $query->where(function ($query) use ($value) {
@@ -32,9 +31,8 @@ class WordsController extends Controller
                     ->paginate()
                     ->withQueryString();
 
-        return Inertia::render('Dashboard', [
+        return Inertia::render('Words', [
             'words' => $words,
-            'appSettings' => $app_settings,
         ])->table(function (InertiaTable $table) {
             $table
                 ->withGlobalSearch('Search words..')
@@ -92,12 +90,16 @@ class WordsController extends Controller
         if($setting_key) {
             $setting = AppSetting::where('key', $setting_key)->firstOrFail();
             $setting->value = !$setting->value;
+            if(!$setting->value) {
+                $setting->message = $request->get('message', '');
+            }
             $setting->save();
 
             return response()->json([
                 'status' => 'success',
                 'message' => 'Setting toggled Successfully',
-                'value' => (int) $setting->value
+                'value' => (int) $setting->value,
+                'settingMessage' => $setting->message
             ]);
         }
         abort(400);

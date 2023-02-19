@@ -1,5 +1,5 @@
 <template>
-    <div class="container min-h-screen flex flex-col justify-center items-center mx-auto">
+    <div class="container min-h-screen flex flex-col justify-center items-center mx-auto ubuntu-mono">
         <div class="sm:max-w-3xl w-full flex flex-col items-center px-4 sm:px-0 gap-2 sm:gap-3">
             <div class="stats stats-horizontal bg-base-content text-base-content grid-rows-2 sm:grid-rows-none w-full gap-[2px] divide-x-0 divide-y-0 border-2 border-base-content">
 
@@ -41,7 +41,7 @@
                     <div class="stat-value relative text-2xl sm:text-4xl w-full">
                         <div class="w-full text-center">{{ guesses || '-' }}</div>
                         <div
-                            class="absolute left-0 top-0 w-full text-center text-error"
+                            class="absolute left-0 top-0 w-full text-center text-error no-scrollbar"
                             :class="{
                                 'animate__animated animate__fadeOutDown': guessesDecreased
                             }"
@@ -52,7 +52,7 @@
                 </div>
 
             </div>
-            <div class="form-control w-40 mx-auto">
+            <div class="form-control w-44 mx-auto">
                     <label class="label cursor-pointer">
                         <span class="label-text text-lg">Show Outlines</span>
                         <input
@@ -74,7 +74,7 @@
                             :class="{
                                 'stroked': showStroke || showStrokeInternal,
                                 'finished': showColour,
-                                'animate__animated animate__lightSpeedOutLeft': showingNext
+                                'animate__animated animate__fadeOutLeft': showingNext
                             }"
                             ref="logoSvg"
                         />
@@ -131,7 +131,10 @@
                         @keydown.prevent=""
                     />
                 </div>
-                <div class="text-primary text-lg my-3">Time Remaining:
+                <div class="text-primary text-lg my-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="w-4 inline-block mr-1">
+                        <path d="M32 0C14.3 0 0 14.3 0 32S14.3 64 32 64V75c0 42.4 16.9 83.1 46.9 113.1L146.7 256 78.9 323.9C48.9 353.9 32 394.6 32 437v11c-17.7 0-32 14.3-32 32s14.3 32 32 32H64 320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V437c0-42.4-16.9-83.1-46.9-113.1L237.3 256l67.9-67.9c30-30 46.9-70.7 46.9-113.1V64c17.7 0 32-14.3 32-32s-14.3-32-32-32H320 64 32zM96 75V64H288V75c0 19-5.6 37.4-16 53H112c-10.3-15.6-16-34-16-53zm16 309c3.5-5.3 7.6-10.3 12.1-14.9L192 301.3l67.9 67.9c4.6 4.6 8.6 9.6 12.2 14.9H112z" stroke="currentColor" fill="currentColor"/>
+                    </svg>
                     <span class="countdown font-mono">
                         <span :style="`--value:${timer || 0};`"></span>
                     </span>
@@ -162,18 +165,18 @@
         <input type="checkbox" :checked="showInstructionsModal" id="start-game-modal" class="modal-toggle" />
         <div class="modal">
             <label class="modal-box w-11/12 max-w-4xl relative" for="">
-                <h3 class="text-2xl underline text-primary font-bold md:pl-4" v-if="gameStartedTimer === null">Instructions:</h3>
                 <div class="py-4 pl-3 md:pl-7">
                     <template v-if="gameStartedTimer === null">
-                        <p class="w-full text-center text-2xl font-bold mb-4 underline underline-offset-2">PLEASE READ THESE INSTRUCTIONS VERY CAREFULLY!!</p>
+                        <p class="w-full text-center text-2xl font-bold mb-4 underline underline-offset-2 text-primary">PLEASE READ THESE INSTRUCTIONS VERY CAREFULLY!!</p>
                         <p class="list-item">In this game, you will be presented with 21 logos of various software development technologies.</p>
                         <p class="list-item">Each logo has a point value, with the first 7 logos being worth 1 point, the next 7 being worth 2 points, and the last 7 being worth 3 points.</p>
                         <p class="list-item">Once a logo is displayed, a 30-second timer will start. You have three attempts to guess the name of the technology and enter it into the input box before the timer runs out.</p>
-                        <p class="list-item">The points you score for each technology will be calculated as follows: (logo_points + remaining_seconds_on_the_timer) x remaining_number_of_guesses.</p>
+                        <p class="list-item">The points you score for each technology will be calculated as follows: (remaining_number_of_guesses + remaining_seconds_on_the_timer) x logo_points.</p>
                         <p class="list-item">This means that your score will be directly influenced by the points associated with the logo, how quickly you answer, and the number of guesses you have left.</p>
                         <p class="list-item">Hints are available for some logos at the cost of one guess.</p>
                         <p class="list-item">When the game ends, your final score will be calculated and displayed.</p>
-                        <p class="list-item"><span class="font-bold text-lg underline">Important</span>: All word scoring and timing calculations are performed on the server. Ensure a stable internet connection before playing. Good luck!</p>
+                        <p class="list-item"><span class="font-bold text-lg text-primary">Important:</span> All word scoring and timing calculations are performed on the server. Ensure a stable internet connection before playing. Good luck!</p>
+                        <p class="list-item">If there is a tie, Ranium will do a lucky draw to decide the winner.</p>
                     </template>
                     <template v-else>
                         <div class="w-full flex flex-col items-center gap-6">

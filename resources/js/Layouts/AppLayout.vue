@@ -1,19 +1,58 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Head, Link, usePage } from '@inertiajs/inertia-vue3';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
 import Banner from '@/Components/Banner.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 defineProps({
     title: String,
 });
 
 const showingNavigationDropdown = ref(false);
+
+const appStatus = computed(() => {
+    return usePage().props.value.appSettings['app_status']['value'];
+})
+
+const playerRegistration = computed(() => {
+    return usePage().props.value.appSettings['player_registration']['value'];
+})
+
+const appStatusMessage = computed(() => {
+    return usePage().props.value.appSettings['app_status']['message'];
+})
+
+const playerRegistrationMessage = computed(() => {
+    return usePage().props.value.appSettings['player_registration']['message'];
+})
+
+const toggleSetting = (setting) => {
+    const val = usePage().props.value.appSettings[setting];
+    const message = val['value'] ? prompt('Enter the error message to be shown', val['message'] ?? "The game is not available as of now. Please try again later") : true;
+    const conf = !val['value'] ? confirm(`Are you sure about toggling the ${setting.replace('_', ' ')}`) : true;
+    if(message && conf) {
+        const payload = {
+            setting
+        };
+
+        if(val['value']) {
+            payload.message = message;
+        }
+
+        axios
+            .post(`/api/toggle-setting`, payload)
+            .then((res) => {
+                usePage().props.value.appSettings[setting]['value'] = res.data.value;
+                usePage().props.value.appSettings[setting]['message'] = res.data.settingMessage;
+            });
+    }
+}
 
 const switchToTeam = (team) => {
     Inertia.put(route('current-team.update'), {
@@ -51,6 +90,10 @@ const logout = () => {
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink :href="route('words')" :active="route().current('words')">
                                     Words
+                                </NavLink>
+
+                                <NavLink :href="route('players')" :active="route().current('players')">
+                                    Players
                                 </NavLink>
                             </div>
                         </div>
@@ -195,6 +238,10 @@ const logout = () => {
                         <ResponsiveNavLink :href="route('words')" :active="route().current('words')">
                             Words
                         </ResponsiveNavLink>
+
+                        <ResponsiveNavLink :href="route('players')" :active="route().current('players')">
+                            Players
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -278,6 +325,45 @@ const logout = () => {
                     <slot name="header" />
                 </div>
             </header>
+
+            <div class="w-full flex flex-col md:flex-row justify-center gap-3 md:gap-20 mt-4 px-6 lg:px-8 text-black">
+                <div class="border border-gray-700 ring-offset-2 ring-gray-900 ring-2 w-full md:w-1/3 rounded-lg px-3 py-4">
+                    <div class="flex flex-col lg:flex-row gap-3 justify-between items-center mb-2">
+                        <p class="text-lg font-bold">
+                            App Status:&nbsp;
+                            <span
+                                class="font-semibold text-xl px-1.5 py-0.5 rounded border-2"
+                                :class="{
+                                    'bg-green-100 border-green-500 text-green-500': appStatus === 1,
+                                    'bg-red-100 border-red-500 text-red-500': appStatus === 0
+                                }"
+                            >
+                                {{ (appStatus === 1) ? `ON` : `OFF` }}
+                            </span>
+                        </p>
+                        <primary-button @click="toggleSetting('app_status')" type="button">Toggle</primary-button>
+                    </div>
+                    <p v-if="appStatus === 0"><span class="font-bold text-lg">Message:</span> {{appStatusMessage}}</p>
+                </div>
+                <div class="border border-gray-700 ring-offset-2 ring-gray-900 ring-2 w-full md:w-1/3 rounded-lg px-3 py-4">
+                    <div class="flex flex-col lg:flex-row gap-3 justify-between items-center mb-2">
+                        <p class="text-lg font-bold">
+                            Self Registration:&nbsp;
+                            <span
+                                class="font-semibold text-xl px-1.5 py-0.5 rounded border-2"
+                                :class="{
+                                    'bg-green-100 border-green-500 text-green-500': playerRegistration === 1,
+                                    'bg-red-100 border-red-500 text-red-500': playerRegistration === 0
+                                }"
+                            >
+                                {{ (playerRegistration === 1) ? `ON` : `OFF` }}
+                            </span>
+                        </p>
+                        <primary-button @click="toggleSetting('player_registration')" type="button">Toggle</primary-button>
+                    </div>
+                    <p v-if="playerRegistration === 0"><span class="font-bold text-lg">Message:</span> {{playerRegistrationMessage}}</p>
+                </div>
+            </div>
 
             <!-- Page Content -->
             <main>

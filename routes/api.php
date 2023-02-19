@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\WordsController;
+use App\Http\Controllers\PlayerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +24,6 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post('/word/store', [WordsController::class, 'store']);
     Route::post('/word/{word}/update', [WordsController::class, 'update']);
     Route::post('/toggle-setting', [WordsController::class, 'toggleSetting']);
+    Route::post('/{player}/send-invite', [PlayerController::class, 'sendInvite']);
+    Route::post('/{player}/reset-game', [PlayerController::class, 'resetGame']);
 });

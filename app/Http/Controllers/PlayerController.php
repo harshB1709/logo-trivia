@@ -3,18 +3,82 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use App\Models\Player;
 use App\Models\Word;
 use App\Models\Game;
 use App\Notifications\GameInvite;
+use App\QueryBuilder\SortByScore;
 use Illuminate\Support\Facades\Storage;
+use ProtoneMedia\LaravelQueryBuilderInertiaJs\InertiaTable;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class PlayerController extends Controller
 {
     const TOTAL_WORDS = 21;
     const GUESSES_PER_WORD = 3;
     const DELAY_SECONDS = 3;
+
+    public function index(Request $request) {
+
+        $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
+                    $query->where(function ($query) use ($value) {
+                        Collection::wrap($value)->each(function ($value) use ($query) {
+                            $query->orWhere('name', 'LIKE', "%{$value}%")
+                                ->orWhere('email', 'LIKE', "%{$value}%")
+                                ->orWhere('display_name', 'LIKE', "%{$value}%");
+                        });
+                    });
+                });
+
+        $custom_sort = AllowedSort::custom('score', new SortByScore())->defaultDirection('desc');
+
+        $players = QueryBuilder::for(Player::class)
+                    ->with('game')
+                    ->allowedSorts([
+                        'name',
+                        'email',
+                        'display_name',
+                        $custom_sort,
+                    ])
+                    ->defaultSort($custom_sort)
+                    ->allowedFilters(['name', 'email', 'display_name', $globalSearch])
+                    ->paginate()
+                    ->withQueryString();
+
+        return Inertia::render('Players', [
+            'players' => $players,
+        ])->table(function (InertiaTable $table) {
+            $table
+                ->withGlobalSearch('Search players..')
+                ->column(key: 'name', sortable: true, canBeHidden: false)
+                ->column(key: 'email', sortable: true)
+                ->column(key: 'display_name', sortable: true)
+                ->column(key: 'score', sortable: true)
+                ->column(label: 'Actions');
+        });
+    }
+
+    public function sendInvite(Player $player, Request $request) {
+        $player->notify(new GameInvite());
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Invite Sent Successfully'
+        ]);
+    }
+
+    public function resetGame(Player $player, Request $request) {
+        $player->game()?->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Game Reset Successfully'
+        ]);
+    }
 
     public function home(Request $request) {
         $registered = session('registered', false);
@@ -28,14 +92,14 @@ class PlayerController extends Controller
             'name' => 'required|string|max:100',
             'display_name' => 'string|max:60|nullable',
             'email' => 'required|string|email:rfc,dns|unique:players,email,max:255',
-            'phone' => 'required|numeric|digits:10'
+            'phone' => 'numeric|digits:10|nullable'
         ]);
 
         $player = Player::create([
             'email' => $request->get('email'),
             'name' => $request->get('name'),
             'display_name' => $request->get('display_name', null),
-            'phone' => $request->get('phone')
+            'phone' => $request->get('phone') ?? ''
         ]);
 
         $player->notify(new GameInvite());
@@ -150,7 +214,7 @@ class PlayerController extends Controller
                         $time_remaining = 31 - $time_elapsed;
                         $time_remaining = min($time_remaining, 30);
                         $time_remaining = max(1, $time_remaining);
-                        $word_points = $word['guesses_remaining'] * ($word['points'] + $time_remaining);
+                        $word_points = $word['points'] * ($word['guesses_remaining'] + $time_remaining);
                         $points_scored += $word_points;
                         $game = Game::where('player_id', session('player_id'))->first();
                         $game->score = $points_scored;
