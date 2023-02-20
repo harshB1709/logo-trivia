@@ -24,7 +24,6 @@ Route::middleware([])->group(function() {
 
     Route::middleware(['app.setting:app_status'])->group(function() {
         Route::get('/register', [PlayerController::class, 'home'])->middleware(['app.setting:player_registration'])->name('home');
-        Route::post('/register', [PlayerController::class, 'register'])->middleware(['app.setting:player_registration']);
         Route::get('/{player}/game', [PlayerController::class, 'gamePage'])->name('game');
 
         Route::middleware(['player.identified'])->group(function() {

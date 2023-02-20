@@ -82,10 +82,7 @@ class PlayerController extends Controller
     }
 
     public function home(Request $request) {
-        $registered = session('registered', false);
-        return Inertia::render('Welcome', [
-            'registered' => $registered
-        ]);
+        return Inertia::render('Welcome');
     }
 
     public function register(Request $request) {
@@ -105,8 +102,10 @@ class PlayerController extends Controller
 
         $player->notify(new GameInvite());
 
-        return redirect()->route('home')
-                    ->with('registered', true);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Player Registered Successfully'
+        ]);
     }
 
     public function gamePage(Request $request, Player $player) {
@@ -114,8 +113,12 @@ class PlayerController extends Controller
         if($request->user())
             $player->game()?->delete();
 
-        if ((!$request->hasValidSignature() && !$request->user()) || $player->game) {
+        if ((!$request->hasValidSignature() && !$request->user())) {
             abort(401);
+        }
+
+        if($player->game) {
+            abort(400, 'Sorry, you have already played the game. This url isn\'t valid anymore');
         }
 
         session(['player_id' => $player->id ]);

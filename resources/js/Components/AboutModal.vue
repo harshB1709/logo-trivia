@@ -50,7 +50,8 @@ export default {
     data() {
         return {
             showColour: false,
-            animateSetTimeout: null
+            animateSetTimeout: null,
+            vivus: null
         }
     },
 
@@ -73,9 +74,7 @@ export default {
                     });
             }
             else {
-                this.showColour = false;
-                clearTimeout(this.animateSetTimeout);
-                this.animateSetTimeout = null;
+                this.stopAnimation();
             }
         }
     },
@@ -96,16 +95,27 @@ export default {
         },
 
         animateLogo(fps) {
-            const vivus = new Vivus(this.$refs?.raniumLogo, {
-                duration: fps ? (fps * 2.5) : 165,
-                type: 'oneByOne'
-            }, (obj) => {
-                this.showColour = true;
-                this.animateSetTimeout = setTimeout(function() {
-                    this.showColour = false;
-                    this.animateLogo(fps);
-                }.bind(this), 5000)
-            });
+            if(!this.vivus) {
+                this.vivus = new Vivus(this.$refs?.raniumLogo, {
+                    duration: fps ? (fps * 2.5) : 165,
+                    type: 'oneByOne'
+                }, (obj) => {
+                    this.showColour = true;
+                    this.animateSetTimeout = setTimeout(function() {
+                        this.stopAnimation();
+                        this.animateLogo(fps);
+                    }.bind(this), 5000)
+                });
+            }
+        },
+        stopAnimation() {
+            this.showColour = false;
+            clearTimeout(this.animateSetTimeout);
+            this.animateSetTimeout = null;
+            if(this.vivus) {
+                this.vivus.destroy();
+                this.vivus = null;
+            }
         }
     },
 }

@@ -27,3 +27,5 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post('/{player}/send-invite', [PlayerController::class, 'sendInvite']);
     Route::post('/{player}/reset-game', [PlayerController::class, 'resetGame']);
 });
+
+Route::post('/register', [PlayerController::class, 'register'])->middleware(['app.setting:player_registration']);
