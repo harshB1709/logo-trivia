@@ -190,6 +190,7 @@ class PlayerController extends Controller
         }
 
         $action = $request->get('action', 'skipWord');
+        $max_timer = config('app.timer_seconds');
 
         if(in_array($action, ['guessWord', 'skipWord', 'getHint'])) {
             $word_change = false;
@@ -200,7 +201,7 @@ class PlayerController extends Controller
             $hint = null;
             $started_at = session('started_at');
             $time_elapsed = now()->timestamp - $started_at;
-            if($time_elapsed > (config('app.timer_seconds') + 10)) {
+            if($time_elapsed > ($max_timer + 10)) {
                 $request->session()->forget(['words', 'points_scored', 'current_index', 'started_at']);
                 return response()->json([
                     'status' => 'redirect',
@@ -213,9 +214,9 @@ class PlayerController extends Controller
                 case 'guessWord':
                     $guess = $request->get('guess', '');
                     $word = &$words[$current_index];
-                    logger(now()->timestamp . ' ' . $started_at . ' ' . config('app.timer_seconds') + 1 - $time_elapsed);
+                    logger(now()->timestamp . ' ' . $started_at . ' ' . $max_timer + 1 - $time_elapsed);
                     if(strtolower($guess) === strtolower($word['name'])) {
-                        $time_remaining = config('app.timer_seconds') + 1 - $time_elapsed;
+                        $time_remaining = $max_timer + 1 - $time_elapsed;
                         $time_remaining = min($time_remaining, config('app.timer_seconds'));
                         $time_remaining = max(1, $time_remaining);
                         $word_points = $word['points'] * ($word['guesses_remaining'] + $time_remaining);
