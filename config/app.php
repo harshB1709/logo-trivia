@@ -123,6 +123,14 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'total_words' => 21,
+
+    'guesses_per_word' => 3,
+
+    'delay_seconds' => 3,
+
+    'timer_seconds' => 20,
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -191,7 +199,7 @@ return [
     */
 
     'aliases' => [
-
+        'Agent' => Phattarachai\LaravelMobileDetect\Facades\Agent::class,
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
@@ -231,7 +239,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
     ],
 
 ];

@@ -7,7 +7,7 @@
                     <div class="stat-title text-xs sm:text-base">Word</div>
                     <div class="stat-value text-2xl sm:text-4xl">
                         <span class="countdown font-mono">
-                          <span :style="`--value:${wordNo};`"></span>/21
+                          <span :style="`--value:${wordNo};`"></span>/{{totalWords}}
                         </span>
                     </div>
                 </div>
@@ -19,7 +19,7 @@
                         </span>
                     </div>
                     <!-- <div class="stat-desc text-base-content">
-                        <progress :value="timer" max="30" class="progress w-16"></progress>
+                        <progress :value="timer" :max="maxTimer" class="progress w-16"></progress>
                     </div> -->
                 </div>
                 <div class="stat bg-base-100 place-items-center px-3 py-2 sm:px-6 sm:py-4 font-mono">
@@ -169,9 +169,9 @@
                     <template v-if="gameStartedTimer === null">
                         <p class="w-full text-center text-2xl font-bold mb-4 underline underline-offset-2 text-primary">PLEASE READ THESE INSTRUCTIONS VERY CAREFULLY!!</p>
                         <p class="list-item">You need to play the game in one go. Do NOT reload the page once the game starts.</p>
-                        <p class="list-item">You will be presented with 21 logos of various software development technologies.</p>
-                        <p class="list-item">Each logo has a point value, with the first 7 logos being worth 1 point, the next 7 being worth 2 points, and the last 7 being worth 3 points.</p>
-                        <p class="list-item">Once a logo is displayed, a 30-second timer will start. You have three attempts to guess the name of the technology and enter it into the input box before the timer runs out.</p>
+                        <p class="list-item">You will be presented with {{ totalWords }} logos of various software development technologies.</p>
+                        <p class="list-item">Each logo has a point value, with the first {{ wordsPerPoint }} logos being worth 1 point, the next {{ wordsPerPoint }} being worth 2 points, and the last {{ wordsPerPoint }} being worth 3 points.</p>
+                        <p class="list-item">Once a logo is displayed, a {{maxTimer}}-second timer will start. You have three attempts to guess the name of the technology and enter it into the input box before the timer runs out.</p>
                         <p class="list-item">The points you score for each technology will be calculated as follows: (remaining_number_of_guesses + remaining_seconds_on_the_timer) x logo_points.</p>
                         <p class="list-item">This means that your score will be directly influenced by the points associated with the logo, how quickly you answer, and the number of guesses you have left.</p>
                         <p class="list-item">Hints are available for some logos at the cost of one guess.</p>
@@ -259,6 +259,27 @@ export default {
         }
     },
 
+    props: {
+        totalWords: {
+            type: Number,
+            required: true
+        },
+        guessesPerWord: {
+            type: Number,
+            required: true
+        },
+        maxTimer: {
+            type: Number,
+            required: true
+        },
+    },
+
+    computed: {
+        wordsPerPoint() {
+            return this.totalWords/3
+        }
+    },
+
     mounted() {
         setTimeout(function() {
             this.showInstructionsModal = true;
@@ -308,7 +329,7 @@ export default {
             this.showColour = false;
             this.logoSvg = data.logo;
             this.charLength = data.charLength;
-            this.timer = 30;
+            this.timer = this.maxTimer;
             this.guesses = data.guessesRemaining;
             this.hasHint = data.hasHint;
             this.$nextTick(function() {

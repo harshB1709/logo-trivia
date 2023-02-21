@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "54e8cb0082707e06afb929e63dc7edc5",
+    "content-hash": "baeb58d582ca5c1efb049eefcc68b506",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3143,6 +3143,79 @@
                 "source": "https://github.com/paragonie/constant_time_encoding"
             },
             "time": "2022-06-14T06:56:20+00:00"
+        },
+        {
+            "name": "phattarachai/laravel-mobile-detect",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phattarachai/laravel-mobile-detect.git",
+                "reference": "08e1ed6f1b6d4aed3055cf1289e8f2303c0d9f24"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phattarachai/laravel-mobile-detect/zipball/08e1ed6f1b6d4aed3055cf1289e8f2303c0d9f24",
+                "reference": "08e1ed6f1b6d4aed3055cf1289e8f2303c0d9f24",
+                "shasum": ""
+            },
+            "require": {
+                "jaybizzle/crawler-detect": "^1.2",
+                "mobiledetect/mobiledetectlib": "^2.8.37",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^v2.5.2",
+                "phpunit/phpunit": "^9.5.13"
+            },
+            "suggest": {
+                "illuminate/support": "Required for laravel service providers"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Phattarachai\\LaravelMobileDetect\\AgentServiceProvider"
+                    ],
+                    "aliases": {
+                        "Agent": "Phattarachai\\LaravelMobileDetect\\Facades\\Agent"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phattarachai\\LaravelMobileDetect\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Phattarachai Chaiimongkol",
+                    "homepage": "https://phattarachai.dev"
+                }
+            ],
+            "description": "Desktop/mobile user agent parser with support for Laravel, based on MobileDetect",
+            "homepage": "https://github.com/phattarachai/laravel-moibile-detect",
+            "keywords": [
+                "Agent",
+                "browser",
+                "desktop",
+                "laravel",
+                "mobile",
+                "platform",
+                "user agent",
+                "useragent"
+            ],
+            "support": {
+                "issues": "https://github.com/phattarachai/laravel-mobile-detect/issues",
+                "source": "https://github.com/phattarachai/laravel-mobile-detect/tree/v1.0.1"
+            },
+            "time": "2022-02-10T17:47:23+00:00"
         },
         {
             "name": "phpoption/phpoption",

@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\AppSetting;
 use App\Http\Controllers\WordsController;
 use App\Http\Controllers\PlayerController;
 
@@ -19,12 +20,20 @@ use App\Http\Controllers\PlayerController;
 
 Route::middleware([])->group(function() {
     Route::get('/', function() {
-        return Inertia::render('Home');
-    });
+        $self_registration = AppSetting::where([
+            'key' => 'player_registration'
+        ])->first() ?? [
+            'value' => true,
+            'message' => ''
+        ];
+        return Inertia::render('Home', [
+            'registrationSetting' => $self_registration
+        ]);
+    })->name('home');
 
     Route::middleware(['app.setting:app_status'])->group(function() {
-        Route::get('/register', [PlayerController::class, 'home'])->middleware(['app.setting:player_registration'])->name('home');
-        Route::get('/{player}/game', [PlayerController::class, 'gamePage'])->name('game');
+        Route::get('/register', [PlayerController::class, 'home'])->middleware(['app.setting:player_registration', 'prevent.mobile']);
+        Route::get('/{player}/game', [PlayerController::class, 'gamePage'])->middleware(['prevent.mobile'])->name('game');
 
         Route::middleware(['player.identified'])->group(function() {
             Route::post('/start-game', [PlayerController::class, 'startGame'])->name('startGame');

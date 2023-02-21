@@ -23,7 +23,8 @@
                                 </p>
                             </div>
                             <p class="mb-4 text-primary text-3xl font-bold">Register now and don't miss this opportunity to win big!</p>
-                            <a href="/register" class="btn btn-primary">Register</a>
+                            <a href="/register" class="btn btn-primary" v-if="registrationSetting?.value">Register</a>
+                            <p v-else class="text-2xl text-error font-semibold">{{ registrationSetting.message }}</p>
                         </div>
                     </div>
                     <div class="mt-20 text-lg"><span class="font-bold text-primary">*Note:</span> In case of ties or any disputes, the final decision will be taken by the Ranium.</div>
@@ -42,6 +43,16 @@ export default {
         GameLayout,
         AuthenticationCardLogo
     },
+
+    props: {
+        registrationSetting: {
+            type: Object,
+            default: {
+                value: true,
+                message: ''
+            }
+        }
+    }
 }
 </script>
 

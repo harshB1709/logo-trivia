@@ -18,10 +18,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class PlayerController extends Controller
 {
-    const TOTAL_WORDS = 21;
-    const GUESSES_PER_WORD = 3;
-    const DELAY_SECONDS = 3;
-
     public function index(Request $request) {
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -122,7 +118,11 @@ class PlayerController extends Controller
         }
 
         session(['player_id' => $player->id ]);
-        return Inertia::render('Game');
+        return Inertia::render('Game', [
+            'totalWords' => config('app.total_words'),
+            'guessesPerWord' => config('app.guesses_per_word'),
+            'maxTimer' => config('app.timer_seconds')
+        ]);
     }
 
     public function startGame(Request $request) {
@@ -140,7 +140,7 @@ class PlayerController extends Controller
                         ['points', $i],
                         ['is_active', true]
                     ])
-                    ->limit(self::TOTAL_WORDS/3)
+                    ->limit(config('app.total_words')/3)
                     ->get()
             );
         }
@@ -159,7 +159,7 @@ class PlayerController extends Controller
                 'name' => $word->name,
                 'url' => $word->url,
                 'characters' => strlen($word->name),
-                'guesses_remaining' => self::GUESSES_PER_WORD,
+                'guesses_remaining' => config('app.guesses_per_word'),
                 'points' => $word->points,
                 'hint' => !empty($word->hint) ? $word->hint : null,
                 'is_completed' => false
@@ -170,7 +170,7 @@ class PlayerController extends Controller
             'words' => $words,
             'points_scored' => 0,
             'current_index' => 0,
-            'started_at' => now()->addSeconds(self::DELAY_SECONDS + 3)->timestamp
+            'started_at' => now()->addSeconds(config('app.delay_seconds') + 3)->timestamp
         ]);
 
         return response()->json([
@@ -184,9 +184,9 @@ class PlayerController extends Controller
     public function gameAction(Request $request) {
         function incrementIndex(&$current_index, &$word_change, &$game_over, &$started_at) {
             $current_index++;
-            $word_change = $current_index <= (PlayerController::TOTAL_WORDS - 1);
-            $game_over = $current_index > (PlayerController::TOTAL_WORDS - 1);
-            $started_at = now()->addSeconds(PlayerController::DELAY_SECONDS)->timestamp;
+            $word_change = $current_index <= (config('app.total_words') - 1);
+            $game_over = $current_index > (config('app.total_words') - 1);
+            $started_at = now()->addSeconds(config('app.delay_seconds'))->timestamp;
         }
 
         $action = $request->get('action', 'skipWord');
@@ -200,7 +200,7 @@ class PlayerController extends Controller
             $hint = null;
             $started_at = session('started_at');
             $time_elapsed = now()->timestamp - $started_at;
-            if($time_elapsed > 40) {
+            if($time_elapsed > (config('app.timer_seconds') + 10)) {
                 $request->session()->forget(['words', 'points_scored', 'current_index', 'started_at']);
                 return response()->json([
                     'status' => 'redirect',
@@ -213,10 +213,10 @@ class PlayerController extends Controller
                 case 'guessWord':
                     $guess = $request->get('guess', '');
                     $word = &$words[$current_index];
-                    logger(now()->timestamp . ' ' . $started_at . ' ' . 31 - $time_elapsed);
+                    logger(now()->timestamp . ' ' . $started_at . ' ' . config('app.timer_seconds') + 1 - $time_elapsed);
                     if(strtolower($guess) === strtolower($word['name'])) {
-                        $time_remaining = 31 - $time_elapsed;
-                        $time_remaining = min($time_remaining, 30);
+                        $time_remaining = config('app.timer_seconds') + 1 - $time_elapsed;
+                        $time_remaining = min($time_remaining, config('app.timer_seconds'));
                         $time_remaining = max(1, $time_remaining);
                         $word_points = $word['points'] * ($word['guesses_remaining'] + $time_remaining);
                         $points_scored += $word_points;
@@ -232,7 +232,7 @@ class PlayerController extends Controller
                         incrementIndex($current_index, $word_change, $game_over, $started_at);
                     }
                     else {
-                        $word['guesses_remaining']  = $word['guesses_remaining'] - 1;
+                        $word['guesses_remaining'] = $word['guesses_remaining'] - 1;
                         if($word['guesses_remaining'] == 0) {
                             incrementIndex($current_index, $word_change, $game_over, $started_at);
                         }
