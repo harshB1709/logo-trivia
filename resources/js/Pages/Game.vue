@@ -1,7 +1,7 @@
 <template>
     <div class="container min-h-screen flex flex-col justify-center items-center mx-auto ubuntu-mono">
         <div class="sm:max-w-3xl w-full flex flex-col items-center px-4 sm:px-0 gap-2 sm:gap-3">
-            <div class="stats stats-horizontal bg-base-content text-base-content grid-rows-2 sm:grid-rows-none w-full gap-[2px] divide-x-0 divide-y-0 border-2 border-base-content">
+            <div class="stats stats-horizontal bg-base-content text-base-content grid-rows-2 sm:grid-rows-none w-full gap-[2px] divide-x-0 divide-y-0 border-2 border-base-content no-scrollbar">
 
                 <div class="stat bg-base-100 place-items-center px-3 py-2 sm:px-6 sm:py-4">
                     <div class="stat-title text-xs sm:text-base">Word</div>
@@ -36,12 +36,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="stat bg-base-100 place-items-center px-3 py-2 sm:px-6 sm:py-4 font-mono">
+                <div class="stat bg-base-100 place-items-center px-3 py-2 sm:px-6 sm:py-4 font-mono no-scrollbar">
                     <div class="stat-title text-xs sm:text-base">Guesses</div>
-                    <div class="stat-value relative text-2xl sm:text-4xl w-full">
+                    <div class="stat-value relative text-2xl sm:text-4xl w-full no-scrollbar">
                         <div class="w-full text-center">{{ guesses || '-' }}</div>
                         <div
-                            class="absolute left-0 top-0 w-full text-center text-error no-scrollbar"
+                            class="absolute left-0 top-0 w-full text-center text-error"
                             :class="{
                                 'animate__animated animate__fadeOutDown': guessesDecreased
                             }"
@@ -202,10 +202,9 @@
                 <div class="py-4 w-full flex flex-col justify-center text-center">
                     <p class="text-2xl">Final Score</p>
                     <h3 class="font-bold text-primary text-6xl mt-4">{{ points }}</h3>
-                    <p class="mt-6">Check the leaderboard to check where you stand!</p>
+                    <p class="mt-6">Please wait for the announcement to find out the winner!</p>
                 </div>
                 <div class="modal-action justify-center mt-2 gap-2">
-                    <button class="btn btn-outline btn-primary" @click="$inertia.visit('/leaderboard')">Leaderboard</button>
                     <button class="btn btn-outline btn-primary" @click="openAboutModal">About</button>
                 </div>
             </label>

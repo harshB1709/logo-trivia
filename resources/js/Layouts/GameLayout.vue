@@ -11,14 +11,12 @@
                 <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                     <li><a href="javascript:void(0);" @click="openAboutModal">About</a></li>
                     <li><a href="/register">Register</a></li>
-                    <li><a href="/leaderboard">Leaderboard</a></li>
                 </ul>
             </div>
             <div class="hidden lg:flex">
                 <ul class="menu menu-horizontal px-1">
                     <li><a href="javascript:void(0);" @click="openAboutModal">About</a></li>
                     <li><a href="/register">Register</a></li>
-                    <li><a href="/leaderboard">Leaderboard</a></li>
                 </ul>
             </div>
         </div>
