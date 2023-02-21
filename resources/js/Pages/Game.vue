@@ -168,7 +168,8 @@
                 <div class="py-4 pl-3 md:pl-7">
                     <template v-if="gameStartedTimer === null">
                         <p class="w-full text-center text-2xl font-bold mb-4 underline underline-offset-2 text-primary">PLEASE READ THESE INSTRUCTIONS VERY CAREFULLY!!</p>
-                        <p class="list-item">In this game, you will be presented with 21 logos of various software development technologies.</p>
+                        <p class="list-item">You need to play the game in one go. Do NOT reload the page once the game starts.</p>
+                        <p class="list-item">You will be presented with 21 logos of various software development technologies.</p>
                         <p class="list-item">Each logo has a point value, with the first 7 logos being worth 1 point, the next 7 being worth 2 points, and the last 7 being worth 3 points.</p>
                         <p class="list-item">Once a logo is displayed, a 30-second timer will start. You have three attempts to guess the name of the technology and enter it into the input box before the timer runs out.</p>
                         <p class="list-item">The points you score for each technology will be calculated as follows: (remaining_number_of_guesses + remaining_seconds_on_the_timer) x logo_points.</p>
