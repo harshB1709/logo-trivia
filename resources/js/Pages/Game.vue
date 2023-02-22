@@ -289,9 +289,9 @@ export default {
 
         (async () => {
             let time = Date.now();
-            this.fps = await refreshRate(120);
+            this.fps = await refreshRate(200);
             time = Date.now() - time;
-            // console.log(this.fps, time, 120);
+            // console.log(this.fps, time, 200);
         })();
     },
 
