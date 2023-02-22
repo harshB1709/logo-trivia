@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Phattarachai\LaravelMobileDetect\Agent;
 
-class PreventMobile
+class EnsureDeviceIsAllowed
 {
     /**
      * Handle an incoming request.
@@ -18,8 +18,9 @@ class PreventMobile
     public function handle(Request $request, Closure $next)
     {
         $agent = new Agent();
-        if($agent->isPhone() && !$request->user())
-            return abort(400, "This link is only accessible with a desktop device.");
+        // Players should only use mobile phones
+        if(!$agent->isPhone() && !$request->user())
+            return abort(400, "Please use a mobile phone to play the game!");
         return $next($request);
     }
 }

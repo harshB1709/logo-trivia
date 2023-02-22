@@ -68,6 +68,6 @@ class Kernel extends HttpKernel
         'player.identified' => \App\Http\Middleware\PlayerIdentified::class,
         'app.setting' => \App\Http\Middleware\AppSetting::class,
         'game.ongoing' => \App\Http\Middleware\GameInProgress::class,
-        'prevent.mobile' => \App\Http\Middleware\PreventMobile::class
+        'device_allowed' => \App\Http\Middleware\EnsureDeviceIsAllowed::class
     ];
 }
