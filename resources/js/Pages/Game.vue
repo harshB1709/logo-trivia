@@ -212,6 +212,7 @@
         </div>
 
         <about-modal
+            :parentFps="fps"
             :modelValue="showAboutModal"
             @update:modelValue="handleAboutModalShow"
         />
@@ -220,7 +221,8 @@
 
 <script>
 import DialogModal from "@/Components/DialogModal.vue";
-import AboutModal from "@/Components/AboutModal.vue"
+import AboutModal from "@/Components/AboutModal.vue";
+import refreshRate from "refresh-rate";
 import Vivus from "vivus";
 import 'animate.css';
 
@@ -247,7 +249,7 @@ export default {
             hint: null,
             hasHint: false,
             drawing: false,
-            refreshRate: null,
+            fps: 2,
             wordNo: 0,
             gameStartedTimer: null,
             gameStartedTimerSetInterval: null,
@@ -283,15 +285,14 @@ export default {
     mounted() {
         setTimeout(function() {
             this.showInstructionsModal = true;
-        }.bind(this), 500)
+        }.bind(this), 500);
 
-        this.getFPS()
-            .then((fps) => {
-                this.refreshRate = fps ?? 60;
-            })
-            .catch((err) => {
-                this.refreshRate = 60;
-            });
+        (async () => {
+            let time = Date.now();
+            this.fps = await refreshRate(120);
+            time = Date.now() - time;
+            // console.log(this.fps, time, 120);
+        })();
     },
 
     methods: {
@@ -354,7 +355,7 @@ export default {
             this.actionsDisabled = true;
             this.showStrokeInternal = true;
             const vivus = new Vivus(this.$refs?.logoSvg?.querySelector('svg'), {
-                duration: 165,
+                duration: this.fps ? parseInt(this.fps * 2.75) : 165,
                 type: 'oneByOne'
             }, (obj) => {
                 this.showColour = true;
@@ -520,14 +521,6 @@ export default {
                 this.startTimerInterval();
             }
             this.focusOnInput();
-        },
-
-        getFPS() {
-            return new Promise(resolve =>
-              requestAnimationFrame(t1 =>
-                requestAnimationFrame(t2 => resolve(1000 / (t2 - t1)))
-              )
-            )
         },
 
         openAboutModal() {

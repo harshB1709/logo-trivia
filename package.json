@@ -26,6 +26,7 @@
         "animate.css": "^4.1.1",
         "animejs": "^3.2.1",
         "daisyui": "^2.50.0",
+        "refresh-rate": "^1.0.0",
         "vivus": "^0.4.6"
     }
 }

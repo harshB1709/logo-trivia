@@ -45,13 +45,15 @@
 
 <script>
 import Vivus from "vivus";
+import refreshRate from "refresh-rate";
 
 export default {
     data() {
         return {
             showColour: false,
             animateSetTimeout: null,
-            vivus: null
+            vivus: null,
+            fps: this.parentFps
         }
     },
 
@@ -59,19 +61,29 @@ export default {
         modelValue: {
             type: Boolean,
             default: false
+        },
+        parentFps: {
+            type: Number,
+            default: null
+        }
+    },
+
+    mounted() {
+        if(this.fps === null) {
+            (async () => {
+
+                let time = Date.now();
+                this.fps = await refreshRate(120);
+                time = Date.now() - time;
+                // console.log(this.fps, time, 120);
+            })();
         }
     },
 
     watch: {
         modelValue(newVal, oldVal) {
             if(newVal) {
-                this.getFPS()
-                    .then((fps) => {
-                        this.animateLogo(fps)
-                    })
-                    .catch((err) => {
-                        this.showColour = true;
-                    });
+                this.animateLogo()
             }
             else {
                 this.stopAnimation();
@@ -86,24 +98,16 @@ export default {
             this.$emit('update:modelValue', false);
         },
 
-        getFPS() {
-            return new Promise(resolve =>
-              requestAnimationFrame(t1 =>
-                requestAnimationFrame(t2 => resolve(1000 / (t2 - t1)))
-              )
-            )
-        },
-
-        animateLogo(fps) {
+        animateLogo() {
             if(!this.vivus) {
                 this.vivus = new Vivus(this.$refs?.raniumLogo, {
-                    duration: fps ? (fps * 2.5) : 165,
+                    duration: this.fps ? parseInt(this.fps * 5) : 165,
                     type: 'oneByOne'
                 }, (obj) => {
                     this.showColour = true;
                     this.animateSetTimeout = setTimeout(function() {
                         this.stopAnimation();
-                        this.animateLogo(fps);
+                        this.animateLogo();
                     }.bind(this), 5000)
                 });
             }

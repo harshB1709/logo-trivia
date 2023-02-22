@@ -19,7 +19,7 @@ class EnsureDeviceIsAllowed
     {
         $agent = new Agent();
         // Players should only use mobile phones
-        if(!$agent->isPhone() && !$request->user())
+        if(!$agent->isPhone() && !$request->user() && config('app.env') === 'production')
             return abort(400, "Please use a mobile phone to play the game!");
         return $next($request);
     }
