@@ -27,7 +27,8 @@ class WordsController extends Controller
 
         $words = QueryBuilder::for(Word::class)
                     ->allowedSorts(['name', 'points'])
-                    ->allowedFilters(['name', 'is_active', $globalSearch])
+                    ->allowedFilters(['name', 'points', 'is_active', $globalSearch])
+                    ->orderBy('id')
                     ->paginate()
                     ->withQueryString();
 
