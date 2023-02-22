@@ -46,4 +46,6 @@ Route::middleware([])->group(function() {
         Route::get('/players', [PlayerController::class, 'index'])->name('players');
         Route::get('/leaderboard', [PlayerController::class, 'leaderboard']);
     });
+
+    Route::get('/tech-wall', [WordsController::class, 'techWall'])->name('tech-wall');
 });
