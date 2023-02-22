@@ -75,7 +75,7 @@ export default {
                 let time = Date.now();
                 this.fps = await refreshRate(120);
                 time = Date.now() - time;
-                // console.log(this.fps, time, 120);
+                console.log(this.fps, time, 120);
             })();
         }
     },
@@ -101,7 +101,7 @@ export default {
         animateLogo() {
             if(!this.vivus) {
                 this.vivus = new Vivus(this.$refs?.raniumLogo, {
-                    duration: this.fps ? parseInt(this.fps * 5) : 165,
+                    duration: this.fps ? parseInt(this.fps * 5) : 300,
                     type: 'oneByOne'
                 }, (obj) => {
                     this.showColour = true;
