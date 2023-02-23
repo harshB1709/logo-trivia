@@ -42,6 +42,7 @@ class PlayerController extends Controller
                     ])
                     ->defaultSort($custom_sort)
                     ->allowedFilters(['name', 'email', 'display_name', $globalSearch])
+                    ->orderBy('id')
                     ->paginate()
                     ->withQueryString();
 
