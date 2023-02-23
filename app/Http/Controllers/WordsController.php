@@ -105,4 +105,14 @@ class WordsController extends Controller
         }
         abort(400);
     }
+
+    public function techWall(Request $request) {
+        $word_names = ['laravel', 'vue', 'php', 'html5', 'css3', 'javascript'];
+        $words = Word::whereIn('name', $word_names)->select('url')->get();
+        $words = $words->map(fn($word) => $word->svg)->toArray();
+
+        return Inertia::render('TechWall', [
+            'svgs' => $words
+        ]);
+    }
 }
