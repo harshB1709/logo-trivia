@@ -402,7 +402,6 @@ export default {
             if(!this.actionsDisabled) {
                 this.$refs.guessButton?.classList?.add('loading');
                 this.clearTimerInterval();
-                const now = this.timer;
                 this.actionsDisabled = true;
                 axios
                     .post('/game-action', {
@@ -412,10 +411,6 @@ export default {
                     .then((res) => {
                         this.lastAction = 'guessWord';
                         this.handleGameActionResponse(res.data)
-                        // if(Math.abs(now - res.data.timer) > 2) {
-                        //     console.log(now, res.data.timer, this.guesses);
-                        // }
-                        console.log(now, res.data.timer, this.guesses);
                     })
                     .finally(()=> {
                         this.actionsDisabled = false;

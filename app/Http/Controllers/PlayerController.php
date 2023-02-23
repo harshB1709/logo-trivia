@@ -210,8 +210,7 @@ class PlayerController extends Controller
             $points_scored = session('points_scored', 0);
             $hint = null;
             $started_at = session('started_at');
-            $time_elapsed = now()->timestamp - $started_at - 1 + $words[$current_index]['guesses_remaining'] - config('app.guesses_per_word');
-            $ts = null;
+            $time_elapsed = now()->timestamp - $started_at - 2 + $words[$current_index]['guesses_remaining'] - config('app.guesses_per_word');
             if($time_elapsed > ($max_timer + 10)) {
                 $request->session()->forget(['words', 'points_scored', 'current_index', 'started_at']);
                 return response()->json([
@@ -225,7 +224,6 @@ class PlayerController extends Controller
                 case 'guessWord':
                     $guess = $request->get('guess', '');
                     $word = &$words[$current_index];
-                    $ts = $max_timer - $time_elapsed;
                     // logger(now()->timestamp . ' ' . $started_at . ' ' . $max_timer - $time_elapsed);
                     if(strtolower($guess) === strtolower($word['name'])) {
                         $time_remaining = $max_timer - $time_elapsed;
@@ -290,8 +288,7 @@ class PlayerController extends Controller
                 'logo' => $word_change ? Storage::get($curr_word['url']) : null,
                 'charLength' => $word_change ? $curr_word['characters'] : null,
                 'hint' => $hint,
-                'hasHint' => !$game_over && ($curr_word['guesses_remaining'] > 1) && ((bool) $curr_word['hint']),
-                'timer' => $ts
+                'hasHint' => !$game_over && ($curr_word['guesses_remaining'] > 1) && ((bool) $curr_word['hint'])
             ]);
         }
         abort(404);
