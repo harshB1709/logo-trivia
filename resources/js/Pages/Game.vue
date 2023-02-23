@@ -402,6 +402,7 @@ export default {
             if(!this.actionsDisabled) {
                 this.$refs.guessButton?.classList?.add('loading');
                 this.clearTimerInterval();
+                const now = this.timer;
                 this.actionsDisabled = true;
                 axios
                     .post('/game-action', {
@@ -411,6 +412,9 @@ export default {
                     .then((res) => {
                         this.lastAction = 'guessWord';
                         this.handleGameActionResponse(res.data)
+                        if(Math.abs(now - res.data.timer) > 2) {
+                            console.log(now, res.data.timer, this.guesses);
+                        }
                     })
                     .finally(()=> {
                         this.actionsDisabled = false;
@@ -489,7 +493,7 @@ export default {
                 this.pointsAdded = null;
             }.bind(this), 1000);
             this.points = data.points;
-            if(this.lastAction === 'guessWord' && (this.guesses > (data.guessesRemaining || 0) || this.guesses === 1 && data.guessesRemaining === 3 && data.wordChange)) {
+            if(this.lastAction === 'guessWord' && !this.pointsAdded) {
                 this.guessesDecreased = 1;
                 setTimeout(function() {
                     this.guessesDecreased = null;
