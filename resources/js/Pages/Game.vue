@@ -203,10 +203,11 @@
                 <div class="py-4 w-full flex flex-col justify-center text-center">
                     <p class="text-2xl">Final Score</p>
                     <h3 class="font-bold text-primary text-6xl mt-4">{{ points }}</h3>
-                    <p class="mt-6">Please wait for the announcement to find out the winner!</p>
+                    <p class="mt-6">Please wait for the announcement to find out the winner! Until then checkout the tech wall and create your own custom background.</p>
                 </div>
                 <div class="modal-action justify-center mt-2 gap-2">
                     <button class="btn btn-outline btn-primary" @click="openAboutModal">About</button>
+                    <button class="btn btn-outline btn-primary" @click="$inertia.visit('/tech-wall')">Tech Wall</button>
                 </div>
             </label>
         </div>
