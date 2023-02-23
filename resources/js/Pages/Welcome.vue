@@ -1,5 +1,5 @@
 <template>
-    <div class="container min-h-screen flex flex-col justify-center items-center mx-auto px-4 ubuntu-mono">
+    <div class="container min-h-screen flex flex-col justify-center items-center mx-auto px-4 ubuntu-mono bg-wall">
         <div class="sm:max-w-md w-full rounded-xl flex flex-col items-center">
             <h1 class="whitespace-nowrap font-bold text-center text-3xl mb-2 text-primary">
                 <img src="/images/ranium-logo-white.png" class="w-28 mx-auto">

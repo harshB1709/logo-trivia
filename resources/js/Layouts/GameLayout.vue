@@ -1,6 +1,6 @@
 <template>
-    <div class="min-h-screen ubuntu-mono">
-        <div class="navbar bg-base-200 justify-between">
+    <div class="min-h-screen ubuntu-mono bg-wall">
+        <div class="navbar bg-base-200 bg-opacity-90 justify-between">
             <div class="navbar-start">
 <!--                <a class="btn btn-ghost normal-case text-xl text-primary" href="/">Ranium's Tech Pictionary</a>-->
             </div>
@@ -13,7 +13,7 @@
                     <li v-if="$page.props?.registrationSetting?.value ?? true"><a href="/register">Register</a></li>
                 </ul>
             </div>
-            <div class="hidden lg:flex">
+            <div class="hidden lg:flex lg:gap-2">
                 <ul class="menu menu-horizontal px-1">
                     <li><a href="javascript:void(0);" @click="openAboutModal">About</a></li>
                     <li v-if="$page.props?.registrationSetting?.value ?? true"><a href="/register">Register</a></li>

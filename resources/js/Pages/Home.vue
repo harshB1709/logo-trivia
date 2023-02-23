@@ -1,6 +1,6 @@
 <template>
     <game-layout>
-        <div class="hero min-h-remaining bg-base-200 ubuntu-mono">
+        <div class="hero min-h-remaining ubuntu-mono">
             <div class="hero-content text-center">
                 <div class="max-w-4xl">
                     <h1 class="text-5xl font-bold text-primary mb-5 w-fit mx-auto">
@@ -9,7 +9,7 @@
                     </h1>
                     <div class="flex flex-col sm:flex-row items-center gap-3">
                         <img src="/images/iphone-14_low.png" class="max-w-100 sm:max-w-xs rounded-lg img-shadow">
-                        <div>
+                        <div class="p-4 rounded-lg bg-base-200 bg-opacity-90">
                             <h1 class="text-3xl font-bold mb-4 underline">Win an iPhone 14* @ LaraconIN 2023</h1>
                             <div class="text-left text-lg">
                                 <p class="mb-2">
@@ -27,7 +27,7 @@
                             <p v-else class="text-2xl text-error font-semibold">{{ registrationSetting.message }}</p>
                         </div>
                     </div>
-                    <div class="mt-20 text-lg"><span class="font-bold text-primary">*Note:</span> In case of ties or any disputes, the final decision will be taken by the Ranium.</div>
+                    <div class="mt-20 text-lg p-4 bg-base-200 bg-opacity-90 rounded-lg"><span class="font-bold text-primary">*Note:</span> In case of ties or any disputes, the final decision will be taken by the Ranium.</div>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <template>
-    <div class="container min-h-screen flex flex-col justify-center items-center mx-auto ubuntu-mono">
-        <div class="sm:max-w-3xl w-full flex flex-col items-center px-4 sm:px-0 gap-2 sm:gap-3">
+    <div class="container min-h-screen flex flex-col justify-center items-center mx-auto ubuntu-mono bg-wall">
+        <div class="sm:max-w-3xl w-full flex flex-col items-center gap-2 sm:gap-3 bg-base-100 p-4 rounded-lg">
             <div class="stats stats-horizontal bg-base-content text-base-content grid-rows-2 sm:grid-rows-none w-full gap-[2px] divide-x-0 divide-y-0 border-2 border-base-content no-scrollbar">
 
                 <div class="stat bg-base-100 place-items-center px-3 py-2 sm:px-6 sm:py-4">
