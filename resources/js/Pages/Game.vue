@@ -412,9 +412,10 @@ export default {
                     .then((res) => {
                         this.lastAction = 'guessWord';
                         this.handleGameActionResponse(res.data)
-                        if(Math.abs(now - res.data.timer) > 2) {
-                            console.log(now, res.data.timer, this.guesses);
-                        }
+                        // if(Math.abs(now - res.data.timer) > 2) {
+                        //     console.log(now, res.data.timer, this.guesses);
+                        // }
+                        console.log(now, res.data.timer, this.guesses);
                     })
                     .finally(()=> {
                         this.actionsDisabled = false;
