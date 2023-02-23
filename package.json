@@ -26,7 +26,8 @@
         "animate.css": "^4.1.1",
         "animejs": "^3.2.1",
         "daisyui": "^2.50.0",
-        "html2canvas": "^1.4.1",
+        "file-saver": "^2.0.5",
+        "html-to-image": "^1.11.11",
         "refresh-rate": "^1.0.0",
         "vivus": "^0.4.6"
     }

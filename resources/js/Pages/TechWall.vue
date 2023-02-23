@@ -181,17 +181,19 @@
 </template>
 
 <script>
-import html2canvas from 'html2canvas';
+import * as htmlToImage from 'html-to-image';
+import { toBlob } from 'html-to-image';
+import { saveAs } from 'file-saver';
 
 export default {
     components: {
     },
 
     created() {
-      // window.addEventListener("resize", this.updateKey);
+      window.addEventListener("resize", this.updateKey);
     },
     destroyed() {
-      // window.removeEventListener("resize", this.updateKey);
+      window.removeEventListener("resize", this.updateKey);
     },
 
     mounted() {
@@ -323,37 +325,21 @@ export default {
         },
 
         captureImage() {
-            // const currControls = this.controlsHidden;
-            // this.controlsHidden = true;
-            let svgElements = this.$refs.wall.querySelectorAll('svg');
-            svgElements.forEach(function(item) {
-                item.setAttribute("width", item.getBoundingClientRect().width);
-                item.setAttribute("height", item.getBoundingClientRect().height);
-                item.setAttribute("stroke", 'black');
-                item.setAttribute("stroke-width", '2%');
-                item.setAttribute("fill-opacity", '0');
-                item.style.width = null;
-                item.style.height= null;
-            });
+            const currControls = this.controlsHidden;
+            this.controlsHidden = true;
 
             setTimeout(function() {
-                html2canvas(this.$refs.wall)
-                    .then(canvas => {
-                        canvas.style.display = 'none'
-                        document.body.appendChild(canvas)
-                        return canvas
+                htmlToImage.toBlob(this.$refs.wall)
+                    .then(function (blob) {
+                        saveAs(blob, 'tech-wall.png');
                     })
-                    .then(canvas => {
-                        const image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
-                        const a = document.createElement('a')
-                        a.setAttribute('download', 'my-image.png')
-                        a.setAttribute('href', image)
-                        a.click()
-                        canvas.remove()
-                        // setTimeout(function() {
-                        //     this.controlsHidden = currControls;
-                        // }.bind(this), 300)
-                    })
+                    .catch(function (error) {
+                        console.error('oops, something went wrong!', error);
+                    });
+
+                setTimeout(function() {
+                    this.controlsHidden = currControls;
+                }.bind(this), 300)
             }.bind(this), 300)
         }
     }
