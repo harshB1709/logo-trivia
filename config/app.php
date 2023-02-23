@@ -131,6 +131,8 @@ return [
 
     'timer_seconds' => 20,
 
+    'invite_validity_mins' => 15,
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

@@ -39,9 +39,13 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <span>
-                            Thank you! Please check your email inbox for the the link to start the game.
-                        </span>
+                        <div>
+                            <span>
+                                Thank you! Please check your email inbox for the the link to start the game.
+                            </span>
+                            <br>
+                            <p><span class="text-lg font-semibold">Note: </span>This link is valid only for the next {{inviteValidityMins}} mins, please start the game before the link expires.</p>
+                        </div>
                     </div>
                 </div>
                 <button
@@ -84,6 +88,13 @@ export default {
             processing: false,
             errors: null,
             registered: false,
+        }
+    },
+
+    props: {
+        inviteValidityMins: {
+            type: Number,
+            default: 15
         }
     },
 

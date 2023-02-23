@@ -15,7 +15,12 @@ class Player extends Model
         'name',
         'display_name',
         'email',
-        'phone'
+        'phone',
+        'invite_expires_at'
+    ];
+
+    protected $casts = [
+        'invite_expires_at' => 'datetime',
     ];
 
     protected function displayName(): Attribute

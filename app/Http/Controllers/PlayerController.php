@@ -72,6 +72,9 @@ class PlayerController extends Controller
     public function resetGame(Player $player, Request $request) {
         $player->game()?->delete();
 
+        $player->invite_expires_at = now()->addMinutes(config('app.invite_validity_mins'));
+        $player->save();
+
         return response()->json([
             'status' => 'success',
             'message' => 'Game Reset Successfully'
@@ -79,7 +82,9 @@ class PlayerController extends Controller
     }
 
     public function home(Request $request) {
-        return Inertia::render('Welcome');
+        return Inertia::render('Welcome', [
+            'inviteValidityMins' => config('app.invite_validity_mins')
+        ]);
     }
 
     public function register(Request $request) {
@@ -110,12 +115,16 @@ class PlayerController extends Controller
         if($request->user())
             $player->game()?->delete();
 
-        if ((!$request->hasValidSignature() && !$request->user())) {
+        if (!$request->hasValidSignature() && !$request->user()) {
             abort(401);
         }
 
         if($player->game) {
-            abort(400, 'Sorry, you have already played the game. This url isn\'t valid anymore');
+            abort(400, 'Sorry, you have already played the game. This link isn\'t valid anymore');
+        }
+
+        if(!$request->user() && !is_null($player->invite_expires_at) && $player->invite_expires_at < now()) {
+            abort(400, 'Sorry, this link has expired.');
         }
 
         session(['player_id' => $player->id ]);
