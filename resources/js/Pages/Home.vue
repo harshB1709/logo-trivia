@@ -13,16 +13,13 @@
                             <h1 class="text-3xl font-bold mb-4 underline">Win an iPhone 14* @ LaraconIN 2023</h1>
                             <div class="text-left text-lg">
                                 <p class="mb-2">
-                                    <span class="font-bold text-primary"> > </span> Register to play the Ranium's Tech Pictionary game.
-                                </p>
-                                <p class="mb-2">
                                     <span class="font-bold text-primary"> > </span> Test your knowledge of the technologies by recognizing as many logos as possible and earn points. The more points you earn, the higher your chances of winning the latest iPhone 14!
                                 </p>
                                 <p class="mb-4">
                                     <span class="font-bold text-primary"> > </span> Wait for the announcement at the end of Day 2 to find out the winner.
                                 </p>
                             </div>
-                            <p class="mb-4 text-primary text-3xl font-bold">Register now and don't miss this opportunity to win big!</p>
+                            <p class="mb-4 text-primary text-3xl font-bold" v-if="registrationSetting?.value">Register now and don't miss this opportunity to win big!</p>
                             <a href="/register" class="btn btn-primary" v-if="registrationSetting?.value">Register</a>
                             <p v-else class="text-2xl text-error font-semibold">{{ registrationSetting.message }}</p>
                         </div>
