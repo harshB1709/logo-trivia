@@ -129,7 +129,7 @@ return [
 
     'delay_seconds' => 3,
 
-    'timer_seconds' => 20,
+    'timer_seconds' => 25,
 
     'invite_validity_mins' => 15,
 

@@ -15,8 +15,11 @@
                                 <p class="mb-2">
                                     <span class="font-bold text-primary"> > </span> Test your knowledge of the technologies by recognizing as many logos as possible and earn points. The more points you earn, the higher your chances of winning the latest iPhone 14!
                                 </p>
-                                <p class="mb-4">
+                                <p class="mb-2">
                                     <span class="font-bold text-primary"> > </span> Wait for the announcement at the end of Day 2 to find out the winner.
+                                </p>
+                                <p class="mb-4 text-info">
+                                    <span class="font-bold">Important: </span>Game ends today by the end of the last tea break!
                                 </p>
                             </div>
                             <p class="mb-4 text-primary text-3xl font-bold" v-if="registrationSetting?.value">Register now and don't miss this opportunity to win big!</p>
