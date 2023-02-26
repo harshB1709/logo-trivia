@@ -18,9 +18,6 @@
                                 <p class="mb-2">
                                     <span class="font-bold text-primary"> > </span> Wait for the announcement at the end of Day 2 to find out the winner.
                                 </p>
-                                <p class="mb-4 text-info">
-                                    <span class="font-bold">Important: </span>Game ends today by the end of the last tea break!
-                                </p>
                             </div>
                             <p class="mb-4 text-primary text-3xl font-bold" v-if="registrationSetting?.value">Register now and don't miss this opportunity to win big!</p>
                             <a href="/register" class="btn btn-primary" v-if="registrationSetting?.value">Register</a>
