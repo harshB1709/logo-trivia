@@ -32,8 +32,8 @@ Route::middleware([])->group(function() {
     })->name('home');
 
     Route::middleware(['app.setting:app_status'])->group(function() {
-        Route::get('/register', [PlayerController::class, 'home'])->middleware(['app.setting:player_registration', 'device_allowed']);
-        Route::get('/{player}/game', [PlayerController::class, 'gamePage'])->middleware(['device_allowed'])->name('game');
+        Route::get('/register', [PlayerController::class, 'home'])->middleware(['app.setting:player_registration']);
+        Route::get('/{player}/game', [PlayerController::class, 'gamePage'])->name('game');
 
         Route::middleware(['player.identified'])->group(function() {
             Route::post('/start-game', [PlayerController::class, 'startGame'])->name('startGame');
