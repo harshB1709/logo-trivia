@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { Inertia } from '@inertiajs/inertia';
-import { Head, Link, usePage } from '@inertiajs/inertia-vue3';
+import { router } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
 import Banner from '@/Components/Banner.vue';
 import Dropdown from '@/Components/Dropdown.vue';
@@ -17,23 +17,23 @@ defineProps({
 const showingNavigationDropdown = ref(false);
 
 const appStatus = computed(() => {
-    return usePage().props.value.appSettings['app_status']['value'];
+    return usePage().props.appSettings['app_status']['value'];
 })
 
 const playerRegistration = computed(() => {
-    return usePage().props.value.appSettings['player_registration']['value'];
+    return usePage().props.appSettings['player_registration']['value'];
 })
 
 const appStatusMessage = computed(() => {
-    return usePage().props.value.appSettings['app_status']['message'];
+    return usePage().props.appSettings['app_status']['message'];
 })
 
 const playerRegistrationMessage = computed(() => {
-    return usePage().props.value.appSettings['player_registration']['message'];
+    return usePage().props.appSettings['player_registration']['message'];
 })
 
 const toggleSetting = (setting) => {
-    const val = usePage().props.value.appSettings[setting];
+    const val = usePage().props.appSettings[setting];
     const message = val['value'] ? prompt('Enter the error message to be shown', val['message'] ?? "The game is not available as of now. Please try again later") : true;
     const conf = !val['value'] ? confirm(`Are you sure about toggling the ${setting.replace('_', ' ')}`) : true;
     if(message && conf) {
@@ -48,14 +48,14 @@ const toggleSetting = (setting) => {
         axios
             .post(`/api/toggle-setting`, payload)
             .then((res) => {
-                usePage().props.value.appSettings[setting]['value'] = res.data.value;
-                usePage().props.value.appSettings[setting]['message'] = res.data.settingMessage;
+                usePage().props.appSettings[setting]['value'] = res.data.value;
+                usePage().props.appSettings[setting]['message'] = res.data.settingMessage;
             });
     }
 }
 
 const switchToTeam = (team) => {
-    Inertia.put(route('current-team.update'), {
+    router.put(route('current-team.update'), {
         team_id: team.id,
     }, {
         preserveState: false,
@@ -63,7 +63,7 @@ const switchToTeam = (team) => {
 };
 
 const logout = () => {
-    Inertia.post(route('logout'));
+    router.post(route('logout'));
 };
 </script>
 
