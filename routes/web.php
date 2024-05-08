@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\AppSetting;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WordsController;
 use App\Http\Controllers\PlayerController;
 
@@ -19,17 +20,7 @@ use App\Http\Controllers\PlayerController;
  */
 
 Route::middleware([])->group(function() {
-    Route::get('/', function() {
-        $self_registration = AppSetting::where([
-            'key' => 'player_registration'
-        ])->first() ?? [
-            'value' => true,
-            'message' => ''
-        ];
-        return Inertia::render('Home', [
-            'registrationSetting' => $self_registration
-        ]);
-    })->name('home');
+    Route::get('/', [HomeController::class, 'home'])->name('home');
 
     Route::middleware(['app.setting:app_status'])->group(function() {
         Route::get('/register', [PlayerController::class, 'home'])->middleware(['app.setting:player_registration']);
