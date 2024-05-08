@@ -27,6 +27,7 @@
         "file-saver": "^2.0.5",
         "html-to-image": "^1.11.11",
         "refresh-rate": "^1.0.0",
-        "vivus": "^0.4.6"
+        "vivus": "^0.4.6",
+        "ziggy-js": "^2.1.0"
     }
 }
