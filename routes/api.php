@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->group(function() {
 
     Route::post('/word/store', [WordsController::class, 'store']);
     Route::post('/word/{word}/update', [WordsController::class, 'update']);
-    Route::post('/toggle-setting', [WordsController::class, 'toggleSetting']);
+    Route::post('/toggle-setting', [WordsController::class, 'toggleSetting'])->name('toggle-setting');
     Route::post('/{player}/send-invite', [PlayerController::class, 'sendInvite']);
     Route::post('/{player}/reset-game', [PlayerController::class, 'resetGame']);
 });
