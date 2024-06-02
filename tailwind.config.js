@@ -30,10 +30,11 @@ module.exports = {
         themes: [
             {
                 ranium: {
-                    ...require("daisyui/src/colors/themes")["[data-theme=halloween]"],
+                    ...require("daisyui/src/theming/themes")["[data-theme=halloween]"],
                     primary: "#006DF5"
                 },
             },
+            "corporate"
         ],
     },
 

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->text('home_content')->nullable();
+            $table->string('background_img_url')->nullable();
             $table->boolean('is_active');
             $table->timestamps();
         });
