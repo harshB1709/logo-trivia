@@ -30,7 +30,7 @@ class Event extends Model
     protected function backgroundImgUrl(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => $value ? Storage::disk('public')->url($value) : null,
+            get: fn (?string $value) => $value ? Storage::disk('public')->url($value) : null,
         );
     }
 
@@ -40,5 +40,13 @@ class Event extends Model
 
     public function words() {
         return $this->belongsToMany(Word::class, 'wordset_words', 'wordset_id', 'word_id', 'wordset_id', 'id');
+    }
+
+    public function appSettings() {
+        return $this->hasMany(AppSetting::class);
+    }
+
+    public function players() {
+        return $this->hasMany(Player::class);
     }
 }

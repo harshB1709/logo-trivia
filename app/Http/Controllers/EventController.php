@@ -73,6 +73,21 @@ class EventController extends Controller
 
         $event->save();
 
+        $settings = [
+            'app_status' => true,
+            'player_registration' => true,
+            'show_leaderboard' => false
+        ];
+
+        foreach($settings as $key => $value) {
+            $app_setting = AppSetting::firstOrCreate([
+                'key' => $key,
+                'event_id' => $event->id
+            ], [
+                'value' => $value
+            ]);
+        }
+
         return response()->json([
             'status' => 'success',
             'message' => 'Event Created Successfully'

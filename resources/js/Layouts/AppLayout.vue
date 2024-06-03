@@ -16,20 +16,32 @@ defineProps({
 
 const showingNavigationDropdown = ref(false);
 
+const currentEvent = computed(() => {
+    return usePage().props.currentEvent;
+})
+
 const appStatus = computed(() => {
-    return usePage().props.appSettings['app_status']['value'];
+    return currentEvent.value ? usePage().props.appSettings['app_status']['value'] : null;
 })
 
 const playerRegistration = computed(() => {
-    return usePage().props.appSettings['player_registration']['value'];
+    return currentEvent.value ? usePage().props.appSettings['player_registration']['value'] : null;
+})
+
+const showLeaderboard = computed(() => {
+    return currentEvent.value ? usePage().props.appSettings['show_leaderboard']['value'] : null;
 })
 
 const appStatusMessage = computed(() => {
-    return usePage().props.appSettings['app_status']['message'];
+    return currentEvent.value ? usePage().props.appSettings['app_status']['message'] : null;
 })
 
 const playerRegistrationMessage = computed(() => {
-    return usePage().props.appSettings['player_registration']['message'];
+    return currentEvent.value ? usePage().props.appSettings['player_registration']['message'] : null;
+})
+
+const showLeaderboardMessage = computed(() => {
+    return currentEvent.value ? usePage().props.appSettings['show_leaderboard']['message'] : null;
 })
 
 const toggleSetting = (setting) => {
@@ -45,8 +57,9 @@ const toggleSetting = (setting) => {
             payload.message = message;
         }
 
+        const event = usePage().props.currentEvent;
         axios
-            .post(`/api/toggle-setting`, payload)
+            .post(route('toggle-setting', {event: event.slug}), payload)
             .then((res) => {
                 usePage().props.appSettings[setting]['value'] = res.data.value;
                 usePage().props.appSettings[setting]['message'] = res.data.settingMessage;
@@ -98,10 +111,6 @@ const logout = () => {
 
                                 <NavLink :href="route('events')" :active="route().current('events')">
                                     Events
-                                </NavLink>
-
-                                <NavLink :href="route('players')" :active="route().current('players')">
-                                    Players
                                 </NavLink>
                             </div>
                         </div>
@@ -254,10 +263,6 @@ const logout = () => {
                         <ResponsiveNavLink :href="route('events')" :active="route().current('events')">
                             Events
                         </ResponsiveNavLink>
-
-                        <ResponsiveNavLink :href="route('players')" :active="route().current('players')">
-                            Players
-                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -342,7 +347,7 @@ const logout = () => {
                 </div>
             </header>
 
-            <div class="w-full flex flex-col md:flex-row justify-center gap-3 md:gap-20 mt-4 px-6 lg:px-8 text-black">
+            <div class="w-full flex flex-col md:flex-row justify-center gap-3 md:gap-20 mt-4 px-6 lg:px-8 text-black" v-if="currentEvent">
                 <div class="border border-gray-700 ring-offset-2 ring-gray-900 ring-2 w-full md:w-1/3 rounded-lg px-3 py-4">
                     <div class="flex flex-col lg:flex-row gap-3 justify-between items-center mb-2">
                         <p class="text-lg font-bold">
@@ -350,16 +355,16 @@ const logout = () => {
                             <span
                                 class="font-semibold text-xl px-1.5 py-0.5 rounded border-2"
                                 :class="{
-                                    'bg-green-100 border-green-500 text-green-500': appStatus === 1,
-                                    'bg-red-100 border-red-500 text-red-500': appStatus === 0
+                                    'bg-green-100 border-green-500 text-green-500': appStatus,
+                                    'bg-red-100 border-red-500 text-red-500': !appStatus
                                 }"
                             >
-                                {{ (appStatus === 1) ? `ON` : `OFF` }}
+                                {{ (appStatus) ? `ON` : `OFF` }}
                             </span>
                         </p>
                         <primary-button @click="toggleSetting('app_status')" type="button">Toggle</primary-button>
                     </div>
-                    <p v-if="appStatus === 0"><span class="font-bold text-lg">Message:</span> {{appStatusMessage}}</p>
+                    <p v-if="!appStatus"><span class="font-bold text-lg">Message:</span> {{appStatusMessage}}</p>
                 </div>
                 <div class="border border-gray-700 ring-offset-2 ring-gray-900 ring-2 w-full md:w-1/3 rounded-lg px-3 py-4">
                     <div class="flex flex-col lg:flex-row gap-3 justify-between items-center mb-2">
@@ -368,16 +373,34 @@ const logout = () => {
                             <span
                                 class="font-semibold text-xl px-1.5 py-0.5 rounded border-2"
                                 :class="{
-                                    'bg-green-100 border-green-500 text-green-500': playerRegistration === 1,
-                                    'bg-red-100 border-red-500 text-red-500': playerRegistration === 0
+                                    'bg-green-100 border-green-500 text-green-500': playerRegistration,
+                                    'bg-red-100 border-red-500 text-red-500': !playerRegistration
                                 }"
                             >
-                                {{ (playerRegistration === 1) ? `ON` : `OFF` }}
+                                {{ (playerRegistration) ? `ON` : `OFF` }}
                             </span>
                         </p>
                         <primary-button @click="toggleSetting('player_registration')" type="button">Toggle</primary-button>
                     </div>
-                    <p v-if="playerRegistration === 0"><span class="font-bold text-lg">Message:</span> {{playerRegistrationMessage}}</p>
+                    <p v-if="!playerRegistration"><span class="font-bold text-lg">Message:</span> {{playerRegistrationMessage}}</p>
+                </div>
+                <div class="border border-gray-700 ring-offset-2 ring-gray-900 ring-2 w-full md:w-1/3 rounded-lg px-3 py-4">
+                    <div class="flex flex-col lg:flex-row gap-3 justify-between items-center mb-2">
+                        <p class="text-lg font-bold">
+                            Show Leaderboard:&nbsp;
+                            <span
+                                class="font-semibold text-xl px-1.5 py-0.5 rounded border-2"
+                                :class="{
+                                    'bg-green-100 border-green-500 text-green-500': showLeaderboard,
+                                    'bg-red-100 border-red-500 text-red-500': !showLeaderboard
+                                }"
+                            >
+                                {{ (showLeaderboard) ? `ON` : `OFF` }}
+                            </span>
+                        </p>
+                        <primary-button @click="toggleSetting('show_leaderboard')" type="button">Toggle</primary-button>
+                    </div>
+                    <p v-if="!showLeaderboard"><span class="font-bold text-lg">Message:</span> {{showLeaderboardMessage}}</p>
                 </div>
             </div>
 

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
+use App\Models\Event;
 use App\Models\Player;
 use App\Models\Word;
 use App\Models\Game;
@@ -18,7 +20,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class PlayerController extends Controller
 {
-    public function index(Request $request) {
+    public function index(Request $request, Event $event) {
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
                     $query->where(function ($query) use ($value) {
@@ -33,6 +35,7 @@ class PlayerController extends Controller
         $custom_sort = AllowedSort::custom('score', new SortByScore())->defaultDirection('desc');
 
         $players = QueryBuilder::for(Player::class)
+                    ->where('event_id', $event->id)
                     ->with('game')
                     ->allowedSorts([
                         'name',
@@ -60,7 +63,7 @@ class PlayerController extends Controller
         });
     }
 
-    public function sendInvite(Player $player, Request $request) {
+    public function sendInvite(Event $event, Player $player, Request $request) {
         $player->notify(new GameInvite());
 
         return response()->json([
@@ -69,7 +72,7 @@ class PlayerController extends Controller
         ]);
     }
 
-    public function resetGame(Player $player, Request $request) {
+    public function resetGame(Event $event, Player $player, Request $request) {
         $player->game()?->delete();
 
         $player->invite_expires_at = now()->addMinutes(config('app.invite_validity_mins'));
@@ -81,21 +84,28 @@ class PlayerController extends Controller
         ]);
     }
 
-    public function home(Request $request) {
+    public function home(Request $request, Event $event) {
         return Inertia::render('Welcome', [
             'inviteValidityMins' => config('app.invite_validity_mins')
         ]);
     }
 
-    public function register(Request $request) {
+    public function register(Request $request, Event $event) {
         $request->validate([
             'name' => 'required|string|max:100',
             'display_name' => 'string|max:60|nullable',
-            'email' => 'required|string|email:rfc,dns|unique:players,email,max:255',
+            'email' => [
+                'required',
+                'string',
+                'email:rfc,dns',
+                'max:255',
+                Rule::unique('players', 'email')->where(fn ($query) => $query->where('event_id', $event->id))
+            ],
             'phone' => 'numeric|digits:10|nullable'
         ]);
 
         $player = Player::create([
+            'event_id' => $event->id,
             'email' => $request->get('email'),
             'name' => $request->get('name'),
             'display_name' => $request->get('display_name', null),
@@ -110,7 +120,7 @@ class PlayerController extends Controller
         ]);
     }
 
-    public function gamePage(Request $request, Player $player) {
+    public function gamePage(Request $request, Event $event, Player $player) {
         $request->session()->forget(['words', 'points_scored', 'current_index', 'started_at']);
         if($request->user())
             $player->game()?->delete();
@@ -135,7 +145,7 @@ class PlayerController extends Controller
         ]);
     }
 
-    public function startGame(Request $request) {
+    public function startGame(Request $request, Event $event) {
         $player = Player::findOrFail(session('player_id'));
 
         if($player->game && !$request->user())
@@ -145,7 +155,7 @@ class PlayerController extends Controller
 
         for($i = 1; $i < 4; $i++) {
             $words = $words->merge(
-                Word::inRandomOrder()
+                $event->words()->inRandomOrder()
                     ->where([
                         ['points', $i],
                         ['is_active', true]
@@ -191,7 +201,7 @@ class PlayerController extends Controller
         ]);
     }
 
-    public function gameAction(Request $request) {
+    public function gameAction(Request $request, Event $event) {
         function incrementIndex(&$current_index, &$word_change, &$game_over, &$started_at) {
             $current_index++;
             $word_change = $current_index <= (config('app.total_words') - 1);
@@ -294,8 +304,8 @@ class PlayerController extends Controller
         abort(404);
     }
 
-    public function leaderboard(Request $request) {
-        $games = Game::with('player:id,name,display_name')
+    public function leaderboard(Event $event, Request $request) {
+        $games = Game::withWhereHas('player', fn ($query) => $query->where('event_id', $event->id))->select('id','event_id','name','display_name')
                     ->select('id', 'player_id', 'score')
                     ->orderByDesc('score')
                     ->paginate(25);

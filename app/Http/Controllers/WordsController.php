@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use App\Models\AppSetting;
+use App\Models\Event;
 use App\Models\Word;
 use App\Http\Requests\StoreOrUpdateWordRequest;
 use Inertia\Inertia;
@@ -86,10 +87,10 @@ class WordsController extends Controller
         ]);
     }
 
-    public function toggleSetting(Request $request) {
+    public function toggleSetting(Request $request, Event $event) {
         $setting_key = $request->get('setting', null);
         if($setting_key) {
-            $setting = AppSetting::where('key', $setting_key)->firstOrFail();
+            $setting = $event->appSettings()->where('key', $setting_key)->firstOrFail();
             $setting->value = !$setting->value;
             if(!$setting->value) {
                 $setting->message = $request->get('message', '');

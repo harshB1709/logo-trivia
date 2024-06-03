@@ -12,6 +12,7 @@ class Player extends Model
     use HasFactory, Notifiable;
 
     protected $fillable = [
+        'event_id',
         'name',
         'display_name',
         'email',
@@ -32,5 +33,9 @@ class Player extends Model
 
     public function game() {
         return $this->hasOne(Game::class);
+    }
+
+    public function event() {
+        return $this->belongsTo(Event::class);
     }
 }

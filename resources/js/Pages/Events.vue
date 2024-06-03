@@ -27,10 +27,14 @@
                                 <td class="text-base py-4 px-6 text-gray-900 whitespace-nowrap">
                                     {{ event.is_active ? 'Active' : 'Inactive' }}
                                 </td>
-                                <td class="text-base py-4 px-6 text-gray-900 whitespace-nowrap">
-                                    <div class="flex gap-2 w-auto">
+                                <td class="text-base py-4 px-6 text-gray-900">
+                                    <div class="flex flex-wrap gap-2 w-auto">
                                         <primary-button @click="viewEvent(event)" type="button">View</primary-button>
                                         <primary-button @click="editEvent(event)" type="button">Edit</primary-button>
+                                        <primary-button @click="openSettings(event)" type="button">Players</primary-button>
+                                        <primary-button @click="openLeaderboard(event)" type="button">Leaderboard</primary-button>
+                                        <primary-button @click="openHomePage(event)" type="button">Homepage</primary-button>
+                                        <primary-button @click="openRegister(event)" type="button">Register</primary-button>
                                     </div>
                                 </td>
                             </tr>
@@ -113,6 +117,18 @@ import EventModal from '@/Components/EventModal.vue';
             },
             updateEvent(event) {
                 this.$inertia.reload({only: ['events']});
+            },
+            openSettings(event) {
+                window.location.href = route('players', {event: event.slug});
+            },
+            openLeaderboard(event) {
+                window.location.href = route('leaderboard', {event: event.slug})
+            },
+            openHomePage(event) {
+                window.location.href = route('home', {event: event.slug})
+            },
+            openRegister(event) {
+                window.location.href = route('player-register', {event: event.slug})
             }
         }
     }

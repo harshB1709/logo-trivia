@@ -44,9 +44,11 @@
                                 >
                                     <div class="flex flex-row gap-3 h-24 py-2">
                                         <!-- <input type="checkbox" class="h-6 w-6 rounded-sm" :name="`words[${word.id}]`" form="wordset-crud"> -->
-                                        <Checkbox v-model:checked="word.selected" value="1" :name="`words[${word.id}]`" form="wordset-crud" class="h-6 w-6" v-if="editable"/>
-                                        <svg v-html="word.svg" class="h-20 w-20 svg-logo"></svg>
-                                        <span class="text-xl pt-4 font-semibold">{{word.name}}</span>
+                                        <Checkbox v-model:checked="word.selected" value="1" :id="`words_${word.id}`" :name="`words[${word.id}]`" form="wordset-crud" class="h-6 w-6" v-if="editable"/>
+                                        <label :for="`words_${word.id}`" class="flex flex-row gap-3">
+                                            <svg v-html="word.svg" class="h-20 w-20 svg-logo"></svg>
+                                            <span class="text-xl pt-4 font-semibold">{{word.name}}</span>
+                                        </label>
                                     </div>
                                 </template>
                             </div>
