@@ -42,6 +42,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Table } from "@protonemedia/inertiajs-tables-laravel-query-builder";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import { usePage } from '@inertiajs/vue3'
 
     export default {
         components: {
@@ -65,7 +66,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
         methods: {
             sendInvite(playerId) {
                 if(confirm('Are you sure about sending the game invite to this player?')) {
-                    axios.post(`/api/${playerId}/send-invite`)
+                    axios.post(route('send-invite', {event: usePage().props.currentEvent.slug, player: playerId}))
                         .then((res) => {
                             alert(res.data.message)
                         });
@@ -74,7 +75,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 
             resetGame(playerId) {
                 if(confirm('Are you sure about resetting this player\'s game?')) {
-                    axios.post(`/api/${playerId}/reset-game`)
+                    axios.post(route('reset-game', {event: usePage().props.currentEvent.slug, player: playerId}))
                         .then((res) => {
                             this.$inertia.reload({only: ['players']});
                             alert(res.data.message);

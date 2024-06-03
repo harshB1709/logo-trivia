@@ -232,7 +232,7 @@ import DialogModal from "@/Components/DialogModal.vue";
 import AboutModal from "@/Components/AboutModal.vue";
 import refreshRate from "refresh-rate";
 import Vivus from "vivus";
-import { Link } from '@inertiajs/vue3'
+import { usePage, Link } from '@inertiajs/vue3'
 import 'animate.css';
 
 export default {
@@ -311,7 +311,7 @@ export default {
         startGame() {
             this.$refs.startGame?.classList?.add('loading');
             axios
-                .post('/start-game')
+                .post(route('start-game', {event: usePage().props.currentEvent.slug}))
                 .then((res) => {
                     this.gameStartedTimer = 300;
                     this.gameStartedTimerSetInterval = setInterval(function() {
@@ -434,7 +434,7 @@ export default {
                 this.clearTimerInterval();
                 this.actionsDisabled = true;
                 axios
-                    .post('/game-action', {
+                    .post(route('game-action', {event: usePage().props.currentEvent?.slug}), {
                         action: 'guessWord',
                         guess: this.$refs.guess.map(i => i.value).join('')
                     })
@@ -455,7 +455,7 @@ export default {
                 this.clearTimerInterval();
                 this.actionsDisabled = true;
                 axios
-                    .post('/game-action', {
+                    .post(route('game-action', {event: usePage().props.currentEvent?.slug}), {
                         action: 'skipWord'
                     })
                     .then((res) => {
@@ -475,7 +475,7 @@ export default {
                 this.clearTimerInterval();
                 this.actionsDisabled = true;
                 axios
-                    .post('/game-action', {
+                    .post(route('game-action', {event: usePage().props.currentEvent?.slug}), {
                         action: 'getHint'
                     })
                     .then((res) => {

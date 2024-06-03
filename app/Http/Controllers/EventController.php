@@ -68,7 +68,8 @@ class EventController extends Controller
         if($request->hasFile('event-bg')) {
             $file = $request->file('event-bg');
             $extension = $file->getClientOriginalExtension();
-            $event->background_img_url = Storage::disk('public')->putFileAs('background', $file, uniqid() . '.' . $extension);
+            $disk = config('filesystems.default');
+            $event->background_img_url = Storage::disk(($disk === 'local') ? 'public' : $disk)->putFileAs('background', $file, uniqid() . '.' . $extension);
         }
 
         $event->save();
@@ -106,7 +107,8 @@ class EventController extends Controller
         if($request->hasFile('event-bg')) {
             $file = $request->file('event-bg');
             $extension = $file->getClientOriginalExtension();
-            $event->background_img_url = Storage::disk('public')->putFileAs('background', $file, uniqid() . '.' . $extension);
+            $disk = config('filesystems.default');
+            $event->background_img_url = Storage::disk(($disk === 'local') ? 'public' : $disk)->putFileAs('background', $file, uniqid() . '.' . $extension);
         }
 
         $event->save();
