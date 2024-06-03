@@ -34,6 +34,7 @@ module.exports = {
                     primary: "#006DF5"
                 },
             },
+            "corporate"
         ],
     },
 

@@ -1,8 +1,9 @@
 <template>
-    <div class="min-h-screen ubuntu-mono bg-wall">
-        <div class="navbar bg-base-200 bg-opacity-90 justify-between">
+    <Head :title="title" />
+    <div class="min-h-screen ubuntu-mono bg-wall" :style="`--bg_wall: url('${$page.props?.currentEvent?.background_img_url ?? '/images/wall.png'}')`">
+        <div class="navbar bg-base-200 bg-opacity-90 justify-between" v-if="showNavbar">
             <div class="navbar-start">
-<!--                <a class="btn btn-ghost normal-case text-xl text-primary" href="/">Ranium's Tech Pictionary</a>-->
+<!--                <a class="btn btn-ghost normal-case text-xl text-primary" href="/">Ranium's Logo Trivia</a>-->
             </div>
             <div class="dropdown dropdown-end lg:hidden">
                 <label tabindex="0" class="btn btn-ghost">
@@ -31,10 +32,23 @@
 </template>
 <script>
 import AboutModal from "@/Components/AboutModal.vue"
+import { Head } from '@inertiajs/vue3';
 
 export default {
     components: {
-        AboutModal
+        AboutModal,
+        Head
+    },
+
+    props: {
+        title: {
+            type: String,
+            default: ''
+        },
+        showNavbar: {
+            type: Boolean,
+            default: true
+        }
     },
 
     data() {
@@ -50,3 +64,10 @@ export default {
     }
 }
 </script>
+
+<style type="text/css">
+    .bg-wall {
+        background-image: var(--bg_wall);
+        background-size: cover;
+    }
+</style>

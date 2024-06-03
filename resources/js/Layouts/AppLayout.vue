@@ -16,20 +16,32 @@ defineProps({
 
 const showingNavigationDropdown = ref(false);
 
+const currentEvent = computed(() => {
+    return usePage().props.currentEvent;
+})
+
 const appStatus = computed(() => {
-    return usePage().props.appSettings['app_status']['value'];
+    return currentEvent.value ? usePage().props.appSettings['app_status']['value'] : null;
 })
 
 const playerRegistration = computed(() => {
-    return usePage().props.appSettings['player_registration']['value'];
+    return currentEvent.value ? usePage().props.appSettings['player_registration']['value'] : null;
+})
+
+const showLeaderboard = computed(() => {
+    return currentEvent.value ? usePage().props.appSettings['show_leaderboard']['value'] : null;
 })
 
 const appStatusMessage = computed(() => {
-    return usePage().props.appSettings['app_status']['message'];
+    return currentEvent.value ? usePage().props.appSettings['app_status']['message'] : null;
 })
 
 const playerRegistrationMessage = computed(() => {
-    return usePage().props.appSettings['player_registration']['message'];
+    return currentEvent.value ? usePage().props.appSettings['player_registration']['message'] : null;
+})
+
+const showLeaderboardMessage = computed(() => {
+    return currentEvent.value ? usePage().props.appSettings['show_leaderboard']['message'] : null;
 })
 
 const toggleSetting = (setting) => {
@@ -45,8 +57,9 @@ const toggleSetting = (setting) => {
             payload.message = message;
         }
 
+        const event = usePage().props.currentEvent;
         axios
-            .post(`/api/toggle-setting`, payload)
+            .post(route('toggle-setting', {event: event.slug}), payload)
             .then((res) => {
                 usePage().props.appSettings[setting]['value'] = res.data.value;
                 usePage().props.appSettings[setting]['message'] = res.data.settingMessage;
@@ -92,8 +105,12 @@ const logout = () => {
                                     Words
                                 </NavLink>
 
-                                <NavLink :href="route('players')" :active="route().current('players')">
-                                    Players
+                                <NavLink :href="route('wordsets')" :active="route().current('wordsets')">
+                                    Wordsets
+                                </NavLink>
+
+                                <NavLink :href="route('events')" :active="route().current('events')">
+                                    Events
                                 </NavLink>
                             </div>
                         </div>
@@ -105,7 +122,7 @@ const logout = () => {
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
                                             <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition">
-                                                {{ $page.props.auth.user.current_team.name }}
+                                                {{ $page.props.user.current_team.name }}
 
                                                 <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
@@ -123,7 +140,7 @@ const logout = () => {
                                                 </div>
 
                                                 <!-- Team Settings -->
-                                                <DropdownLink :href="route('teams.show', $page.props.auth.user.current_team)">
+                                                <DropdownLink :href="route('teams.show', $page.props.user.current_team)">
                                                     Team Settings
                                                 </DropdownLink>
 
@@ -138,11 +155,11 @@ const logout = () => {
                                                     Switch Teams
                                                 </div>
 
-                                                <template v-for="team in $page.props.auth.user.all_teams" :key="team.id">
+                                                <template v-for="team in $page.props.user.all_teams" :key="team.id">
                                                     <form @submit.prevent="switchToTeam(team)">
                                                         <DropdownLink as="button">
                                                             <div class="flex items-center">
-                                                                <svg v-if="team.id == $page.props.auth.user.current_team_id" class="mr-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                                <svg v-if="team.id == $page.props.user.current_team_id" class="mr-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                                 </svg>
 
@@ -162,12 +179,12 @@ const logout = () => {
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
                                         <button v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                            <img class="h-8 w-8 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
+                                            <img class="h-8 w-8 rounded-full object-cover" :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name">
                                         </button>
 
                                         <span v-else class="inline-flex rounded-md">
                                             <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition">
-                                                {{ $page.props.auth.user.name }}
+                                                {{ $page.props.user.name }}
 
                                                 <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
@@ -239,8 +256,12 @@ const logout = () => {
                             Words
                         </ResponsiveNavLink>
 
-                        <ResponsiveNavLink :href="route('players')" :active="route().current('players')">
-                            Players
+                        <ResponsiveNavLink :href="route('wordsets')" :active="route().current('wordsets')">
+                            Wordsets
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink :href="route('events')" :active="route().current('events')">
+                            Events
                         </ResponsiveNavLink>
                     </div>
 
@@ -248,15 +269,15 @@ const logout = () => {
                     <div class="pt-4 pb-1 border-t border-gray-200">
                         <div class="flex items-center px-4">
                             <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 mr-3">
-                                <img class="h-10 w-10 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
+                                <img class="h-10 w-10 rounded-full object-cover" :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name">
                             </div>
 
                             <div>
                                 <div class="font-medium text-base text-gray-800">
-                                    {{ $page.props.auth.user.name }}
+                                    {{ $page.props.user.name }}
                                 </div>
                                 <div class="font-medium text-sm text-gray-500">
-                                    {{ $page.props.auth.user.email }}
+                                    {{ $page.props.user.email }}
                                 </div>
                             </div>
                         </div>
@@ -286,7 +307,7 @@ const logout = () => {
                                 </div>
 
                                 <!-- Team Settings -->
-                                <ResponsiveNavLink :href="route('teams.show', $page.props.auth.user.current_team)" :active="route().current('teams.show')">
+                                <ResponsiveNavLink :href="route('teams.show', $page.props.user.current_team)" :active="route().current('teams.show')">
                                     Team Settings
                                 </ResponsiveNavLink>
 
@@ -301,11 +322,11 @@ const logout = () => {
                                     Switch Teams
                                 </div>
 
-                                <template v-for="team in $page.props.auth.user.all_teams" :key="team.id">
+                                <template v-for="team in $page.props.user.all_teams" :key="team.id">
                                     <form @submit.prevent="switchToTeam(team)">
                                         <ResponsiveNavLink as="button">
                                             <div class="flex items-center">
-                                                <svg v-if="team.id == $page.props.auth.user.current_team_id" class="mr-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <svg v-if="team.id == $page.props.user.current_team_id" class="mr-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                 </svg>
                                                 <div>{{ team.name }}</div>
@@ -326,7 +347,7 @@ const logout = () => {
                 </div>
             </header>
 
-            <div class="w-full flex flex-col md:flex-row justify-center gap-3 md:gap-20 mt-4 px-6 lg:px-8 text-black">
+            <div class="w-full flex flex-col md:flex-row justify-center gap-3 md:gap-20 mt-4 px-6 lg:px-8 text-black" v-if="currentEvent">
                 <div class="border border-gray-700 ring-offset-2 ring-gray-900 ring-2 w-full md:w-1/3 rounded-lg px-3 py-4">
                     <div class="flex flex-col lg:flex-row gap-3 justify-between items-center mb-2">
                         <p class="text-lg font-bold">
@@ -334,16 +355,16 @@ const logout = () => {
                             <span
                                 class="font-semibold text-xl px-1.5 py-0.5 rounded border-2"
                                 :class="{
-                                    'bg-green-100 border-green-500 text-green-500': appStatus === 1,
-                                    'bg-red-100 border-red-500 text-red-500': appStatus === 0
+                                    'bg-green-100 border-green-500 text-green-500': appStatus,
+                                    'bg-red-100 border-red-500 text-red-500': !appStatus
                                 }"
                             >
-                                {{ (appStatus === 1) ? `ON` : `OFF` }}
+                                {{ (appStatus) ? `ON` : `OFF` }}
                             </span>
                         </p>
                         <primary-button @click="toggleSetting('app_status')" type="button">Toggle</primary-button>
                     </div>
-                    <p v-if="appStatus === 0"><span class="font-bold text-lg">Message:</span> {{appStatusMessage}}</p>
+                    <p v-if="!appStatus"><span class="font-bold text-lg">Message:</span> {{appStatusMessage}}</p>
                 </div>
                 <div class="border border-gray-700 ring-offset-2 ring-gray-900 ring-2 w-full md:w-1/3 rounded-lg px-3 py-4">
                     <div class="flex flex-col lg:flex-row gap-3 justify-between items-center mb-2">
@@ -352,16 +373,34 @@ const logout = () => {
                             <span
                                 class="font-semibold text-xl px-1.5 py-0.5 rounded border-2"
                                 :class="{
-                                    'bg-green-100 border-green-500 text-green-500': playerRegistration === 1,
-                                    'bg-red-100 border-red-500 text-red-500': playerRegistration === 0
+                                    'bg-green-100 border-green-500 text-green-500': playerRegistration,
+                                    'bg-red-100 border-red-500 text-red-500': !playerRegistration
                                 }"
                             >
-                                {{ (playerRegistration === 1) ? `ON` : `OFF` }}
+                                {{ (playerRegistration) ? `ON` : `OFF` }}
                             </span>
                         </p>
                         <primary-button @click="toggleSetting('player_registration')" type="button">Toggle</primary-button>
                     </div>
-                    <p v-if="playerRegistration === 0"><span class="font-bold text-lg">Message:</span> {{playerRegistrationMessage}}</p>
+                    <p v-if="!playerRegistration"><span class="font-bold text-lg">Message:</span> {{playerRegistrationMessage}}</p>
+                </div>
+                <div class="border border-gray-700 ring-offset-2 ring-gray-900 ring-2 w-full md:w-1/3 rounded-lg px-3 py-4">
+                    <div class="flex flex-col lg:flex-row gap-3 justify-between items-center mb-2">
+                        <p class="text-lg font-bold">
+                            Show Leaderboard:&nbsp;
+                            <span
+                                class="font-semibold text-xl px-1.5 py-0.5 rounded border-2"
+                                :class="{
+                                    'bg-green-100 border-green-500 text-green-500': showLeaderboard,
+                                    'bg-red-100 border-red-500 text-red-500': !showLeaderboard
+                                }"
+                            >
+                                {{ (showLeaderboard) ? `ON` : `OFF` }}
+                            </span>
+                        </p>
+                        <primary-button @click="toggleSetting('show_leaderboard')" type="button">Toggle</primary-button>
+                    </div>
+                    <p v-if="!showLeaderboard"><span class="font-bold text-lg">Message:</span> {{showLeaderboardMessage}}</p>
                 </div>
             </div>
 
@@ -372,3 +411,8 @@ const logout = () => {
         </div>
     </div>
 </template>
+<style type="text/css">
+    input {
+        color: black;
+    }
+</style>

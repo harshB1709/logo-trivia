@@ -5,9 +5,10 @@
                 <div class="max-w-4xl">
                     <h1 class="text-5xl font-bold text-primary mb-5 w-fit mx-auto">
                         <img src="/images/ranium-logo-white.png" class="w-48 mx-auto my-4">
-                        <span class="h-100 inline-block">Tech Pictionary</span>
+                        <span class="h-100 inline-block">Logo Trivia</span>
                     </h1>
-                    <div class="flex flex-col sm:flex-row items-center gap-3">
+                    <div v-html="$page.props?.currentEvent?.home_content" v-if="$page.props?.currentEvent?.home_content"></div>
+                    <div class="flex flex-col sm:flex-row items-center gap-3" v-else>
                         <img src="/images/iphone-14_low.png" class="max-w-100 sm:max-w-xs rounded-lg img-shadow">
                         <div class="p-4 rounded-lg bg-base-200 bg-opacity-90">
                             <h1 class="text-3xl font-bold mb-4 underline">Win an iPhone 14* @ LaraconIN 2023</h1>

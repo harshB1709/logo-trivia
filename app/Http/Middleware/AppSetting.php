@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use App\Models\AppSetting as AppSettingModel;
+use App\Models\Event;
 
 class AppSetting
 {
@@ -17,8 +18,11 @@ class AppSetting
      */
     public function handle(Request $request, Closure $next, $setting_key)
     {
+        $event = $request->route('event', null);
+
         $app_setting = AppSettingModel::where([
-            'key' => $setting_key
+            'key' => $setting_key,
+            'event_id' => $event?->id
         ])->first();
 
         $app_setting_val = $app_setting?->value ?? true;
