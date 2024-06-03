@@ -21,7 +21,7 @@
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^41.4.2",
         "@ckeditor/ckeditor5-vue": "^5.1.0",
-        "@inertiajs/vue3": "^1.0.16",
+        "@inertiajs/vue3": "^1.1",
         "@protonemedia/inertiajs-tables-laravel-query-builder": "^2.1.0",
         "animate.css": "^4.1.1",
         "animejs": "^3.2.1",
