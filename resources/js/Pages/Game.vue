@@ -311,7 +311,7 @@ export default {
         startGame() {
             this.$refs.startGame?.classList?.add('loading');
             axios
-                .post('/start-game')
+                .post(route('startGame', {event: $page.props.currentEvent.slug}))
                 .then((res) => {
                     this.gameStartedTimer = 300;
                     this.gameStartedTimerSetInterval = setInterval(function() {
