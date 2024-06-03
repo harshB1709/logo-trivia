@@ -22,8 +22,21 @@ use App\Http\Controllers\PlayerController;
  */
 
 Route::middleware([])->group(function() {
-    $domain = config('app.domain');
-    Route::domain("{event:slug}.{$domain}")->group(function () {
+    Route::get('/', [HomeController::class, 'adminHome'])->name('admin-home');
+
+    Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+        Route::get('/words', [WordsController::class, 'index'])->name('words');
+        Route::get('/wordsets', [WordsetController::class, 'index'])->name('wordsets');
+        Route::get('/events', [EventController::class, 'index'])->name('events');
+
+        Route::prefix("{event:slug}")->group(function () {
+            Route::get('/players', [PlayerController::class, 'index'])->name('players');
+        });
+    });
+
+    Route::get('/tech-wall', [WordsController::class, 'techWall'])->name('tech-wall');
+    
+    Route::prefix("{event:slug}")->group(function () {
         Route::get('/', [HomeController::class, 'home'])->name('home');
         Route::get('/leaderboard', [PlayerController::class, 'leaderboard'])->middleware(['app.setting:show_leaderboard'])->name('leaderboard');
 
@@ -37,19 +50,4 @@ Route::middleware([])->group(function() {
             });
         });
     });
-
-    Route::get('/', [HomeController::class, 'adminHome'])->name('admin-home');
-
-    Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
-        Route::get('/words', [WordsController::class, 'index'])->name('words');
-        Route::get('/wordsets', [WordsetController::class, 'index'])->name('wordsets');
-        Route::get('/events', [EventController::class, 'index'])->name('events');
-
-        $domain = config('app.domain');
-        Route::domain("{event:slug}.{$domain}")->group(function () {
-            Route::get('/players', [PlayerController::class, 'index'])->name('players');
-        });
-    });
-
-    Route::get('/tech-wall', [WordsController::class, 'techWall'])->name('tech-wall');
 });
