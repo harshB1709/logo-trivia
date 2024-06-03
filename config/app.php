@@ -52,6 +52,8 @@ return [
     |
     */
 
+    'domain' => env('APP_DOMAIN', 'localhost'),
+
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
@@ -123,7 +125,7 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    'total_words' => 21,
+    'total_words' => 15,
 
     'guesses_per_word' => 3,
 
