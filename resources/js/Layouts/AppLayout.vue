@@ -17,7 +17,7 @@ defineProps({
 const showingNavigationDropdown = ref(false);
 
 const currentUser = computed(() => {
-    return usePage().props.user;
+    return usePage().props.auth.user;
 })
 
 const currentEvent = computed(() => {
