@@ -311,7 +311,7 @@ export default {
         startGame() {
             this.$refs.startGame?.classList?.add('loading');
             axios
-                .post(route('startGame', {event: $page.props.currentEvent.slug}))
+                .post(route('start-game', {event: $page.props.currentEvent.slug}))
                 .then((res) => {
                     this.gameStartedTimer = 300;
                     this.gameStartedTimerSetInterval = setInterval(function() {
@@ -434,7 +434,7 @@ export default {
                 this.clearTimerInterval();
                 this.actionsDisabled = true;
                 axios
-                    .post('/game-action', {
+                    .post(route('game-action', {event: $page.props.currentEvent.slug}), {
                         action: 'guessWord',
                         guess: this.$refs.guess.map(i => i.value).join('')
                     })
@@ -455,7 +455,7 @@ export default {
                 this.clearTimerInterval();
                 this.actionsDisabled = true;
                 axios
-                    .post('/game-action', {
+                    .post(route('game-action', {event: $page.props.currentEvent.slug}), {
                         action: 'skipWord'
                     })
                     .then((res) => {
@@ -475,7 +475,7 @@ export default {
                 this.clearTimerInterval();
                 this.actionsDisabled = true;
                 axios
-                    .post('/game-action', {
+                    .post(route('game-action', {event: $page.props.currentEvent.slug}), {
                         action: 'getHint'
                     })
                     .then((res) => {
