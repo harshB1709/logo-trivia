@@ -45,8 +45,8 @@ Route::middleware([])->group(function() {
             Route::get('/{player}/game', [PlayerController::class, 'gamePage'])->name('game');
 
             Route::middleware(['player.identified'])->group(function() {
-                Route::post('/start-game', [PlayerController::class, 'startGame'])->name('start-game');
-                Route::post('/game-action', [PlayerController::class, 'gameAction'])->middleware(['game.ongoing'])->name('game-action');
+                Route::post('/start-game', [PlayerController::class, 'startGame'])->name('startGame');
+                Route::post('/game-action', [PlayerController::class, 'gameAction'])->middleware(['game.ongoing']);
             });
         });
     });
