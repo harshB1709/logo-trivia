@@ -16,6 +16,8 @@ defineProps({
 
 const showingNavigationDropdown = ref(false);
 
+console.log(usePage().props.user)
+
 const currentEvent = computed(() => {
     return usePage().props.currentEvent;
 })
@@ -274,7 +276,7 @@ const logout = () => {
 
                             <div>
                                 <div class="font-medium text-base text-gray-800">
-                                    {{ $page.props.user.name }}
+                                    {{ $page.props?.user?.name }}
                                 </div>
                                 <div class="font-medium text-sm text-gray-500">
                                     {{ $page.props.user.email }}
