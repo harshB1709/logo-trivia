@@ -108,7 +108,7 @@ class WordsController extends Controller
     }
 
     public function techWall(Request $request) {
-        $word_names = ['laravel', 'vue', 'php', 'html5', 'css3', 'javascript'];
+        $word_names = ['laravel', 'phpunit', 'php', 'symfony', 'yii', 'drupal', 'codeigniter', 'cakephp', 'lumen'];
         $words = Word::whereIn('name', $word_names)->select('url')->get();
         $words = $words->map(fn($word) => $word->svg)->toArray();
 

@@ -2,27 +2,29 @@
     <game-layout>
         <div class="hero min-h-remaining ubuntu-mono">
             <div class="hero-content text-center">
-                <div class="max-w-4xl">
+                <div class="max-w-4xl flex flex-col">
                     <h1 class="text-5xl font-bold text-primary mb-5 w-fit mx-auto">
                         <img src="/images/ranium-logo-white.png" class="w-48 mx-auto my-4">
                         <span class="h-100 inline-block">Logo Trivia</span>
                     </h1>
-                    <div v-html="$page.props?.currentEvent?.home_content" v-if="$page.props?.currentEvent?.home_content"></div>
-                    <div class="flex flex-col sm:flex-row items-center gap-3" v-else>
-                        <img src="/images/iphone-14_low.png" class="max-w-100 sm:max-w-xs rounded-lg img-shadow">
-                        <div class="p-4 rounded-lg bg-base-200 bg-opacity-90">
-                            <h1 class="text-3xl font-bold mb-4 underline">Win an iPhone 14* @ LaraconIN 2023</h1>
-                            <div class="text-left text-lg">
-                                <p class="mb-2">
-                                    <span class="font-bold text-primary"> > </span> Test your knowledge of the technologies by recognizing as many logos as possible and earn points. The more points you earn, the higher your chances of winning the latest iPhone 14!
-                                </p>
-                                <p class="mb-2">
-                                    <span class="font-bold text-primary"> > </span> Wait for the announcement at the end of Day 2 to find out the winner.
-                                </p>
+                    <div>
+                        <div v-html="home_content" v-if="$page.props?.currentEvent?.home_content"></div>
+                        <div class="flex flex-col sm:flex-row items-center gap-3" v-else>
+                            <img src="/images/iphone-14_low.png" class="max-w-100 sm:max-w-xs rounded-lg img-shadow">
+                            <div class="p-4 rounded-lg bg-base-200 bg-opacity-90">
+                                <h1 class="text-3xl font-bold mb-4 underline">Win an iPhone 14* @ LaraconIN 2023</h1>
+                                <div class="text-left text-lg">
+                                    <p class="mb-2">
+                                        <span class="font-bold text-primary"> > </span> Test your knowledge of the technologies by recognizing as many logos as possible and earn points. The more points you earn, the higher your chances of winning the latest iPhone 14!
+                                    </p>
+                                    <p class="mb-2">
+                                        <span class="font-bold text-primary"> > </span> Wait for the announcement at the end of Day 2 to find out the winner.
+                                    </p>
+                                </div>
+                                <p class="mb-4 text-primary text-3xl font-bold" v-if="registrationSetting?.value">Register now and don't miss this opportunity to win big!</p>
+                                <a :href="route('player-register', {event: $page.props?.currentEvent?.slug})" class="btn btn-primary" v-if="registrationSetting?.value">Register</a>
+                                <p v-else class="text-2xl text-error font-semibold">{{ registrationSetting.message }}</p>
                             </div>
-                            <p class="mb-4 text-primary text-3xl font-bold" v-if="registrationSetting?.value">Register now and don't miss this opportunity to win big!</p>
-                            <a href="/register" class="btn btn-primary" v-if="registrationSetting?.value">Register</a>
-                            <p v-else class="text-2xl text-error font-semibold">{{ registrationSetting.message }}</p>
                         </div>
                     </div>
                     <div class="mt-20 text-lg p-4 bg-base-200 bg-opacity-90 rounded-lg"><span class="font-bold text-primary">*Note:</span> In case of ties or any disputes, the final decision will be taken by the Ranium.</div>
@@ -35,11 +37,22 @@
 <script>
 import GameLayout from "@/Layouts/GameLayout.vue";
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
+import { usePage } from '@inertiajs/vue3'
 
 export default {
     components: {
         GameLayout,
         AuthenticationCardLogo
+    },
+
+    computed: {
+        home_content() {
+            let content = usePage().props?.currentEvent?.home_content;
+            if(content.length && (this.registrationSetting?.value ?? false)) {
+                content = content.replace(/#register_btn/g, `<a href="${route('player-register', {event: usePage().props?.currentEvent?.slug})}" class="btn btn-primary">Register</a>`)
+            }
+            return content;
+        }
     },
 
     props: {

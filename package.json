@@ -19,10 +19,9 @@
         "vue": "^3.4"
     },
     "dependencies": {
-        "@ckeditor/ckeditor5-build-classic": "^41.4.2",
-        "@ckeditor/ckeditor5-vue": "^5.1.0",
         "@inertiajs/vue3": "^1.1",
         "@protonemedia/inertiajs-tables-laravel-query-builder": "^2.1.0",
+        "@tinymce/tinymce-vue": "^5.1.1",
         "animate.css": "^4.1.1",
         "animejs": "^3.2.1",
         "daisyui": "^2.50.0",

@@ -29,9 +29,8 @@ class Event extends Model
 
     protected function backgroundImgUrl(): Attribute
     {
-        $disk = config('filesystems.default');
         return Attribute::make(
-            get: fn (?string $value) => $value ? Storage::disk(($disk === 'local') ? 'public' : $disk)->url($value) : null,
+            get: fn (?string $value) => $value ? Storage::disk('public')->url($value) : null,
         );
     }
 

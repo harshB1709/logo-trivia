@@ -9,7 +9,7 @@
         <div class="pt-8 pb-10">
             <div class="max-w-7xl mx-auto px-2 px-6 lg:px-8">
                 <div class="w-full flex justify-end gap-2 mb-2">
-                    <a href="/register" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">Register User</a>
+                    <a :href="route('player-register', {event: $page.props.currentEvent.slug})" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">Register User</a>
                 </div>
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-2">
                     <Table :meta="players" :striped="true">

@@ -114,8 +114,22 @@
                     
                     <div>
                         <InputLabel for="home_content" value="Home Content" />
-                        <ckeditor form="event-crud" name="home_content" :readonly="!editable" :editor="editor" v-model="event.home_content" :config="editorConfig"></ckeditor>
+                        <Editor
+                            form="event-crud"
+                            name="home_content"
+                            :readonly="!editable"
+                            v-model="event.home_content"
+                            api-key="joowo0gyte6a2y91cvcyum6jim7k36ngr2uh4ty3sn9vyupp"
+                            :init="{
+                                plugins: 'a11ychecker advcode advlist advtable anchor autocorrect autolink autoresize autosave casechange charmap checklist code codesample directionality editimage emoticons export footnotes formatpainter fullscreen help image importcss inlinecss insertdatetime link linkchecker lists media mediaembed mentions mergetags nonbreaking pagebreak pageembed permanentpen powerpaste preview quickbars save searchreplace table tableofcontents template  tinydrive tinymcespellchecker typography visualblocks visualchars wordcount',
+                                images_upload_url: route('upload'),
+                                automatic_uploads: true,
+                                images_reuse_filename: true,
+                                images_upload_handler: handleImageUpload,
+                            }"
+                        />
                         <InputError class="mt-2" :message="formErrors?.home_content?.join(' ')" v-if="editable" />
+                        <div class="pt-2 text-base">Use #register_btn as a placeholder for the Registration button</div>
                     </div>
                 </div>
             </div>
@@ -135,8 +149,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
-import CKEditor from '@ckeditor/ckeditor5-vue';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import Editor from '@tinymce/tinymce-vue'
 
 export default {
     components: {
@@ -146,16 +159,18 @@ export default {
         TextInput,
         InputLabel,
         InputError,
-        ckeditor: CKEditor.component
+        Editor
     },
 
     data() {
         return {
             bgImageContent: null,
             formErrors: null,
-            editor: ClassicEditor,
             editorConfig: {
-
+                // plugins: [SimpleUploadAdapter],
+                // simpleUpload: {
+                //     uploadUrl: route('upload')
+                // }
             }
         };
     },
@@ -165,9 +180,6 @@ export default {
             if((oldVal === true) && (newVal === false)) {
                 this.bgImageContent = null;
                 this.formErrors = null;
-                this.editorConfig = {
-                    isReadOnly: !this.editable
-                }
             }
         }
     },
@@ -226,6 +238,50 @@ export default {
                     this.bgImageContent = reader.result;
                 }
                 reader.readAsDataURL(e.target.files[0]);
+            }
+        },
+
+        async handleImageUpload(blobInfo, progress, failure) {
+            const formData = new FormData();
+            formData.append("file", blobInfo.blob(), blobInfo.filename());
+
+            try {
+                const response = await axios.post(
+                    route('upload'),
+                    formData,
+                    {
+                        headers: { "Content-Type": "multipart/form-data" },
+                        onUploadProgress: (progressEvent) => {
+                            const percentCompleted = Math.round(
+                                (progressEvent.loaded * 100) / progressEvent.total
+                            );
+                            if (progress && typeof progress === "function") {
+                                progress(percentCompleted);
+                            }
+                        },
+                    }
+                );
+
+                if (response.status === 403) {
+                    throw new Error("HTTP Error: " + response.status);
+                }
+
+                if (response.status < 200 || response.status >= 300) {
+                    throw new Error("HTTP Error: " + response.status);
+                }
+
+                const json = response.data;
+
+                if (!json || typeof json.location !== "string") {
+                    throw new Error("Invalid JSON: " + JSON.stringify(json));
+                } else response;
+                {
+                    return json.location;
+                }
+            } catch (error) {
+                if (failure && typeof failure === "function") {
+                    failure(error.message);
+                }
             }
         }
     }

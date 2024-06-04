@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\UploadController;
 use App\Http\Controllers\WordsController;
 use App\Http\Controllers\WordsetController;
 use App\Http\Controllers\PlayerController;
@@ -22,6 +23,8 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+
+    Route::post('/upload', [UploadController::class, 'upload'])->name('upload');
 
     Route::post('/word/store', [WordsController::class, 'store'])->name('create-word');
     Route::post('/word/{word}/update', [WordsController::class, 'update'])->name('update-word');

@@ -11,15 +11,15 @@
                 </label>
                 <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                     <li><a href="javascript:void(0);" @click="openAboutModal">About</a></li>
-                    <li><a href="/tech-wall">Tech Wall</a></li>
-                    <li v-if="$page.props?.registrationSetting?.value ?? true"><a href="/register">Register</a></li>
+                    <li><a :href="route('tech-wall')">Tech Wall</a></li>
+                    <li v-if="$page.props?.registrationSetting?.value ?? true"><a :href="route('player-register', {event: $page.props.currentEvent.slug})">Register</a></li>
                 </ul>
             </div>
             <div class="hidden lg:flex lg:gap-2">
                 <ul class="menu menu-horizontal px-1">
                     <li><a href="javascript:void(0);" @click="openAboutModal">About</a></li>
-                    <li><a href="/tech-wall">Tech Wall</a></li>
-                    <li v-if="$page.props?.registrationSetting?.value ?? true"><a href="/register">Register</a></li>
+                    <li><a :href="route('tech-wall')">Tech Wall</a></li>
+                    <li v-if="$page.props?.registrationSetting?.value ?? true"><a :href="route('player-register', {event: $page.props.currentEvent.slug})">Register</a></li>
                 </ul>
             </div>
         </div>
