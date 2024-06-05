@@ -26,8 +26,11 @@ class DeleteEventPlayers extends Command
      */
     public function handle()
     {
-        $event = Event::find($this->argument('event'));
-        $event->players()->delete();
-        $this->info("Deleted all the players and related data for event_id {$event->id}");
+        $event_slug = $this->argument('event');
+        $event = Event::where('slug', $event_slug)->first();
+        if($event) {
+            $event->players()->delete();
+        }
+        $this->info("Deleted all the players and related data for event {$event->slug}");
     }
 }
