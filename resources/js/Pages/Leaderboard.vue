@@ -44,6 +44,7 @@
 
 <script>
 import GameLayout from "@/Layouts/GameLayout.vue";
+import { router } from '@inertiajs/vue3'
 
 export default {
     components: {
@@ -57,9 +58,28 @@ export default {
         }
     },
 
+    data() {
+        return {
+            interval: null
+        }
+    },
+
+    created() {
+        this.reload();
+        this.interval = setInterval(this.reload, 5000)
+    },
+
+    beforeDestroy() {
+        clearInterval(this.interval);
+    },
+
     methods: {
         goToLink(link) {
             this.$inertia.visit(link);
+        },
+        reload() {
+            console.log('reloading');
+            router.reload({ only: ['games'] })
         }
     }
 }
