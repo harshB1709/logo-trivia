@@ -1,5 +1,5 @@
 <template>
-    <game-layout>
+    <game-layout title="Home">
         <div class="hero min-h-remaining ubuntu-mono">
             <div class="hero-content text-center">
                 <div class="max-w-4xl flex flex-col">

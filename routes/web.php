@@ -24,6 +24,8 @@ use App\Http\Controllers\PlayerController;
 Route::middleware([])->group(function() {
     Route::get('/', [HomeController::class, 'adminHome'])->name('admin-home');
 
+    Route::get('link-storage', [HomeController::class, 'linkStorage'])->name('link-storage');
+
     Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
         Route::get('/words', [WordsController::class, 'index'])->name('words');
         Route::get('/wordsets', [WordsetController::class, 'index'])->name('wordsets');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AppSetting;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -24,5 +25,18 @@ class HomeController extends Controller
 
     public function adminHome(Request $request) {
         return redirect()->route('login');
+    }
+
+    public function linkStorage(Request $request) {
+        try {
+            // Running the storage link command
+            $output = Artisan::call('storage:link');
+
+            // Displaying the output
+            dd($output);
+        } catch (\Exception $e) {
+            // In case of error, dump the exception message
+            dd($e->getMessage());
+        }
     }
 }
