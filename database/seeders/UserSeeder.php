@@ -17,10 +17,10 @@ class UserSeeder extends Seeder
     public function run()
     {
         $user = User::updateOrCreate([
-            'email' => 'admin@admin.com'
+            'email' => 'info@ranium.in'
         ], [
             'name' => 'Admin',
-            'password' => Hash::make('password')
+            'password' => Hash::make('phprocks')
         ]);
     }
 }

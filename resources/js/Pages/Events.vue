@@ -31,10 +31,10 @@
                                     <div class="flex flex-wrap gap-2 w-auto">
                                         <primary-button @click="viewEvent(event)" type="button">View</primary-button>
                                         <primary-button @click="editEvent(event)" type="button">Edit</primary-button>
-                                        <primary-button @click="openSettings(event)" type="button">Players</primary-button>
-                                        <primary-button @click="openLeaderboard(event)" type="button">Leaderboard</primary-button>
-                                        <primary-button @click="openHomePage(event)" type="button">Homepage</primary-button>
-                                        <primary-button @click="openRegister(event)" type="button">Register</primary-button>
+                                        <Link class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition" :href="route('players', {event: event.slug})">Players</Link>
+                                        <Link class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition" :href="route('leaderboard', {event: event.slug})">Leaderboard</Link>
+                                        <Link class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition" :href="route('home', {event: event.slug})">Homepage</Link>
+                                        <Link class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition" :href="route('player-register', {event: event.slug})">Register</Link>
                                     </div>
                                 </td>
                             </tr>
@@ -59,13 +59,15 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { Table } from "@protonemedia/inertiajs-tables-laravel-query-builder";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import EventModal from '@/Components/EventModal.vue';
+import { Link } from '@inertiajs/vue3'
 
     export default {
         components: {
             AppLayout,
             Table,
             PrimaryButton,
-            EventModal
+            EventModal,
+            Link
         },
 
         data() {

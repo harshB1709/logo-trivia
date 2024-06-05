@@ -48,8 +48,8 @@ export default {
     computed: {
         home_content() {
             let content = usePage().props?.currentEvent?.home_content;
-            if(content.length && (this.registrationSetting?.value ?? false)) {
-                content = content.replace(/#register_btn/g, `<a href="${route('player-register', {event: usePage().props?.currentEvent?.slug})}" class="btn btn-primary">Register</a>`)
+            if(content.length) {
+                content = content.replace(/#register_btn/g, this.registrationSetting?.value ? `<a href="${route('player-register', {event: usePage().props?.currentEvent?.slug})}" class="btn btn-primary">Register</a>` : '')
             }
             return content;
         }
