@@ -27,16 +27,23 @@ class HomeController extends Controller
         return redirect()->route('login');
     }
 
-    public function linkStorage(Request $request) {
-        try {
-            // Running the storage link command
-            $output = Artisan::call('storage:link');
+    public function runCommand(Request $request) {
+        return Inertia::render('RunCommand', []);
+    }
 
-            // Displaying the output
-            dd($output);
+    public function postRunCommand(Request $request) {
+        $command = $request->get('command', '');
+        $output = null;
+        try {
+            $output = Artisan::call($command);
         } catch (\Exception $e) {
-            // In case of error, dump the exception message
-            dd($e->getMessage());
+            $output = $e->getMessage();
         }
+        $output = shell_exec($command);
+
+        return response()->json([
+            'success' => true,
+            'output' => $output
+        ]);
     }
 }

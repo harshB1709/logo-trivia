@@ -112,6 +112,10 @@ const logout = () => {
                                 <NavLink :href="route('events')" :active="route().current('events')">
                                     Events
                                 </NavLink>
+
+                                <NavLink :href="route('run-command')" :active="route().current('run-command')">
+                                    Run Command
+                                </NavLink>
                             </div>
                         </div>
 
@@ -262,6 +266,10 @@ const logout = () => {
 
                         <ResponsiveNavLink :href="route('events')" :active="route().current('events')">
                             Events
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink :href="route('run-command')" :active="route().current('run-command')">
+                            Run Command
                         </ResponsiveNavLink>
                     </div>
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\WordsController;
 use App\Http\Controllers\WordsetController;
@@ -23,6 +24,8 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+
+    Route::post('run-command', [HomeController::class, 'postRunCommand'])->name('post-run-command');
 
     Route::post('/upload', [UploadController::class, 'upload'])->name('upload');
 
