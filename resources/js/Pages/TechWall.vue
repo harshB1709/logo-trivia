@@ -1,4 +1,5 @@
 <template>
+    <Head title="Tech Wall" />
     <div
         class="min-w-full min-h-screen ubuntu-mono relative grid gap-px"
         id="wall"
@@ -184,9 +185,11 @@
 import * as htmlToImage from 'html-to-image';
 import { toBlob } from 'html-to-image';
 import { saveAs } from 'file-saver';
+import { Head } from '@inertiajs/vue3';
 
 export default {
     components: {
+        Head
     },
 
     created() {
