@@ -49,7 +49,9 @@ export default {
         home_content() {
             let content = usePage().props?.currentEvent?.home_content;
             if(content.length) {
-                content = content.replace(/#register_btn/g, this.registrationSetting?.value ? `<a href="${route('player-register', {event: usePage().props?.currentEvent?.slug})}" class="btn btn-primary">Register</a>` : '')
+                content = content
+                    .replace(/#register_btn/g, this.registrationSetting?.value ? `<a href="${route('player-register', {event: usePage().props?.currentEvent?.slug})}" class="btn btn-primary">Register</a>` : '')
+                    .replace(/#leaderboard/g, usePage().props.appSettings?.show_leaderboard?.value ? `<a href="${route('leaderboard', {event: usePage().props?.currentEvent?.slug})}" class="btn btn-primary">Leaderboard</a>` : '')
             }
             return content;
         }

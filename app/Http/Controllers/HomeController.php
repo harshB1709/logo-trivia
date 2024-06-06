@@ -23,8 +23,16 @@ class HomeController extends Controller
         ]);
     }
 
-    public function adminHome(Request $request) {
-        return redirect()->route('login');
+    public function appHome(Request $request) {
+        $start = now()->subDays(2)->format('Y-m-d');
+        $end = now()->addDays(2)->format('Y-m-d');
+        $events = Event::whereBetween('start_date', [$start, $end])
+            ->orwhereBetween('end_date', [$start, $end])
+            ->get();
+
+        return Inertia::render('AppHome', [
+            'events' => $events
+        ]);
     }
 
     public function runCommand(Request $request) {

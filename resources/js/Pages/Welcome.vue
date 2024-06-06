@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-control w-full max-w-sm">
                       <label class="label" for="phone">
-                        <span class="label-text">Phone No.(Optional)</span>
+                        <span class="label-text">Phone No.</span>
                       </label>
                       <input type="text" placeholder="Phone No." v-model="phone" id="phone" class="input input-bordered border-base-content w-full" />
                       <InputError class="mt-1 text-error" :message="errors?.phone?.join(' ')" />

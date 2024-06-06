@@ -129,7 +129,7 @@
                             }"
                         />
                         <InputError class="mt-2" :message="formErrors?.home_content?.join(' ')" v-if="editable" />
-                        <div class="pt-2 text-base">Use #register_btn as a placeholder for the Registration button</div>
+                        <div class="pt-2 text-base">Use #register_btn and #leaderboard as placeholders for Registration button and leader button respectively</div>
                     </div>
                 </div>
             </div>

@@ -101,7 +101,7 @@ class PlayerController extends Controller
                 'max:255',
                 Rule::unique('players', 'email')->where(fn ($query) => $query->where('event_id', $event->id))
             ],
-            'phone' => 'numeric|digits:10|nullable'
+            'phone' => 'required|numeric|digits:10|nullable'
         ]);
 
         $player = Player::create([
