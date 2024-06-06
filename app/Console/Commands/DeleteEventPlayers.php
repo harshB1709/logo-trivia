@@ -31,6 +31,6 @@ class DeleteEventPlayers extends Command
         if($event) {
             $event->players()->delete();
         }
-        $this->info("Deleted all the players and related data for event {$event->slug}");
+        $this->info("Deleted all the players and related data for event {$event_slug}");
     }
 }
