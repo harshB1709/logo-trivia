@@ -27,6 +27,7 @@
                                     <div class="flex gap-2 w-auto">
                                         <primary-button @click="sendInvite(player.id)" type="button">Send Invite</primary-button>
                                         <primary-button @click="resetGame(player.id)" type="button">Reset Game</primary-button>
+                                        <a :href="player.game_url" target="_blank">Game Link</a>
                                     </div>
                                 </td>
                             </tr>
@@ -48,7 +49,7 @@ import { usePage } from '@inertiajs/vue3'
         components: {
             AppLayout,
             Table,
-            PrimaryButton,
+            PrimaryButton
         },
 
         data() {

@@ -17,6 +17,7 @@ use ProtoneMedia\LaravelQueryBuilderInertiaJs\InertiaTable;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Support\Facades\URL;
 
 class PlayerController extends Controller
 {
@@ -48,6 +49,10 @@ class PlayerController extends Controller
                     ->orderBy('id')
                     ->paginate()
                     ->withQueryString();
+
+        foreach ($players as $player) {
+            $player->game_url = URL::signedRoute('game', ['player' => $player->id, 'event' => $event?->slug]);
+        }
 
         return Inertia::render('Players', [
             'players' => $players,
